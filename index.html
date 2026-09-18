@@ -1,0 +1,4764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Eagles Panorama</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            color: #ffffff;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(76, 122, 74, 0.34),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 85% 18%,
+                    rgba(132, 88, 48, 0.30),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #10261c,
+                    #2a2419,
+                    #111a14,
+                    #342416
+                );
+
+            background-size: 180% 180%;
+
+            animation: backgroundFlow 18s ease-in-out infinite alternate;
+
+            overflow-x: hidden;
+        }
+
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            width: 420px;
+
+            height: 420px;
+
+            border-radius: 50%;
+
+            top: 8%;
+
+            left: -110px;
+
+            background: rgba(88, 136, 82, 0.16);
+
+            filter: blur(55px);
+
+            pointer-events: none;
+
+            animation: driftGreen 16s ease-in-out infinite alternate;
+
+            z-index: -1;
+        }
+
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 420px;
+
+            height: 420px;
+
+            border-radius: 50%;
+
+            right: -120px;
+
+            bottom: 10%;
+
+            background: rgba(156, 100, 53, 0.14);
+
+            filter: blur(60px);
+
+            pointer-events: none;
+
+            animation: driftBrown 20s ease-in-out infinite alternate;
+
+            z-index: -1;
+        }
+
+
+        @keyframes backgroundFlow {
+
+            0% {
+                background-position: 0% 20%;
+            }
+
+            50% {
+                background-position: 100% 60%;
+            }
+
+            100% {
+                background-position: 20% 100%;
+            }
+        }
+
+
+        @keyframes driftGreen {
+
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(120px, 70px, 0) scale(1.18);
+            }
+        }
+
+
+        @keyframes driftBrown {
+
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(-100px, -80px, 0) scale(1.15);
+            }
+        }
+
+
+        .top-bar {
+            position: absolute;
+
+            top: 20px;
+
+            right: 25px;
+
+            z-index: 30;
+        }
+
+
+        #languageSelect {
+            padding: 10px 14px;
+
+            border: 1px solid rgba(255,255,255,0.18);
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.08);
+
+            color: white;
+
+            backdrop-filter: blur(10px);
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        #languageSelect option {
+            color: #222;
+
+            background: white;
+        }
+
+
+        .top-bar {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        #aboutButton {
+            padding: 10px 15px;
+
+            border: 1px solid rgba(255,255,255,0.18);
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.08);
+
+            color: white;
+
+            backdrop-filter: blur(10px);
+
+            outline: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+
+        #aboutButton:hover {
+            background: rgba(255,255,255,0.15);
+
+            transform: translateY(-2px);
+        }
+
+
+        .hero {
+            text-align: center;
+
+            padding: 100px 20px 70px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+
+            height: 500px;
+
+            background: rgba(84,126,255,0.12);
+
+            border-radius: 50%;
+
+            top: -250px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            filter: blur(30px);
+        }
+
+
+        .welcome {
+            display: inline-block;
+
+            padding: 8px 16px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.08);
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            color: #d9e2ff;
+
+            font-size: 14px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 25px;
+
+            position: relative;
+        }
+
+
+        .logo {
+            font-size: 64px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+
+            position: relative;
+        }
+
+
+        .logo span {
+            color: #8faeff;
+        }
+
+
+        .tagline {
+            max-width: 700px;
+
+            margin: auto;
+
+            font-size: 22px;
+
+            line-height: 1.6;
+
+            color: #c7cee0;
+
+            margin-bottom: 45px;
+
+            position: relative;
+        }
+
+
+        .search-area {
+            position: relative;
+
+            width: 900px;
+
+            max-width: 95%;
+
+            margin: auto;
+
+            z-index: 5;
+        }
+
+
+        .search-box {
+            display: flex;
+
+            gap: 10px;
+
+            background: rgba(255,255,255,0.07);
+
+            padding: 8px;
+
+            border-radius: 18px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.25);
+        }
+
+
+        input {
+            flex: 1;
+
+            padding: 19px;
+
+            font-size: 17px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: rgba(255,255,255,0.95);
+
+            color: #222;
+
+            min-width: 0;
+        }
+
+
+        input::placeholder {
+            color: #777;
+        }
+
+
+        select {
+            padding: 0 16px;
+
+            font-size: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: white;
+
+            color: #222;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        .search-box button {
+            padding: 18px 28px;
+
+            font-size: 17px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            background: #6d8dff;
+
+            color: white;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        .search-box button:hover {
+            background: #829eff;
+        }
+
+
+        #suggestions {
+            position: absolute;
+
+            top: 78px;
+
+            left: 8px;
+
+            right: 225px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.25);
+
+            text-align: left;
+
+            overflow: hidden;
+
+            z-index: 20;
+        }
+
+
+        .suggestion {
+            display: block;
+
+            width: 100%;
+
+            padding: 14px 18px;
+
+            margin: 0;
+
+            border: none;
+
+            border-radius: 0;
+
+            background: white;
+
+            color: #222;
+
+            text-align: left;
+
+            box-shadow: none;
+
+            font-size: 16px;
+        }
+
+
+        .suggestion:hover {
+            background: #f1f3f6;
+
+            transform: none;
+        }
+
+
+        #result {
+            max-width: 1000px;
+
+            margin: 50px auto 0;
+
+            padding: 35px;
+
+            background: rgba(255,255,255,0.97);
+
+            color: #222;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.25);
+
+            text-align: left;
+        }
+
+
+        .result-header {
+            display: flex;
+
+            gap: 25px;
+
+            align-items: center;
+
+            border-bottom: 1px solid #e0e0e0;
+
+            padding-bottom: 25px;
+        }
+
+
+        .result-image {
+            width: 180px;
+
+            height: 130px;
+
+            object-fit: cover;
+
+            border-radius: 16px;
+
+            flex-shrink: 0;
+        }
+
+
+        .result-title {
+            flex: 1;
+        }
+
+
+        .result-title h2 {
+            margin: 0 0 10px;
+
+            font-size: 38px;
+        }
+
+
+        .result-title p {
+            margin: 0;
+
+            color: #777;
+        }
+
+
+        .badge {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            margin-right: 7px;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .category-badge {
+            background: #eef1ff;
+
+            color: #4f63c7;
+        }
+
+
+        .level-badge {
+            background: #f0f0f0;
+
+            color: #555;
+        }
+
+
+        .language-badge {
+            background: #edf8f2;
+
+            color: #28704b;
+        }
+
+
+        .section {
+            margin-top: 35px;
+        }
+
+
+        .section h3 {
+            margin-bottom: 12px;
+
+            font-size: 22px;
+        }
+
+
+        .section p {
+            color: #555;
+
+            line-height: 1.75;
+
+            font-size: 16px;
+        }
+
+
+        .section ul {
+            color: #555;
+
+            line-height: 1.8;
+
+            padding-left: 25px;
+        }
+
+
+        .learning-note {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .learning-path {
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+
+        .path-step {
+            background: #f3f5f7;
+
+            color: #333;
+
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            border: 1px solid transparent;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .path-step:hover {
+            background: #e7ebf7;
+
+            color: #3f55b5;
+
+            border-color: #cbd3ff;
+
+            transform: translateY(-2px);
+        }
+
+
+        .path-arrow {
+            color: #777;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .panorama-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-top: 15px;
+        }
+
+
+        .panorama-card {
+            background: #f3f5f7;
+
+            padding: 20px;
+
+            border-radius: 14px;
+        }
+
+
+        .panorama-card h4 {
+            margin: 0 0 8px;
+
+            font-size: 18px;
+        }
+
+
+        .panorama-card p {
+            margin: 0;
+
+            font-size: 14px;
+        }
+
+
+        .resource {
+            background: #f3f5f7;
+
+            padding: 18px;
+
+            margin: 12px 0;
+
+            border-radius: 12px;
+        }
+
+
+        .resource a {
+            color: #222;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .resource a:hover {
+            text-decoration: underline;
+        }
+
+
+        .book-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .book-card {
+            display: flex;
+
+            gap: 15px;
+
+            background: #f3f5f7;
+
+            padding: 16px;
+
+            border-radius: 14px;
+
+            min-height: 150px;
+        }
+
+
+        .book-cover {
+            width: 85px;
+
+            height: 120px;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+
+            background: #ddd;
+
+            flex-shrink: 0;
+        }
+
+
+        .book-info {
+            flex: 1;
+        }
+
+
+        .book-info h4 {
+            margin: 0 0 8px;
+
+            font-size: 17px;
+        }
+
+
+        .book-info p {
+            margin: 5px 0;
+
+            font-size: 14px;
+
+            color: #666;
+        }
+
+
+        .book-link {
+            display: inline-block;
+
+            margin-top: 8px;
+
+            color: #222;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .book-link:hover {
+            text-decoration: underline;
+        }
+
+
+        .related-card {
+            background: #f3f5f7;
+
+            padding: 18px;
+
+            margin: 12px 0;
+
+            border-radius: 12px;
+        }
+
+
+        .related-card h4 {
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+            font-size: 18px;
+        }
+
+
+        .related-card p {
+            margin-top: 0;
+        }
+
+
+        .related-card button {
+            padding: 10px 16px;
+
+            font-size: 14px;
+        }
+
+
+        .source {
+            margin-top: 35px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #ddd;
+        }
+
+
+        .source a {
+            color: #555;
+
+            text-decoration: none;
+        }
+
+
+        .source a:hover {
+            text-decoration: underline;
+        }
+
+
+        .loading {
+            text-align: center;
+
+            color: #666;
+        }
+
+
+        .error {
+            text-align: center;
+
+            color: #b00020;
+        }
+
+
+        .topics {
+            text-align: center;
+
+            padding: 60px 20px 100px;
+
+            background: rgba(0,0,0,0.12);
+        }
+
+
+        .topics h2 {
+            font-size: 32px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .topics-description {
+            color: #aeb8ce;
+
+            margin-bottom: 40px;
+        }
+
+
+        .category-section {
+            max-width: 1000px;
+
+            margin: 0 auto 40px;
+        }
+
+
+        .category-title {
+            color: #dce4ff;
+
+            font-size: 24px;
+
+            margin-bottom: 18px;
+
+            text-align: left;
+        }
+
+
+        .topic-list {
+            text-align: left;
+        }
+
+
+        .topic {
+            display: inline-block;
+
+            background: rgba(255,255,255,0.08);
+
+            color: #e7ebf7;
+
+            padding: 15px 22px;
+
+            margin: 6px;
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.15);
+        }
+
+
+        .topic:hover {
+            background: rgba(255,255,255,0.15);
+
+            transform: translateY(-3px);
+        }
+
+
+
+
+        .about-section {
+            padding: 70px 20px 35px;
+
+            background: rgba(0,0,0,0.10);
+        }
+
+
+        .about-container {
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            padding: 34px;
+
+            border-radius: 24px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            background: rgba(255,255,255,0.06);
+
+            backdrop-filter: blur(14px);
+
+            box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+        }
+
+
+        .about-container h2 {
+            margin-top: 0;
+
+            margin-bottom: 12px;
+
+            font-size: 30px;
+        }
+
+
+        .about-intro {
+            color: #d8dfd6;
+
+            line-height: 1.75;
+
+            font-size: 16px;
+
+            max-width: 850px;
+        }
+
+
+        .about-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+
+        .about-card {
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,0.08);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        .about-card h3 {
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+            font-size: 17px;
+        }
+
+
+        .about-card p {
+            margin: 0;
+
+            color: #c3cdc1;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+
+        @media (max-width: 800px) {
+
+            .top-bar {
+                right: 15px;
+
+                top: 15px;
+            }
+
+
+            .logo {
+                font-size: 44px;
+            }
+
+
+            .tagline {
+                font-size: 18px;
+            }
+
+
+            .search-box {
+                flex-direction: column;
+            }
+
+
+            select {
+                padding: 16px;
+            }
+
+
+            #suggestions {
+                right: 8px;
+            }
+
+
+            .panorama-grid,
+            .book-grid,
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .learning-path {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .path-arrow {
+                text-align: center;
+
+                transform: rotate(90deg);
+            }
+
+
+            .result-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .result-image {
+                width: 100%;
+
+                height: 200px;
+            }
+
+        }
+
+
+        /* ===== Eagles Panorama visual polish v1 ===== */
+
+        body {
+            background:
+                radial-gradient(circle at 15% 12%, rgba(95, 125, 255, 0.22), transparent 24%),
+                radial-gradient(circle at 86% 16%, rgba(170, 92, 255, 0.16), transparent 22%),
+                radial-gradient(circle at 50% 100%, rgba(58, 94, 180, 0.12), transparent 34%),
+                linear-gradient(145deg, #080c18 0%, #11182f 48%, #080c17 100%);
+            overflow-x: hidden;
+        }
+
+        .top-bar {
+            top: 18px;
+            right: 20px;
+        }
+
+        #languageSelect {
+            min-width: 132px;
+            border-radius: 999px;
+            background: rgba(17, 24, 47, 0.72);
+            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+            transition: 0.2s ease;
+        }
+
+        #languageSelect:hover,
+        #languageSelect:focus {
+            background: rgba(26, 36, 68, 0.9);
+            border-color: rgba(143, 174, 255, 0.45);
+        }
+
+        .hero {
+            padding: 112px 20px 82px;
+        }
+
+        .hero::before {
+            opacity: 0.9;
+        }
+
+        .welcome {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.14);
+        }
+
+        .logo {
+            font-size: clamp(48px, 7vw, 68px);
+            letter-spacing: -1px;
+            text-shadow: 0 8px 32px rgba(93, 127, 255, 0.14);
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, #8faeff, #b69cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            max-width: 760px;
+            font-size: 20px;
+            color: #c8d0e6;
+        }
+
+        .search-area {
+            max-width: 980px;
+        }
+
+        .search-box {
+            padding: 9px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.065);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+            transition: 0.25s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: rgba(143, 174, 255, 0.4);
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(109, 141, 255, 0.08);
+        }
+
+        input {
+            padding: 18px 19px;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+            transition: 0.2s ease;
+        }
+
+        input:focus {
+            box-shadow: inset 0 0 0 2px rgba(109, 141, 255, 0.3);
+        }
+
+        select {
+            min-height: 54px;
+            transition: 0.2s ease;
+        }
+
+        .search-box button {
+            min-height: 54px;
+            padding: 0 30px;
+            background: linear-gradient(135deg, #6486ff, #7a63e8);
+            box-shadow: 0 10px 24px rgba(94, 113, 235, 0.22);
+        }
+
+        .search-box button:hover {
+            background: linear-gradient(135deg, #7896ff, #8a74f3);
+            box-shadow: 0 13px 28px rgba(94, 113, 235, 0.28);
+        }
+
+        #suggestions {
+            top: 82px;
+            border: 1px solid #e6e8ef;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        }
+
+        .suggestion {
+            transition: background 0.15s ease;
+        }
+
+        #result {
+            margin-top: 58px;
+            padding: 38px;
+            border: 1px solid rgba(222, 226, 235, 0.85);
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.25);
+            animation: resultEnter 0.3s ease;
+        }
+
+        @keyframes resultEnter {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            gap: 30px;
+            padding-bottom: 28px;
+            border-bottom-color: #e7e9ef;
+        }
+
+        .result-image {
+            width: 190px;
+            height: 140px;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+        }
+
+        .result-title h2 {
+            font-size: clamp(30px, 4vw, 40px);
+            letter-spacing: -0.5px;
+        }
+
+        .badge {
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .section {
+            margin-top: 40px;
+        }
+
+        .section h3 {
+            font-size: 21px;
+            letter-spacing: -0.2px;
+        }
+
+        .panorama-grid,
+        .book-grid {
+            gap: 18px;
+        }
+
+        .panorama-card,
+        .resource,
+        .book-card,
+        .related-card {
+            border: 1px solid #e5e8ef;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .panorama-card:hover,
+        .resource:hover,
+        .book-card:hover,
+        .related-card:hover {
+            transform: translateY(-2px);
+            border-color: #d7dcff;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        .resource a,
+        .book-link,
+        .source a {
+            color: #4058b8;
+        }
+
+        .resource a:hover,
+        .book-link:hover,
+        .source a:hover {
+            color: #2f4395;
+        }
+
+        .book-cover {
+            box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .learning-path {
+            gap: 9px;
+        }
+
+        .path-step {
+            background: linear-gradient(180deg, #f7f8fb, #f0f3f8);
+            border-color: #e2e6ee;
+            box-shadow: 0 5px 14px rgba(20, 30, 60, 0.04);
+        }
+
+        .path-step:hover {
+            background: #eef2ff;
+            box-shadow: 0 8px 18px rgba(63, 85, 181, 0.1);
+        }
+
+        .topics {
+            position: relative;
+            padding: 72px 20px 110px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .topics h2 {
+            font-size: clamp(28px, 4vw, 34px);
+            letter-spacing: -0.5px;
+        }
+
+        .category-section {
+            padding: 22px 22px 26px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.025);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-title {
+            margin-top: 0;
+            font-size: 20px;
+            letter-spacing: 0.2px;
+        }
+
+        .topic {
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .topic:hover {
+            background: rgba(255, 255, 255, 0.13);
+            border-color: rgba(143, 174, 255, 0.28);
+            box-shadow: 0 9px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                padding-top: 94px;
+            }
+
+            #result {
+                padding: 26px 22px;
+            }
+
+            .category-section {
+                padding: 18px 15px 20px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .top-bar {
+                top: 12px;
+                right: 12px;
+            }
+
+            #languageSelect {
+                min-width: 118px;
+                padding: 9px 12px;
+            }
+
+            .hero {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .logo {
+                margin-top: 18px;
+            }
+
+            .tagline {
+                font-size: 17px;
+            }
+
+            .search-box {
+                padding: 7px;
+            }
+
+            .search-box button,
+            select {
+                width: 100%;
+            }
+
+            #result {
+                border-radius: 18px;
+                padding: 22px 18px;
+            }
+        }
+
+
+        /* =========================
+           MY LEARNING
+        ========================= */
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-button {
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 10px;
+            background: rgba(36, 65, 41, 0.58);
+            color: #f4f1df;
+            backdrop-filter: blur(10px);
+            outline: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s ease;
+        }
+
+        .top-bar-button:hover {
+            background: rgba(72, 91, 48, 0.82);
+            transform: translateY(-2px);
+        }
+
+        .learning-dashboard {
+            display: none;
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 30px;
+            background: rgba(248, 246, 235, 0.98);
+            color: #2d3025;
+            border: 1px solid rgba(88, 73, 45, 0.14);
+            border-radius: 22px;
+            box-shadow: 0 20px 48px rgba(32, 28, 15, 0.26);
+            text-align: left;
+            animation: resultEnter 0.28s ease;
+        }
+
+        .learning-dashboard.open {
+            display: block;
+        }
+
+        .learning-dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #ded9c7;
+        }
+
+        .learning-dashboard-header h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            letter-spacing: -0.4px;
+        }
+
+        .learning-dashboard-header p {
+            margin: 0;
+            color: #6d705f;
+            line-height: 1.6;
+        }
+
+        .dashboard-close {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border: none;
+            border-radius: 12px;
+            background: #ece8d9;
+            color: #3b3b31;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .dashboard-close:hover {
+            background: #e1ddca;
+            transform: none;
+        }
+
+        .dashboard-group {
+            margin-top: 28px;
+        }
+
+        .dashboard-group h3 {
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        .dashboard-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .dashboard-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 18px;
+            background: #f1efe4;
+            border: 1px solid #e2dfd1;
+            border-radius: 14px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 20px rgba(59, 53, 32, 0.08);
+        }
+
+        .dashboard-card-main {
+            min-width: 0;
+        }
+
+        .dashboard-card-title {
+            margin: 0 0 6px;
+            font-size: 16px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .dashboard-card-meta {
+            margin: 0;
+            color: #707260;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .dashboard-card-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .dashboard-action {
+            padding: 9px 12px;
+            border: none;
+            border-radius: 10px;
+            background: #e0e4cf;
+            color: #36402a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dashboard-action:hover {
+            background: #d4dac0;
+            transform: none;
+        }
+
+        .dashboard-empty {
+            padding: 18px;
+            background: #f6f4eb;
+            color: #777864;
+            border-radius: 12px;
+            border: 1px dashed #d8d4c4;
+        }
+
+        .dashboard-footer {
+            margin-top: 30px;
+            padding-top: 22px;
+            border-top: 1px solid #ded9c7;
+        }
+
+        .clear-data-button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 10px;
+            background: #e5dfce;
+            color: #5c543f;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .clear-data-button:hover {
+            background: #dbd4c1;
+            transform: none;
+        }
+
+        .save-topic-button,
+        .save-item-button {
+            border: none;
+            border-radius: 10px;
+            background: #dfe5cb;
+            color: #38452a;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s ease;
+        }
+
+        .save-topic-button {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 14px;
+        }
+
+        .save-item-button {
+            padding: 8px 11px;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .save-topic-button:hover,
+        .save-item-button:hover {
+            background: #d1dabc;
+            transform: translateY(-1px);
+        }
+
+        .resource-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .saved-search-item {
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .dashboard-list {
+                grid-template-columns: 1fr;
+            }
+
+            .learning-dashboard {
+                margin-left: 14px;
+                margin-right: 14px;
+                padding: 22px 18px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .top-bar {
+                right: 12px;
+                left: 12px;
+                justify-content: flex-end;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="top-bar">
+
+        <button
+            class="top-bar-button"
+            id="myLearningButton"
+            onclick="toggleMyLearning()"
+        >
+            My Learning
+        </button>
+
+
+        <button
+            class="top-bar-button"
+            id="aboutButton"
+            onclick="scrollToAbout()"
+        >
+            About
+        </button>
+
+        <select
+            id="languageSelect"
+            onchange="changeLanguage()"
+        >
+
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="ar">العربية</option>
+            <option value="de">Deutsch</option>
+            <option value="pt">Português</option>
+            <option value="ru">Русский</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="hi">हिन्दी</option>
+            <option value="it">Italiano</option>
+            <option value="nl">Nederlands</option>
+            <option value="pl">Polski</option>
+            <option value="tr">Türkçe</option>
+            <option value="ko">한국어</option>
+            <option value="fa">فارسی</option>
+            <option value="id">Bahasa Indonesia</option>
+
+        </select>
+
+    </div>
+
+
+
+    <section class="hero">
+
+
+        <div
+            class="welcome"
+            id="welcomeText"
+        >
+            WELCOME TO THE KNOWLEDGE LANDSCAPE
+        </div>
+
+
+        <div class="logo">
+            Eagles <span>Panorama</span>
+        </div>
+
+
+        <div
+            class="tagline"
+            id="taglineText"
+        >
+            Take a step back. See the bigger picture.
+            Discover ideas, connect subjects, and learn something new.
+        </div>
+
+
+        <div class="search-area">
+
+
+            <div class="search-box">
+
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="What do you want to learn?"
+                    oninput="getSuggestions()"
+                    onkeydown="handleEnter(event)"
+                    autocomplete="off"
+                >
+
+
+                <select id="learningLevel" onchange="savePreferences()">
+
+                    <option value="beginner">
+                        Beginner
+                    </option>
+
+                    <option value="intermediate">
+                        Intermediate
+                    </option>
+
+                    <option value="advanced">
+                        Advanced
+                    </option>
+
+                </select>
+
+
+                <button
+                    onclick="exploreTopic()"
+                    id="exploreButton"
+                >
+                    Explore
+                </button>
+
+
+            </div>
+
+
+            <div id="suggestions"></div>
+
+
+        </div>
+
+
+        <div id="result"></div>
+
+
+    </section>
+
+
+    <section
+        id="learningDashboard"
+        class="learning-dashboard"
+    >
+
+        <div class="learning-dashboard-header">
+
+            <div>
+                <h2 id="myLearningTitle">
+                    My Learning
+                </h2>
+
+                <p id="myLearningDescription">
+                    Your saved topics, resources, books, and recent searches.
+                </p>
+            </div>
+
+            <button
+                class="dashboard-close"
+                onclick="toggleMyLearning(false)"
+                aria-label="Close My Learning"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="learningDashboardContent"></div>
+
+    </section>
+
+
+    <section class="about-section" id="aboutSection">
+
+        <div class="about-container">
+
+            <h2 id="aboutTitle">About Eagles Panorama</h2>
+
+            <p class="about-intro" id="aboutIntro">
+                Eagles Panorama is a broad learning explorer designed to help you step back from one subject and see the wider landscape around it. It combines curated learning paths with live information from public knowledge sources so you can move from an introduction toward deeper exploration.
+            </p>
+
+            <div class="about-grid">
+
+                <div class="about-card">
+                    <h3 id="aboutCard1Title">Curated Knowledge</h3>
+                    <p id="aboutCard1Text">Core subjects include structured levels, concepts, prerequisites, related subjects, and learning resources.</p>
+                </div>
+
+                <div class="about-card">
+                    <h3 id="aboutCard2Title">Live Sources</h3>
+                    <p id="aboutCard2Text">Search results connect to Wikipedia and the public Open Library so the site can reach beyond its built-in database.</p>
+                </div>
+
+                <div class="about-card">
+                    <h3 id="aboutCard3Title">Built to Explore</h3>
+                    <p id="aboutCard3Text">Click learning-path steps and related subjects to keep moving through the knowledge landscape.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="topics">
+
+
+        <h2 id="topicsTitle">
+            Explore a world of knowledge
+        </h2>
+
+
+        <p
+            class="topics-description"
+            id="topicsDescription"
+        >
+            Discover subjects through different fields of knowledge.
+        </p>
+
+
+        <div id="topicCategories"></div>
+
+
+    </section>
+
+
+
+    <script src="topics.js"></script>
+
+
+    <script>
+
+
+        let suggestionTimer;
+
+
+
+        const supportedLanguages = [
+            "en", "fr", "es", "ar", "de", "pt", "ru", "zh", "ja",
+            "hi", "it", "nl", "pl", "tr", "ko", "fa", "id"
+        ];
+
+
+        function getStoredValue(key, fallback) {
+            try {
+                const value = localStorage.getItem(key);
+                return value !== null ? value : fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+
+        function setStoredValue(key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch (error) {
+                console.error("Could not save local data:", error);
+            }
+        }
+
+
+        function getStoredArray(key) {
+            try {
+                const value = localStorage.getItem(key);
+                if (!value) return [];
+                const parsed = JSON.parse(value);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+
+        function setStoredArray(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (error) {
+                console.error("Could not save learning data:", error);
+            }
+        }
+
+
+        const savedLanguage = getStoredValue("eaglesLanguage", "en");
+
+        let selectedLanguage =
+            supportedLanguages.includes(savedLanguage)
+                ? savedLanguage
+                : "en";
+
+        let recentSearches = getStoredArray("eaglesRecentSearches");
+        let savedTopics = getStoredArray("eaglesSavedTopics");
+        let savedResources = getStoredArray("eaglesSavedResources");
+        let savedBooks = getStoredArray("eaglesSavedBooks");
+
+
+        function savePreferences() {
+            const level = document.querySelector("#learningLevel").value;
+            setStoredValue("eaglesLanguage", selectedLanguage);
+            setStoredValue("eaglesLearningLevel", level);
+        }
+
+
+        function addRecentSearch(query, pageTitle, level) {
+            const item = {
+                query,
+                pageTitle,
+                level,
+                language: selectedLanguage,
+                timestamp: Date.now()
+            };
+
+            recentSearches = recentSearches.filter(function(recent) {
+                return !(recent.query === query && recent.language === selectedLanguage);
+            });
+
+            recentSearches.unshift(item);
+            recentSearches = recentSearches.slice(0, 10);
+            setStoredArray("eaglesRecentSearches", recentSearches);
+            renderMyLearning();
+        }
+
+
+        function topicSaveKey(topic) {
+            return (topic.language || "en") + "::" + (topic.url || topic.title || "");
+        }
+
+
+        function isTopicSaved(topic) {
+            return savedTopics.some(item => topicSaveKey(item) === topicSaveKey(topic));
+        }
+
+
+        function isResourceSaved(resource) {
+            return savedResources.some(item => item.url === resource.url);
+        }
+
+
+        function isBookSaved(book) {
+            return savedBooks.some(item => item.url === book.url);
+        }
+
+
+        function toggleSavedTopic(topic, button) {
+            if (isTopicSaved(topic)) {
+                savedTopics = savedTopics.filter(item => topicSaveKey(item) !== topicSaveKey(topic));
+            } else {
+                savedTopics.unshift(topic);
+            }
+
+            savedTopics = savedTopics.slice(0, 50);
+            setStoredArray("eaglesSavedTopics", savedTopics);
+
+            if (button) {
+                button.textContent = isTopicSaved(topic) ? currentUI().saved : currentUI().saveTopic;
+            }
+
+            renderMyLearning();
+        }
+
+
+        function toggleSavedResource(resource, button) {
+            if (isResourceSaved(resource)) {
+                savedResources = savedResources.filter(item => item.url !== resource.url);
+            } else {
+                savedResources.unshift(resource);
+            }
+
+            savedResources = savedResources.slice(0, 50);
+            setStoredArray("eaglesSavedResources", savedResources);
+
+            if (button) {
+                button.textContent = isResourceSaved(resource) ? currentUI().saved : currentUI().saveResource;
+            }
+
+            renderMyLearning();
+        }
+
+
+        function toggleSavedBook(book, button) {
+            if (isBookSaved(book)) {
+                savedBooks = savedBooks.filter(item => item.url !== book.url);
+            } else {
+                savedBooks.unshift(book);
+            }
+
+            savedBooks = savedBooks.slice(0, 50);
+            setStoredArray("eaglesSavedBooks", savedBooks);
+
+            if (button) {
+                button.textContent = isBookSaved(book) ? currentUI().saved : currentUI().saveBook;
+            }
+
+            renderMyLearning();
+        }
+
+
+        function removeRecentSearch(query, language) {
+            recentSearches = recentSearches.filter(item => !(item.query === query && item.language === language));
+            setStoredArray("eaglesRecentSearches", recentSearches);
+            renderMyLearning();
+        }
+
+
+        function removeSavedTopic(url, language) {
+            savedTopics = savedTopics.filter(item => !(item.url === url && item.language === language));
+            setStoredArray("eaglesSavedTopics", savedTopics);
+            renderMyLearning();
+        }
+
+
+        function removeSavedResource(url) {
+            savedResources = savedResources.filter(item => item.url !== url);
+            setStoredArray("eaglesSavedResources", savedResources);
+            renderMyLearning();
+        }
+
+
+        function removeSavedBook(url) {
+            savedBooks = savedBooks.filter(item => item.url !== url);
+            setStoredArray("eaglesSavedBooks", savedBooks);
+            renderMyLearning();
+        }
+
+
+        function clearLearningData() {
+            const text = currentUI();
+            if (!confirm(text.confirmClear)) return;
+
+            recentSearches = [];
+            savedTopics = [];
+            savedResources = [];
+            savedBooks = [];
+
+            setStoredArray("eaglesRecentSearches", []);
+            setStoredArray("eaglesSavedTopics", []);
+            setStoredArray("eaglesSavedResources", []);
+            setStoredArray("eaglesSavedBooks", []);
+
+            renderMyLearning();
+        }
+
+
+        function dashboardEmpty(text) {
+            return `<div class="dashboard-empty">${escapeHTML(text)}</div>`;
+        }
+
+
+        function renderDashboardList(items, title, emptyText, getTitle, getMeta, getURL, getRemoveArgs) {
+            if (items.length === 0) {
+                return `
+                    <div class="dashboard-group">
+                        <h3>${escapeHTML(title)}</h3>
+                        ${dashboardEmpty(emptyText)}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="dashboard-group">
+                    <h3>${escapeHTML(title)}</h3>
+                    <div class="dashboard-list">
+                        ${items.map(function(item) {
+                            const removeArgs = getRemoveArgs(item);
+                            const args = removeArgs.args.map(arg => JSON.stringify(arg)).join(", ");
+                            return `
+                                <div class="dashboard-card">
+                                    <div class="dashboard-card-main">
+                                        <p class="dashboard-card-title">${escapeHTML(getTitle(item))}</p>
+                                        <p class="dashboard-card-meta">${escapeHTML(getMeta(item))}</p>
+                                    </div>
+                                    <div class="dashboard-card-actions">
+                                        ${getURL(item) ? `
+                                            <button class="dashboard-action" onclick='openSavedItem(${JSON.stringify(getURL(item))})'>
+                                                ${escapeHTML(currentUI().open)}
+                                            </button>
+                                        ` : ""}
+                                        <button class="dashboard-action" onclick='${removeArgs.functionName}(${args})'>
+                                            ${escapeHTML(currentUI().remove)}
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join("")}
+                    </div>
+                </div>
+            `;
+        }
+
+
+        function renderMyLearning() {
+            const dashboard = document.querySelector("#learningDashboard");
+            const content = document.querySelector("#learningDashboardContent");
+            if (!dashboard || !content) return;
+
+            const text = currentUI();
+
+            document.querySelector("#myLearningTitle").textContent = text.myLearning;
+            document.querySelector("#myLearningDescription").textContent = text.myLearningDescription;
+
+            const recentHTML = `
+                <div class="dashboard-group">
+                    <h3>${escapeHTML(text.recentSearches)}</h3>
+                    ${recentSearches.length === 0 ? dashboardEmpty(text.noRecentSearches) : `
+                        <div class="dashboard-list">
+                            ${recentSearches.map(item => `
+                                <div class="dashboard-card saved-search-item" onclick='openSavedSearch(${JSON.stringify(item.query)}, ${JSON.stringify(item.language)}, ${JSON.stringify(item.level)})'>
+                                    <div class="dashboard-card-main">
+                                        <p class="dashboard-card-title">${escapeHTML(item.pageTitle || item.query)}</p>
+                                        <p class="dashboard-card-meta">${escapeHTML(item.query)} · ${escapeHTML(item.language)} · ${escapeHTML(item.level)}</p>
+                                    </div>
+                                    <div class="dashboard-card-actions">
+                                        <button class="dashboard-action" onclick='event.stopPropagation(); removeRecentSearch(${JSON.stringify(item.query)}, ${JSON.stringify(item.language)})'>
+                                            ${escapeHTML(text.remove)}
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join("")}
+                        </div>
+                    `}
+                </div>
+            `;
+
+            const topicsHTML = renderDashboardList(
+                savedTopics,
+                text.savedTopics,
+                text.noSavedTopics,
+                item => item.title,
+                item => `${item.category ? item.category + " · " : ""}${item.language}`,
+                item => item.url || "",
+                item => ({ functionName: "removeSavedTopic", args: [item.url, item.language] })
+            );
+
+            const resourcesHTML = renderDashboardList(
+                savedResources,
+                text.savedResources,
+                text.noSavedResources,
+                item => item.name,
+                item => `${item.topic} · ${item.language}`,
+                item => item.url || "",
+                item => ({ functionName: "removeSavedResource", args: [item.url] })
+            );
+
+            const booksHTML = renderDashboardList(
+                savedBooks,
+                text.savedBooks,
+                text.noSavedBooks,
+                item => item.title,
+                item => `${item.author} · ${item.year} · ${item.language}`,
+                item => item.url || "",
+                item => ({ functionName: "removeSavedBook", args: [item.url] })
+            );
+
+            content.innerHTML = recentHTML + topicsHTML + resourcesHTML + booksHTML + `
+                <div class="dashboard-footer">
+                    <button class="clear-data-button" onclick="clearLearningData()">
+                        ${escapeHTML(text.clearData)}
+                    </button>
+                </div>
+            `;
+        }
+
+
+        function openSavedItem(url) {
+            if (!url) return;
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+
+        function openSavedSearch(query, language, level) {
+            const languageSelect = document.querySelector("#languageSelect");
+            const learningLevel = document.querySelector("#learningLevel");
+
+            languageSelect.value = supportedLanguages.includes(language) ? language : "en";
+            selectedLanguage = languageSelect.value;
+
+            document.documentElement.lang = selectedLanguage;
+            document.documentElement.dir = (selectedLanguage === "ar" || selectedLanguage === "fa") ? "rtl" : "ltr";
+
+            learningLevel.value = ["beginner", "intermediate", "advanced"].includes(level) ? level : "beginner";
+            savePreferences();
+            updateInterface();
+            createTopicCategories();
+
+            document.querySelector("#searchInput").value = query;
+            exploreTopic();
+            toggleMyLearning(false);
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+
+        function toggleMyLearning(forceState) {
+            const dashboard = document.querySelector("#learningDashboard");
+            if (!dashboard) return;
+
+            const shouldOpen = typeof forceState === "boolean"
+                ? forceState
+                : !dashboard.classList.contains("open");
+
+            if (shouldOpen) {
+                renderMyLearning();
+                dashboard.classList.add("open");
+                dashboard.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                dashboard.classList.remove("open");
+            }
+        }
+
+
+
+        const ui = {
+
+            en: {
+                welcome:
+                    "WELCOME TO THE KNOWLEDGE LANDSCAPE",
+
+                tagline:
+                    "Take a step back. See the bigger picture. Discover ideas, connect subjects, and learn something new.",
+
+                placeholder:
+                    "What do you want to learn?",
+
+                explore:
+                    "Explore",
+
+                beginner:
+                    "Beginner",
+
+                intermediate:
+                    "Intermediate",
+
+                advanced:
+                    "Advanced",
+
+                topicsTitle:
+                    "Explore a world of knowledge",
+
+                topicsDescription:
+                    "Discover subjects through different fields of knowledge.",
+
+                overview:
+                    "Overview",
+
+                learningPanorama:
+                    "Your Learning Panorama",
+
+                prerequisites:
+                    "Prerequisites",
+
+                concepts:
+                    "Key Concepts",
+
+                learningPath:
+                    "Recommended Learning Path",
+
+                learningNote:
+                    "Click any step to explore it immediately.",
+
+                resources:
+                    "Curated Resources",
+
+                related:
+                    "Related Subjects",
+
+                books:
+                    "Public Learning Library",
+
+                deeper:
+                    "Explore Deeper",
+
+                automaticNote:
+                    "These steps are generated from related results. Click one to explore it.",
+
+                around:
+                    "Explore Around This Topic",
+
+                noResults:
+                    "No results found",
+
+                notFound:
+                    "Topic not found",
+
+                source:
+                    "Read the full article →",
+                myLearning:
+                    "My Learning",
+
+                myLearningDescription:
+                    "Your saved topics, resources, books, and recent searches.",
+
+                recentSearches:
+                    "Recent Searches",
+
+                savedTopics:
+                    "Saved Topics",
+
+                savedResources:
+                    "Saved Resources",
+
+                savedBooks:
+                    "Saved Books",
+
+                noRecentSearches:
+                    "No recent searches yet.",
+
+                noSavedTopics:
+                    "No saved topics yet.",
+
+                noSavedResources:
+                    "No saved resources yet.",
+
+                noSavedBooks:
+                    "No saved books yet.",
+
+                open:
+                    "Open",
+
+                remove:
+                    "Remove",
+
+                saveTopic:
+                    "Save Topic",
+
+                saveResource:
+                    "Save",
+
+                saveBook:
+                    "Save",
+
+                saved:
+                    "Saved",
+
+                clearData:
+                    "Clear My Learning",
+
+                confirmClear:
+                    "Clear all saved topics, resources, books, and recent searches?",
+
+
+                aboutButton:
+                    "About",
+
+                aboutTitle:
+                    "About Eagles Panorama",
+
+                aboutIntro:
+                    "Eagles Panorama is a broad learning explorer designed to help you step back from one subject and see the wider landscape around it. It combines curated learning paths with live information from public knowledge sources so you can move from an introduction toward deeper exploration.",
+
+                aboutCard1Title:
+                    "Curated Knowledge",
+
+                aboutCard1Text:
+                    "Core subjects include structured levels, concepts, prerequisites, related subjects, and learning resources.",
+
+                aboutCard2Title:
+                    "Live Sources",
+
+                aboutCard2Text:
+                    "Search results connect to Wikipedia and the public Open Library so the site can reach beyond its built-in database.",
+
+                aboutCard3Title:
+                    "Built to Explore",
+
+                aboutCard3Text:
+                    "Click learning-path steps and related subjects to keep moving through the knowledge landscape."
+
+            },
+
+
+            fr: {
+                welcome:
+                    "BIENVENUE DANS LE PAYSAGE DES CONNAISSANCES",
+
+                tagline:
+                    "Prenez du recul. Voyez la vue d'ensemble. Découvrez des idées, reliez les sujets et apprenez quelque chose de nouveau.",
+
+                placeholder:
+                    "Que voulez-vous apprendre ?",
+
+                explore:
+                    "Explorer",
+
+                beginner:
+                    "Débutant",
+
+                intermediate:
+                    "Intermédiaire",
+
+                advanced:
+                    "Avancé",
+
+                topicsTitle:
+                    "Explorez un monde de connaissances",
+
+                topicsDescription:
+                    "Découvrez des sujets à travers différents domaines de connaissance.",
+
+                overview:
+                    "Vue d'ensemble",
+
+                learningPanorama:
+                    "Votre panorama d'apprentissage",
+
+                prerequisites:
+                    "Prérequis",
+
+                concepts:
+                    "Concepts clés",
+
+                learningPath:
+                    "Parcours d'apprentissage recommandé",
+
+                learningNote:
+                    "Cliquez sur une étape pour l'explorer immédiatement.",
+
+                resources:
+                    "Ressources sélectionnées",
+
+                related:
+                    "Sujets associés",
+
+                books:
+                    "Bibliothèque d'apprentissage publique",
+
+                deeper:
+                    "Explorer plus loin",
+
+                automaticNote:
+                    "Ces étapes sont générées à partir des résultats associés. Cliquez sur l'une d'elles pour l'explorer.",
+
+                around:
+                    "Explorer autour de ce sujet",
+
+                noResults:
+                    "Aucun résultat trouvé",
+
+                notFound:
+                    "Sujet introuvable",
+
+                source:
+                    "Lire l'article complet →",
+                myLearning:
+                    "Mon apprentissage",
+
+                myLearningDescription:
+                    "Vos sujets, ressources, livres et recherches récentes enregistrés.",
+
+                recentSearches:
+                    "Recherches récentes",
+
+                savedTopics:
+                    "Sujets enregistrés",
+
+                savedResources:
+                    "Ressources enregistrées",
+
+                savedBooks:
+                    "Livres enregistrés",
+
+                noRecentSearches:
+                    "Aucune recherche récente pour le moment.",
+
+                noSavedTopics:
+                    "Aucun sujet enregistré pour le moment.",
+
+                noSavedResources:
+                    "Aucune ressource enregistrée pour le moment.",
+
+                noSavedBooks:
+                    "Aucun livre enregistré pour le moment.",
+
+                open:
+                    "Ouvrir",
+
+                remove:
+                    "Supprimer",
+
+                saveTopic:
+                    "Enregistrer le sujet",
+
+                saveResource:
+                    "Enregistrer",
+
+                saveBook:
+                    "Enregistrer",
+
+                saved:
+                    "Enregistré",
+
+                clearData:
+                    "Effacer mon apprentissage",
+
+                confirmClear:
+                    "Effacer tous les sujets, ressources, livres et recherches récentes enregistrés ?",
+
+
+                aboutButton:
+                    "À propos",
+
+                aboutTitle:
+                    "À propos d'Eagles Panorama",
+
+                aboutIntro:
+                    "Eagles Panorama est un explorateur d'apprentissage conçu pour prendre du recul par rapport à un sujet et voir le paysage plus large qui l'entoure. Il combine des parcours organisés avec des informations provenant de sources publiques afin de passer de l'introduction à une exploration plus approfondie.",
+
+                aboutCard1Title:
+                    "Connaissances organisées",
+
+                aboutCard1Text:
+                    "Les sujets principaux proposent des niveaux, des concepts, des prérequis, des sujets associés et des ressources d'apprentissage.",
+
+                aboutCard2Title:
+                    "Sources en direct",
+
+                aboutCard2Text:
+                    "Les recherches utilisent Wikipédia et l'Open Library public pour dépasser la base de données intégrée.",
+
+                aboutCard3Title:
+                    "Conçu pour explorer",
+
+                aboutCard3Text:
+                    "Cliquez sur les étapes et les sujets associés pour continuer à parcourir le paysage des connaissances."
+            },
+
+
+            es: {
+                welcome:
+                    "BIENVENIDO AL PAISAJE DEL CONOCIMIENTO",
+
+                tagline:
+                    "Da un paso atrás. Mira el panorama completo. Descubre ideas, conecta temas y aprende algo nuevo.",
+
+                placeholder:
+                    "¿Qué quieres aprender?",
+
+                explore:
+                    "Explorar",
+
+                beginner:
+                    "Principiante",
+
+                intermediate:
+                    "Intermedio",
+
+                advanced:
+                    "Avanzado",
+
+                topicsTitle:
+                    "Explora un mundo de conocimiento",
+
+                topicsDescription:
+                    "Descubre temas a través de diferentes áreas del conocimiento.",
+
+                overview:
+                    "Descripción general",
+
+                learningPanorama:
+                    "Tu panorama de aprendizaje",
+
+                prerequisites:
+                    "Requisitos previos",
+
+                concepts:
+                    "Conceptos clave",
+
+                learningPath:
+                    "Ruta de aprendizaje recomendada",
+
+                learningNote:
+                    "Haz clic en cualquier paso para explorarlo inmediatamente.",
+
+                resources:
+                    "Recursos seleccionados",
+
+                related:
+                    "Temas relacionados",
+
+                books:
+                    "Biblioteca pública de aprendizaje",
+
+                deeper:
+                    "Explorar más",
+
+                automaticNote:
+                    "Estos pasos se generan a partir de resultados relacionados. Haz clic en uno para explorarlo.",
+
+                around:
+                    "Explorar alrededor de este tema",
+
+                noResults:
+                    "No se encontraron resultados",
+
+                notFound:
+                    "Tema no encontrado",
+
+                source:
+                    "Leer el artículo completo →",
+                myLearning:
+                    "Mi aprendizaje",
+
+                myLearningDescription:
+                    "Tus temas, recursos, libros y búsquedas recientes guardados.",
+
+                recentSearches:
+                    "Búsquedas recientes",
+
+                savedTopics:
+                    "Temas guardados",
+
+                savedResources:
+                    "Recursos guardados",
+
+                savedBooks:
+                    "Libros guardados",
+
+                noRecentSearches:
+                    "Aún no hay búsquedas recientes.",
+
+                noSavedTopics:
+                    "Aún no hay temas guardados.",
+
+                noSavedResources:
+                    "Aún no hay recursos guardados.",
+
+                noSavedBooks:
+                    "Aún no hay libros guardados.",
+
+                open:
+                    "Abrir",
+
+                remove:
+                    "Eliminar",
+
+                saveTopic:
+                    "Guardar tema",
+
+                saveResource:
+                    "Guardar",
+
+                saveBook:
+                    "Guardar",
+
+                saved:
+                    "Guardado",
+
+                clearData:
+                    "Borrar mi aprendizaje",
+
+                confirmClear:
+                    "¿Borrar todos los temas, recursos, libros y búsquedas recientes guardados?",
+
+
+                aboutButton:
+                    "Acerca de",
+
+                aboutTitle:
+                    "Acerca de Eagles Panorama",
+
+                aboutIntro:
+                    "Eagles Panorama es un explorador de aprendizaje creado para tomar distancia de un tema y ver el paisaje más amplio que lo rodea. Combina rutas organizadas con información de fuentes públicas para pasar de una introducción a una exploración más profunda.",
+
+                aboutCard1Title:
+                    "Conocimiento organizado",
+
+                aboutCard1Text:
+                    "Los temas principales incluyen niveles, conceptos, requisitos previos, temas relacionados y recursos de aprendizaje.",
+
+                aboutCard2Title:
+                    "Fuentes en vivo",
+
+                aboutCard2Text:
+                    "Las búsquedas conectan con Wikipedia y Open Library para ir más allá de la base de datos integrada.",
+
+                aboutCard3Title:
+                    "Diseñado para explorar",
+
+                aboutCard3Text:
+                    "Haz clic en los pasos y temas relacionados para seguir recorriendo el paisaje del conocimiento."
+            },
+
+
+            ar: {
+                welcome:
+                    "مرحبًا بك في عالم المعرفة",
+
+                tagline:
+                    "تراجع خطوة إلى الوراء. انظر إلى الصورة الأكبر. اكتشف الأفكار واربط بين المواضيع وتعلم شيئًا جديدًا.",
+
+                placeholder:
+                    "ماذا تريد أن تتعلم؟",
+
+                explore:
+                    "استكشف",
+
+                beginner:
+                    "مبتدئ",
+
+                intermediate:
+                    "متوسط",
+
+                advanced:
+                    "متقدم",
+
+                topicsTitle:
+                    "استكشف عالمًا من المعرفة",
+
+                topicsDescription:
+                    "اكتشف المواضيع من خلال مجالات مختلفة من المعرفة.",
+
+                overview:
+                    "نظرة عامة",
+
+                learningPanorama:
+                    "بانوراما التعلم الخاصة بك",
+
+                prerequisites:
+                    "المتطلبات الأساسية",
+
+                concepts:
+                    "المفاهيم الأساسية",
+
+                learningPath:
+                    "مسار التعلم المقترح",
+
+                learningNote:
+                    "اضغط على أي خطوة لاستكشافها مباشرة.",
+
+                resources:
+                    "المصادر المختارة",
+
+                related:
+                    "المواضيع المرتبطة",
+
+                books:
+                    "المكتبة التعليمية العامة",
+
+                deeper:
+                    "استكشف بشكل أعمق",
+
+                automaticNote:
+                    "تم إنشاء هذه الخطوات تلقائيًا من النتائج المرتبطة. اضغط على أي خطوة لاستكشافها.",
+
+                around:
+                    "استكشف ما حول هذا الموضوع",
+
+                noResults:
+                    "لم يتم العثور على نتائج",
+
+                notFound:
+                    "لم يتم العثور على الموضوع",
+
+                source:
+                    "اقرأ المقال الكامل →",
+                myLearning:
+                    "تعلّمي",
+
+                myLearningDescription:
+                    "مواضيعك ومصادرك وكتبك وعمليات البحث الأخيرة المحفوظة.",
+
+                recentSearches:
+                    "عمليات البحث الأخيرة",
+
+                savedTopics:
+                    "المواضيع المحفوظة",
+
+                savedResources:
+                    "المصادر المحفوظة",
+
+                savedBooks:
+                    "الكتب المحفوظة",
+
+                noRecentSearches:
+                    "لا توجد عمليات بحث حديثة بعد.",
+
+                noSavedTopics:
+                    "لا توجد مواضيع محفوظة بعد.",
+
+                noSavedResources:
+                    "لا توجد مصادر محفوظة بعد.",
+
+                noSavedBooks:
+                    "لا توجد كتب محفوظة بعد.",
+
+                open:
+                    "فتح",
+
+                remove:
+                    "إزالة",
+
+                saveTopic:
+                    "حفظ الموضوع",
+
+                saveResource:
+                    "حفظ",
+
+                saveBook:
+                    "حفظ",
+
+                saved:
+                    "محفوظ",
+
+                clearData:
+                    "مسح تعلّمي",
+
+                confirmClear:
+                    "هل تريد مسح جميع المواضيع والمصادر والكتب وعمليات البحث المحفوظة؟",
+
+
+                aboutButton:
+                    "حول الموقع",
+
+                aboutTitle:
+                    "حول Eagles Panorama",
+
+                aboutIntro:
+                    "Eagles Panorama هو مستكشف تعليمي يساعدك على التراجع خطوة عن موضوع واحد ورؤية الصورة الأوسع من حوله. يجمع بين مسارات تعلم منظمة ومعلومات مباشرة من مصادر معرفة عامة للانتقال من المقدمة إلى الاستكشاف الأعمق.",
+
+                aboutCard1Title:
+                    "معرفة منظمة",
+
+                aboutCard1Text:
+                    "تتضمن المواضيع الأساسية مستويات ومفاهيم ومتطلبات مسبقة ومواضيع مرتبطة وموارد للتعلم.",
+
+                aboutCard2Title:
+                    "مصادر مباشرة",
+
+                aboutCard2Text:
+                    "ترتبط نتائج البحث بويكيبيديا وOpen Library العامة حتى يتجاوز الموقع قاعدة بياناته الداخلية.",
+
+                aboutCard3Title:
+                    "مصمم للاستكشاف",
+
+                aboutCard3Text:
+                    "اضغط على خطوات التعلم والمواضيع المرتبطة لمواصلة استكشاف عالم المعرفة."
+            }
+
+        };
+
+
+
+        function currentUI() {
+
+            return ui[selectedLanguage] || ui.en;
+
+        }
+
+
+
+        function getLocalizedTopic(topicKey) {
+
+            const topic = topics[topicKey];
+
+
+            if (!topic) {
+                return null;
+            }
+
+
+            return (
+                topic.translations[selectedLanguage]
+                ||
+                topic.translations.en
+            );
+
+        }
+
+
+
+        function normalizeSearchText(text) {
+
+            return String(text || "")
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^\p{L}\p{N}\s]/gu, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+
+        }
+
+
+
+        function searchTokens(text) {
+
+            const stopWords = new Set([
+                "a", "an", "the", "what", "is", "are", "of", "about",
+                "tell", "me", "learn", "to", "introduction", "intro",
+                "basics", "basic", "que", "es", "son", "del", "de", "la", "el",
+                "los", "las", "una", "un", "sobre", "para", "qu", "est", "ce",
+                "l", "les", "des", "et", "ou", "ما", "هو", "هي", "عن", "ماهو",
+                "ماهي", "من", "في", "الى", "إلى", "ل", "ال"
+            ]);
+
+            return normalizeSearchText(text)
+                .split(" ")
+                .filter(Boolean)
+                .map(function(token) {
+
+                    if (token.length > 4 && token.endsWith("s")) {
+                        return token.slice(0, -1);
+                    }
+
+                    return token;
+
+                })
+                .filter(function(token) {
+                    return !stopWords.has(token);
+                });
+
+        }
+
+
+
+        function findTopicKey(query) {
+
+            const normalizedQuery =
+                normalizeSearchText(query);
+
+            const simplifiedQuery =
+                searchTokens(query).join(" ");
+
+            const queryTokens =
+                searchTokens(query);
+
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const topicKey of Object.keys(topics)) {
+
+                const topic = topics[topicKey];
+
+                const aliases = topic.aliases || {};
+                const candidates = [];
+
+                Object.values(aliases).forEach(function(languageAliases) {
+                    if (Array.isArray(languageAliases)) {
+                        candidates.push(...languageAliases);
+                    }
+                });
+
+                if (topic.translations) {
+                    Object.values(topic.translations).forEach(function(translation) {
+                        if (translation && translation.title) {
+                            candidates.push(translation.title);
+                        }
+                    });
+                }
+
+                for (const candidate of candidates) {
+
+                    const normalizedCandidate =
+                        normalizeSearchText(candidate);
+
+                    const candidateTokens =
+                        searchTokens(candidate);
+
+                    const candidateSimplified =
+                        candidateTokens.join(" ");
+
+                    if (!normalizedCandidate) {
+                        continue;
+                    }
+
+                    if (normalizedCandidate === normalizedQuery) {
+                        return topicKey;
+                    }
+
+                    if (candidateSimplified === simplifiedQuery && simplifiedQuery) {
+                        return topicKey;
+                    }
+
+                    if (simplifiedQuery && (
+                        candidateSimplified.includes(simplifiedQuery) ||
+                        simplifiedQuery.includes(candidateSimplified)
+                    )) {
+                        const substringScore =
+                            Math.min(1, simplifiedQuery.length / Math.max(candidateSimplified.length, 1));
+
+                        if (substringScore > bestScore) {
+                            bestScore = substringScore;
+                            bestMatch = topicKey;
+                        }
+                    }
+
+                    if (queryTokens.length > 0 && candidateTokens.length > 0) {
+                        const candidateSet = new Set(candidateTokens);
+                        const matched = queryTokens.filter(function(token) {
+                            return candidateSet.has(token);
+                        }).length;
+
+                        const score = matched / queryTokens.length;
+
+                        if (score >= 0.75 && score > bestScore) {
+                            bestScore = score;
+                            bestMatch = topicKey;
+                        }
+                    }
+
+                }
+
+            }
+
+            return bestMatch;
+
+        }
+
+
+
+        function escapeHTML(text) {
+
+
+            if (!text) {
+                return "";
+            }
+
+
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+
+
+        function scrollToAbout() {
+
+            const section =
+                document.querySelector("#aboutSection");
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+        }
+
+
+        function handleEnter(event) {
+
+
+            if (event.key === "Enter") {
+
+                exploreTopic();
+
+            }
+
+        }
+
+
+
+        function changeLanguage() {
+
+
+            selectedLanguage =
+                document.querySelector(
+                    "#languageSelect"
+                ).value;
+
+
+            document.documentElement.lang =
+                selectedLanguage;
+
+
+            document.documentElement.dir =
+                (
+                    selectedLanguage === "ar"
+                    ||
+                    selectedLanguage === "fa"
+                )
+                    ? "rtl"
+                    : "ltr";
+
+
+            savePreferences();
+
+
+            updateInterface();
+
+
+            createTopicCategories();
+
+
+            renderMyLearning();
+
+
+            const currentSearch =
+                document.querySelector(
+                    "#searchInput"
+                ).value.trim();
+
+
+            if (currentSearch !== "") {
+
+                exploreTopic();
+
+            }
+
+        }
+
+
+
+        function updateInterface() {
+
+
+            const text = currentUI();
+
+
+            document.querySelector(
+                "#welcomeText"
+            ).textContent = text.welcome;
+
+
+            document.querySelector(
+                "#taglineText"
+            ).textContent = text.tagline;
+
+
+            document.querySelector(
+                "#searchInput"
+            ).placeholder = text.placeholder;
+
+
+            document.querySelector(
+                "#exploreButton"
+            ).textContent = text.explore;
+
+
+            document.querySelector(
+                "#aboutButton"
+            ).textContent = text.aboutButton;
+
+
+            document.querySelector(
+                "#myLearningButton"
+            ).textContent = text.myLearning;
+
+
+            document.querySelector(
+                "#aboutTitle"
+            ).textContent = text.aboutTitle;
+
+
+            document.querySelector(
+                "#aboutIntro"
+            ).textContent = text.aboutIntro;
+
+
+            document.querySelector(
+                "#aboutCard1Title"
+            ).textContent = text.aboutCard1Title;
+
+
+            document.querySelector(
+                "#aboutCard1Text"
+            ).textContent = text.aboutCard1Text;
+
+
+            document.querySelector(
+                "#aboutCard2Title"
+            ).textContent = text.aboutCard2Title;
+
+
+            document.querySelector(
+                "#aboutCard2Text"
+            ).textContent = text.aboutCard2Text;
+
+
+            document.querySelector(
+                "#aboutCard3Title"
+            ).textContent = text.aboutCard3Title;
+
+
+            document.querySelector(
+                "#aboutCard3Text"
+            ).textContent = text.aboutCard3Text;
+
+
+            document.querySelector(
+                "#topicsTitle"
+            ).textContent = text.topicsTitle;
+
+
+            document.querySelector(
+                "#topicsDescription"
+            ).textContent = text.topicsDescription;
+
+
+            const level =
+                document.querySelector(
+                    "#learningLevel"
+                );
+
+
+            level.options[0].text =
+                text.beginner;
+
+
+            level.options[1].text =
+                text.intermediate;
+
+
+            level.options[2].text =
+                text.advanced;
+
+        }
+
+
+
+        function wikipediaBaseURL() {
+
+
+            return (
+                "https://" +
+                selectedLanguage +
+                ".wikipedia.org"
+            );
+
+        }
+
+
+
+        async function getSuggestions() {
+
+
+            const input =
+                document.querySelector(
+                    "#searchInput"
+                );
+
+
+            const suggestions =
+                document.querySelector(
+                    "#suggestions"
+                );
+
+
+            const query =
+                input.value.trim();
+
+
+            clearTimeout(
+                suggestionTimer
+            );
+
+
+            if (query.length < 2) {
+
+
+                suggestions.innerHTML =
+                    "";
+
+
+                return;
+
+            }
+
+
+            suggestionTimer =
+                setTimeout(
+                    async function () {
+
+
+                        try {
+
+
+                            const url =
+                                wikipediaBaseURL()
+                                +
+                                "/w/rest.php/v1/search/title?q="
+                                +
+                                encodeURIComponent(
+                                    query
+                                )
+                                +
+                                "&limit=5";
+
+
+                            const response =
+                                await fetch(url);
+
+
+                            if (!response.ok) {
+
+                                throw new Error(
+                                    "Suggestion request failed."
+                                );
+
+                            }
+
+
+                            const data =
+                                await response.json();
+
+
+                            suggestions.innerHTML =
+                                "";
+
+
+                            if (
+                                !data.pages ||
+                                data.pages.length === 0
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            data.pages.forEach(
+                                function(page) {
+
+
+                                    const suggestion =
+                                        document.createElement(
+                                            "button"
+                                        );
+
+
+                                    suggestion.className =
+                                        "suggestion";
+
+
+                                    suggestion.textContent =
+                                        page.title;
+
+
+                                    suggestion.addEventListener(
+                                        "click",
+                                        function() {
+
+
+                                            selectSuggestion(
+                                                page.title
+                                            );
+
+                                        }
+                                    );
+
+
+                                    suggestions.appendChild(
+                                        suggestion
+                                    );
+
+                                }
+                            );
+
+
+                        } catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+                        }
+
+                    },
+
+                    300
+                );
+
+        }
+
+
+
+        function selectSuggestion(title) {
+
+
+            document.querySelector(
+                "#searchInput"
+            ).value = title;
+
+
+            document.querySelector(
+                "#suggestions"
+            ).innerHTML = "";
+
+
+            exploreTopic();
+
+        }
+
+
+
+        async function getBooks(topic) {
+
+
+            try {
+
+
+                const booksUrl =
+                    "https://openlibrary.org/search.json?q="
+                    +
+                    encodeURIComponent(
+                        topic +
+                        " ebook_access:public"
+                    )
+                    +
+                    "&fields=title,author_name,first_publish_year,key,cover_i,ebook_access"
+                    +
+                    "&limit=4";
+
+
+                const response =
+                    await fetch(
+                        booksUrl
+                    );
+
+
+                if (!response.ok) {
+
+                    return [];
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                return data.docs || [];
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Open Library error:",
+                    error
+                );
+
+
+                return [];
+
+            }
+
+        }
+
+
+
+        function createClickablePath(path) {
+
+
+            return path
+                .map(
+                    function(step, index) {
+
+
+                        return `
+
+                            <button
+                                class="path-step"
+                                onclick="searchTopicText(${escapeHTML(
+                                    JSON.stringify(step)
+                                )})"
+                            >
+
+                                ${index + 1}.
+                                ${escapeHTML(step)}
+
+                            </button>
+
+
+                            ${
+                                index <
+                                path.length - 1
+
+                                    ? `
+                                        <div class="path-arrow">
+                                            →
+                                        </div>
+                                    `
+
+                                    : ""
+                            }
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+        }
+
+
+
+        function searchTopicText(text) {
+
+
+            document.querySelector(
+                "#searchInput"
+            ).value = text;
+
+
+            exploreTopic();
+
+        }
+
+
+
+        function createExplorationPath(
+            mainTitle,
+            relatedPages,
+            level
+        ) {
+
+
+            const path = [
+                mainTitle
+            ];
+
+
+            relatedPages
+                .slice(0, 4)
+                .forEach(
+                    page => path.push(
+                        page.title
+                    )
+                );
+
+
+            let count = 3;
+
+
+            if (
+                level === "intermediate"
+            ) {
+
+                count = 4;
+
+            }
+
+
+            if (
+                level === "advanced"
+            ) {
+
+                count = 5;
+
+            }
+
+
+            return path.slice(
+                0,
+                count
+            );
+
+        }
+
+
+
+        async function exploreTopic() {
+
+
+            const topic =
+                document.querySelector(
+                    "#searchInput"
+                ).value.trim();
+
+
+            const level =
+                document.querySelector(
+                    "#learningLevel"
+                ).value;
+
+
+            const result =
+                document.querySelector(
+                    "#result"
+                );
+
+
+            const text = currentUI();
+
+
+            document.querySelector(
+                "#suggestions"
+            ).innerHTML = "";
+
+
+            if (topic === "") {
+
+
+                result.innerHTML = `
+
+                    <h2>
+                        ${text.notFound}
+                    </h2>
+
+                `;
+
+
+                return;
+
+            }
+
+
+            result.innerHTML = `
+
+                <div class="loading">
+
+                    <h2>
+                        Exploring...
+                    </h2>
+
+                    <p>
+                        ${escapeHTML(
+                            text.tagline
+                        )}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            try {
+
+
+                /*
+                    1. SEARCH WIKIPEDIA
+                */
+
+                const searchUrl =
+                    wikipediaBaseURL()
+                    +
+                    "/w/rest.php/v1/search/page?q="
+                    +
+                    encodeURIComponent(topic)
+                    +
+                    "&limit=6";
+
+
+                const searchResponse =
+                    await fetch(
+                        searchUrl
+                    );
+
+
+                if (!searchResponse.ok) {
+
+                    throw new Error(
+                        "Wikipedia search failed."
+                    );
+
+                }
+
+
+                const searchData =
+                    await searchResponse.json();
+
+
+                if (
+                    !searchData.pages ||
+                    searchData.pages.length === 0
+                ) {
+
+
+                    result.innerHTML = `
+
+                        <h2>
+                            ${text.noResults}
+                        </h2>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+                const bestMatch =
+                    searchData.pages[0];
+
+
+                const pageTitle =
+                    bestMatch.title;
+
+
+
+                /*
+                    2. GET SUMMARY
+                */
+
+                const summaryUrl =
+                    wikipediaBaseURL()
+                    +
+                    "/api/rest_v1/page/summary/"
+                    +
+                    encodeURIComponent(
+                        pageTitle
+                    );
+
+
+                const summaryResponse =
+                    await fetch(
+                        summaryUrl
+                    );
+
+
+                if (!summaryResponse.ok) {
+
+                    throw new Error(
+                        "Wikipedia summary failed."
+                    );
+
+                }
+
+
+                const summaryData =
+                    await summaryResponse.json();
+
+
+                addRecentSearch(
+                    topic,
+                    summaryData.title || topic,
+                    level
+                );
+
+
+                /*
+                    3. CHECK CURATED DATA
+                */
+
+                const localKey =
+                    findTopicKey(topic);
+
+
+                const localTopic =
+                    localKey
+                        ? getLocalizedTopic(
+                            localKey
+                        )
+                        : null;
+
+
+                let localSection = "";
+
+
+
+                /*
+                    4. CURATED LEARNING PANORAMA
+                */
+
+                if (localTopic) {
+
+
+                    const path =
+                        localTopic.learningPath[
+                            level
+                        ];
+
+
+                    localSection = `
+
+                        <div class="section">
+
+
+                            <h3>
+                                ${text.learningPanorama}
+                            </h3>
+
+
+                            <h3>
+                                ${text.learningPath}
+                            </h3>
+
+
+                            <p class="learning-note">
+                                ${text.learningNote}
+                            </p>
+
+
+                            <div class="learning-path">
+
+                                ${createClickablePath(
+                                    path
+                                )}
+
+                            </div>
+
+
+                            <div class="panorama-grid">
+
+
+                                <div class="panorama-card">
+
+                                    <h4>
+                                        ${text.prerequisites}
+                                    </h4>
+
+
+                                    <p>
+                                        ${localTopic
+                                            .prerequisites
+                                            .map(
+                                                item =>
+                                                    escapeHTML(
+                                                        item
+                                                    )
+                                            )
+                                            .join(
+                                                " • "
+                                            )}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="panorama-card">
+
+                                    <h4>
+                                        ${text.concepts}
+                                    </h4>
+
+
+                                    <p>
+                                        ${localTopic
+                                            .concepts
+                                            .map(
+                                                item =>
+                                                    escapeHTML(
+                                                        item
+                                                    )
+                                            )
+                                            .join(
+                                                " • "
+                                            )}
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <h3>
+                                ${text.resources}
+                            </h3>
+
+
+                            ${topics[localKey]
+                                .resources
+                                .map(
+                                    resource => `
+
+                                        <div class="resource">
+
+                                            <div class="resource-actions">
+
+                                                <a
+                                                    href="${resource.url}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    ${escapeHTML(
+                                                        resource.name
+                                                    )}
+                                                </a>
+
+                                                <button
+                                                    class="save-item-button"
+                                                    onclick='toggleSavedResource(${JSON.stringify({
+                                                        name: resource.name,
+                                                        url: resource.url,
+                                                        topic: summaryData.title,
+                                                        language: selectedLanguage
+                                                    })}, this)'
+                                                >
+                                                    ${
+                                                        isResourceSaved({
+                                                            name: resource.name,
+                                                            url: resource.url,
+                                                            topic: summaryData.title,
+                                                            language: selectedLanguage
+                                                        })
+                                                            ? text.saved
+                                                            : text.saveResource
+                                                    }
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    `
+                                )
+                                .join("")}
+
+
+                            <h3>
+                                ${text.related}
+                            </h3>
+
+
+                            <ul>
+
+                                ${localTopic.related
+                                    .map(
+                                        item =>
+                                            `<li>${escapeHTML(item)}</li>`
+                                    )
+                                    .join("")}
+
+                            </ul>
+
+
+                        </div>
+
+                    `;
+
+                }
+
+
+
+                /*
+                    5. AUTOMATIC EXPLORATION
+                    FOR UNCURATED TOPICS
+                */
+
+                const relatedPages =
+                    searchData.pages.slice(1);
+
+
+                let automaticSection = "";
+
+
+                if (!localTopic) {
+
+
+                    const automaticPath =
+                        createExplorationPath(
+                            pageTitle,
+                            relatedPages,
+                            level
+                        );
+
+
+                    automaticSection = `
+
+                        <div class="section">
+
+
+                            <h3>
+                                ${text.deeper}
+                            </h3>
+
+
+                            <p class="learning-note">
+                                ${text.automaticNote}
+                            </p>
+
+
+                            <div class="learning-path">
+
+                                ${createClickablePath(
+                                    automaticPath
+                                )}
+
+                            </div>
+
+
+                        </div>
+
+                    `;
+
+                }
+
+
+
+                /*
+                    6. BOOKS
+                */
+
+                const books =
+                    await getBooks(
+                        topic
+                    );
+
+
+                let booksSection = `
+
+                    <div class="section">
+
+                        <h3>
+                            ${text.books}
+                        </h3>
+
+                `;
+
+
+                if (books.length === 0) {
+
+
+                    booksSection += `
+
+                        <p>
+                            No publicly readable books
+                            were found for this search.
+                        </p>
+
+                    `;
+
+
+                } else {
+
+
+                    booksSection += `
+
+                        <div class="book-grid">
+
+                            ${books
+                                .map(
+                                    book => {
+
+
+                                        const title =
+                                            book.title ||
+                                            "Untitled book";
+
+
+                                        const author =
+                                            book.author_name &&
+                                            book.author_name.length
+                                                ? book.author_name[0]
+                                                : "Unknown author";
+
+
+                                        const year =
+                                            book.first_publish_year ||
+                                            "Unknown year";
+
+
+                                        const cover =
+                                            book.cover_i
+                                                ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+                                                : "";
+
+
+                                        const workKey =
+                                            book.key
+                                                ? book.key.replace(
+                                                    "/works/",
+                                                    ""
+                                                )
+                                                : "";
+
+
+                                        const bookURL =
+                                            workKey
+                                                ? `https://openlibrary.org/works/${workKey}`
+                                                : "https://openlibrary.org/";
+
+
+                                        return `
+
+                                            <div class="book-card">
+
+                                                ${
+                                                    cover
+
+                                                        ? `
+
+                                                            <img
+                                                                class="book-cover"
+                                                                src="${escapeHTML(
+                                                                    cover
+                                                                )}"
+                                                                alt="${escapeHTML(
+                                                                    title
+                                                                )}"
+                                                            >
+
+                                                        `
+
+                                                        : `
+
+                                                            <div
+                                                                class="book-cover"
+                                                            ></div>
+
+                                                        `
+                                                }
+
+
+                                                <div class="book-info">
+
+                                                    <h4>
+                                                        ${escapeHTML(
+                                                            title
+                                                        )}
+                                                    </h4>
+
+
+                                                    <p>
+                                                        ${escapeHTML(
+                                                            author
+                                                        )}
+                                                    </p>
+
+
+                                                    <p>
+                                                        First published:
+                                                        ${escapeHTML(
+                                                            String(
+                                                                year
+                                                            )
+                                                        )}
+                                                    </p>
+
+
+                                                    <a
+                                                        class="book-link"
+                                                        href="${escapeHTML(
+                                                            bookURL
+                                                        )}"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        Explore book →
+                                                    </a>
+
+                                                    <button
+                                                        class="save-item-button"
+                                                        onclick='toggleSavedBook(${JSON.stringify({
+                                                            title: title,
+                                                            author: author,
+                                                            year: String(year),
+                                                            url: bookURL,
+                                                            cover: cover,
+                                                            topic: summaryData.title,
+                                                            language: selectedLanguage
+                                                        })}, this)'
+                                                    >
+                                                        ${
+                                                            isBookSaved({
+                                                                title: title,
+                                                                author: author,
+                                                                year: String(year),
+                                                                url: bookURL,
+                                                                cover: cover,
+                                                                topic: summaryData.title,
+                                                                language: selectedLanguage
+                                                            })
+                                                                ? text.saved
+                                                                : text.saveBook
+                                                        }
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        `;
+
+                                    }
+                                )
+                                .join("")}
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                booksSection +=
+                    `</div>`;
+
+
+
+                /*
+                    7. RELATED WIKIPEDIA RESULTS
+                */
+
+                let relatedSection = `
+
+                    <div class="section">
+
+                        <h3>
+                            ${text.around}
+                        </h3>
+
+                `;
+
+
+                if (
+                    relatedPages.length === 0
+                ) {
+
+
+                    relatedSection += `
+
+                        <p>
+                            No related topics were found.
+                        </p>
+
+                    `;
+
+
+                } else {
+
+
+                    relatedSection +=
+                        relatedPages
+                            .map(
+                                page => `
+
+                                    <div class="related-card">
+
+                                        <h4>
+                                            ${escapeHTML(
+                                                page.title
+                                            )}
+                                        </h4>
+
+
+                                        <p>
+                                            ${
+                                                escapeHTML(
+                                                    page.description ||
+                                                    page.excerpt ||
+                                                    ""
+                                                )
+                                            }
+                                        </p>
+
+
+                                        <button
+                                            onclick="searchTopicText(${escapeHTML(
+                                                JSON.stringify(
+                                                    page.title
+                                                )
+                                            )})"
+                                        >
+                                            ${text.explore}
+                                        </button>
+
+                                    </div>
+
+                                `
+                            )
+                            .join("");
+
+                }
+
+
+                relatedSection +=
+                    `</div>`;
+
+
+
+                /*
+                    8. IMAGE
+                */
+
+                let imageHTML = "";
+
+
+                if (
+                    summaryData.thumbnail &&
+                    summaryData.thumbnail.source
+                ) {
+
+
+                    imageHTML = `
+
+                        <img
+                            class="result-image"
+                            src="${escapeHTML(
+                                summaryData.thumbnail.source
+                            )}"
+                            alt="${escapeHTML(
+                                summaryData.title
+                            )}"
+                        >
+
+                    `;
+
+                }
+
+
+
+                /*
+                    9. BADGES
+                */
+
+                const categoryHTML =
+                    localTopic
+
+                        ? `
+
+                            <div class="badge category-badge">
+
+                                ${escapeHTML(
+                                    localTopic.category
+                                )}
+
+                            </div>
+
+                        `
+
+                        : "";
+
+
+                const levelHTML =
+                    localTopic
+
+                        ? `
+
+                            <div class="badge level-badge">
+
+                                ${
+                                    level === "beginner"
+                                        ? text.beginner
+
+                                        : level === "intermediate"
+                                            ? text.intermediate
+
+                                            : text.advanced
+                                }
+
+                            </div>
+
+                        `
+
+                        : "";
+
+
+                const languageHTML = `
+
+                    <div class="badge language-badge">
+
+                        ${
+                            document.querySelector(
+                                "#languageSelect"
+                            ).selectedOptions[0].text
+                        }
+
+                    </div>
+
+                `;
+
+
+
+                /*
+                    10. FINAL RESULT
+                */
+
+                result.innerHTML = `
+
+                    <div class="result-header">
+
+
+                        ${imageHTML}
+
+
+                        <div class="result-title">
+
+
+                            <h2>
+                                ${escapeHTML(
+                                    summaryData.title
+                                )}
+                            </h2>
+
+
+                            <p>
+                                ${
+                                    escapeHTML(
+                                        summaryData.description ||
+                                        "Explore this subject."
+                                    )
+                                }
+                            </p>
+
+
+                            ${categoryHTML}
+
+
+                            ${levelHTML}
+
+
+                            ${languageHTML}
+
+
+                            <button
+                                class="save-topic-button"
+                                id="saveTopicButton"
+                                onclick='toggleSavedTopic(${JSON.stringify({
+                                    title: summaryData.title,
+                                    description: summaryData.description || "",
+                                    url: summaryData.content_urls.desktop.page,
+                                    image: (summaryData.thumbnail && summaryData.thumbnail.source) ? summaryData.thumbnail.source : "",
+                                    category: localTopic ? localTopic.category : "",
+                                    language: selectedLanguage,
+                                    level: level,
+                                    query: topic
+                                })}, this)'
+                            >
+                                ${
+                                    isTopicSaved({
+                                        title: summaryData.title,
+                                        description: summaryData.description || "",
+                                        url: summaryData.content_urls.desktop.page,
+                                        image: (summaryData.thumbnail && summaryData.thumbnail.source) ? summaryData.thumbnail.source : "",
+                                        category: localTopic ? localTopic.category : "",
+                                        language: selectedLanguage,
+                                        level: level,
+                                        query: topic
+                                    })
+                                        ? text.saved
+                                        : text.saveTopic
+                                }
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="section">
+
+
+                        <h3>
+                            ${text.overview}
+                        </h3>
+
+
+                        <p>
+                            ${
+                                escapeHTML(
+                                    summaryData.extract ||
+                                    "No summary was available."
+                                )
+                            }
+                        </p>
+
+
+                    </div>
+
+
+
+                    ${localSection}
+
+
+                    ${automaticSection}
+
+
+                    ${booksSection}
+
+
+                    ${relatedSection}
+
+
+
+                    <div class="source">
+
+                        <a
+                            href="${summaryData.content_urls.desktop.page}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            ${text.source}
+                        </a>
+
+                    </div>
+
+                `;
+
+
+            } catch (error) {
+
+
+                console.error(
+                    error
+                );
+
+
+                result.innerHTML = `
+
+                    <div class="error">
+
+                        <h2>
+                            Something went wrong
+                        </h2>
+
+
+                        <p>
+                            Eagles Panorama could not
+                            reach the selected source.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        function searchTopic(topicKey) {
+
+
+            const topic =
+                topics[topicKey];
+
+
+            const localData =
+                getLocalizedTopic(
+                    topicKey
+                );
+
+
+            document.querySelector(
+                "#searchInput"
+            ).value =
+                localData.title;
+
+
+            exploreTopic();
+
+        }
+
+
+
+        function createTopicCategories() {
+
+
+            const container =
+                document.querySelector(
+                    "#topicCategories"
+                );
+
+
+            const categories = {};
+
+
+            Object.keys(topics)
+                .forEach(
+                    function(topicKey) {
+
+
+                        const data =
+                            getLocalizedTopic(
+                                topicKey
+                            );
+
+
+                        const category =
+                            data.category;
+
+
+                        if (
+                            !categories[category]
+                        ) {
+
+                            categories[category] =
+                                [];
+
+                        }
+
+
+                        categories[category]
+                            .push(topicKey);
+
+                    }
+                );
+
+
+            container.innerHTML =
+                Object.keys(categories)
+                    .map(
+                        function(category) {
+
+
+                            return `
+
+                                <div
+                                    class="category-section"
+                                >
+
+                                    <h3
+                                        class="category-title"
+                                    >
+                                        ${escapeHTML(
+                                            category
+                                        )}
+                                    </h3>
+
+
+                                    <div
+                                        class="topic-list"
+                                    >
+
+                                        ${categories[
+                                            category
+                                        ]
+                                            .map(
+                                                function(topicKey) {
+
+
+                                                    const data =
+                                                        getLocalizedTopic(
+                                                            topicKey
+                                                        );
+
+
+                                                    return `
+
+                                                        <button
+                                                            class="topic"
+                                                            onclick="searchTopic('${topicKey}')"
+                                                        >
+
+                                                            ${escapeHTML(
+                                                                data.title
+                                                            )}
+
+                                                        </button>
+
+                                                    `;
+
+                                                }
+                                            )
+                                            .join("")}
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+        }
+
+
+
+
+
+
+        function initializeApp() {
+            const languageSelect = document.querySelector("#languageSelect");
+            const learningLevel = document.querySelector("#learningLevel");
+
+            languageSelect.value = selectedLanguage;
+
+            const savedLevel = getStoredValue("eaglesLearningLevel", "beginner");
+            learningLevel.value = ["beginner", "intermediate", "advanced"].includes(savedLevel)
+                ? savedLevel
+                : "beginner";
+
+            document.documentElement.lang = selectedLanguage;
+            document.documentElement.dir = (selectedLanguage === "ar" || selectedLanguage === "fa") ? "rtl" : "ltr";
+
+            savePreferences();
+            updateInterface();
+            createTopicCategories();
+            renderMyLearning();
+        }
+
+
+        initializeApp();
+
+
+    </script>
+
+
+</body>
+
+</html>
