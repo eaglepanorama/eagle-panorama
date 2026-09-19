@@ -1744,6 +1744,123 @@
             body { background-attachment: scroll; }
         }
 
+
+
+        /* ===== Living night sky ===== */
+        #starfieldCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.72;
+        }
+
+        .starfield-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 35%, transparent 0%, rgba(0,0,0,0.05) 55%, rgba(0,0,0,0.22) 100%);
+        }
+
+        .learning-expansion {
+            margin-top: 24px;
+            padding-top: 4px;
+        }
+
+        .learning-expansion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .learning-expansion-card {
+            padding: 18px;
+            border-radius: 15px;
+            background: rgba(238, 239, 227, 0.72);
+            border: 1px solid rgba(87, 92, 70, 0.12);
+        }
+
+        .learning-expansion-card h4 {
+            margin: 0 0 9px;
+            font-size: 16px;
+        }
+
+        .learning-expansion-card p,
+        .learning-expansion-card ul {
+            margin: 0;
+            line-height: 1.65;
+            color: #55594b;
+        }
+
+        .learning-expansion-card ul {
+            padding-left: 19px;
+        }
+
+        .learning-resource-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .learning-resource-link {
+            display: inline-block;
+            padding: 10px 13px;
+            border-radius: 11px;
+            background: #e8eadc;
+            color: #30382d;
+            text-decoration: none;
+            border: 1px solid #d8dcc9;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .learning-resource-link:hover {
+            background: #dce1ce;
+            transform: translateY(-1px);
+        }
+
+        .next-learning-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-top: 14px;
+            padding: 16px 18px;
+            border-radius: 15px;
+            background: rgba(225, 231, 213, 0.78);
+            border: 1px solid rgba(81, 98, 67, 0.16);
+        }
+
+        .next-learning-card p {
+            margin: 4px 0 0;
+            color: #5d6354;
+        }
+
+        .dashboard-suggestion {
+            border: 1px solid #dfe3d2;
+            background: #e9ecdf;
+        }
+
+        .dashboard-suggestion .dashboard-card-title {
+            color: #29382b;
+        }
+
+        @media (max-width: 850px) {
+            .learning-expansion-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #starfieldCanvas {
+                display: none;
+            }
+        }
+
     </style>
 
 </head>
@@ -1751,6 +1868,8 @@
 
 <body>
 
+    <canvas id="starfieldCanvas" aria-hidden="true"></canvas>
+    <div class="starfield-overlay" aria-hidden="true"></div>
 
     <div class="top-bar">
 
@@ -2301,7 +2420,50 @@
                 item => ({ functionName: "removeSavedBook", args: [item.url] })
             );
 
-            content.innerHTML = recentHTML + topicsHTML + resourcesHTML + booksHTML + `
+            const suggestionPool = [];
+
+            recentSearches.slice(0, 3).forEach(item => {
+                if (item.query) suggestionPool.push({ query: item.query, reason: text.recentSearches });
+            });
+
+            savedTopics.slice(0, 3).forEach(item => {
+                const key = findTopicKey(item.title || item.query || "");
+                const data = key ? getLocalizedTopic(key) : null;
+                const path = data && data.learningPath ? (data.learningPath[item.level] || data.learningPath.beginner || []) : [];
+                const next = path && path.length > 1 ? path[1] : (data && data.related ? data.related[0] : "");
+                if (next) suggestionPool.push({ query: next, reason: item.title });
+            });
+
+            const uniqueSuggestions = [];
+            const seenSuggestions = new Set();
+            suggestionPool.forEach(item => {
+                const key = item.query.toLowerCase();
+                if (!seenSuggestions.has(key) && key.trim()) {
+                    seenSuggestions.add(key);
+                    uniqueSuggestions.push(item);
+                }
+            });
+
+            const suggestionsHTML = uniqueSuggestions.length ? `
+                <div class="dashboard-group">
+                    <h3>${escapeHTML(text.yourNextStep)}</h3>
+                    <div class="dashboard-list">
+                        ${uniqueSuggestions.slice(0, 5).map(item => `
+                            <div class="dashboard-card dashboard-suggestion">
+                                <div class="dashboard-card-main">
+                                    <p class="dashboard-card-title">${escapeHTML(item.query)}</p>
+                                    <p class="dashboard-card-meta">${escapeHTML(item.reason)}</p>
+                                </div>
+                                <div class="dashboard-card-actions">
+                                    <button class="dashboard-action" onclick='searchTopicText(${JSON.stringify(item.query)})'>${escapeHTML(text.exploreNext)}</button>
+                                </div>
+                            </div>
+                        `).join("")}
+                    </div>
+                </div>
+            ` : "";
+
+            content.innerHTML = suggestionsHTML + recentHTML + topicsHTML + resourcesHTML + booksHTML + `
                 <div class="dashboard-footer">
                     <button class="clear-data-button" onclick="clearLearningData()">
                         ${escapeHTML(text.clearData)}
@@ -2406,6 +2568,36 @@
 
                 learningNote:
                     "Click any step to explore it immediately.",
+
+                learningHow:
+                    "How to Learn It",
+
+                actualPrerequisites:
+                    "Actual Prerequisites",
+
+                suggestedOrder:
+                    "Suggested Order",
+
+                yourNextStep:
+                    "Your Next Step",
+
+                learningHowNote:
+                    "Build the foundation first, then move through the path at your chosen level.",
+
+                startWith:
+                    "Start with",
+
+                whyItMatters:
+                    "Why this matters",
+
+                videoSearch:
+                    "Video Search",
+
+                bookSearch:
+                    "Book Search",
+
+                exploreNext:
+                    "Explore this next step",
 
                 resources:
                     "Curated Resources",
@@ -2564,6 +2756,36 @@
                 learningNote:
                     "Cliquez sur une étape pour l'explorer immédiatement.",
 
+                learningHow:
+                    "Comment l’apprendre",
+
+                actualPrerequisites:
+                    "Prérequis réels",
+
+                suggestedOrder:
+                    "Ordre suggéré",
+
+                yourNextStep:
+                    "Votre prochaine étape",
+
+                learningHowNote:
+                    "Construisez d’abord les bases, puis avancez dans le parcours au niveau choisi.",
+
+                startWith:
+                    "Commencez par",
+
+                whyItMatters:
+                    "Pourquoi c’est important",
+
+                videoSearch:
+                    "Recherche vidéo",
+
+                bookSearch:
+                    "Recherche de livres",
+
+                exploreNext:
+                    "Explorer cette prochaine étape",
+
                 resources:
                     "Ressources sélectionnées",
 
@@ -2720,6 +2942,36 @@
                 learningNote:
                     "Haz clic en cualquier paso para explorarlo inmediatamente.",
 
+                learningHow:
+                    "Cómo aprenderlo",
+
+                actualPrerequisites:
+                    "Requisitos previos reales",
+
+                suggestedOrder:
+                    "Orden sugerido",
+
+                yourNextStep:
+                    "Tu siguiente paso",
+
+                learningHowNote:
+                    "Construye primero las bases y luego avanza por la ruta en el nivel elegido.",
+
+                startWith:
+                    "Empieza por",
+
+                whyItMatters:
+                    "Por qué importa",
+
+                videoSearch:
+                    "Buscar vídeos",
+
+                bookSearch:
+                    "Buscar libros",
+
+                exploreNext:
+                    "Explorar este siguiente paso",
+
                 resources:
                     "Recursos seleccionados",
 
@@ -2875,6 +3127,36 @@
 
                 learningNote:
                     "اضغط على أي خطوة لاستكشافها مباشرة.",
+
+                learningHow:
+                    "كيفية تعلمه",
+
+                actualPrerequisites:
+                    "المتطلبات الأساسية الفعلية",
+
+                suggestedOrder:
+                    "الترتيب المقترح",
+
+                yourNextStep:
+                    "خطوتك التالية",
+
+                learningHowNote:
+                    "ابنِ الأساسيات أولًا، ثم تقدّم عبر المسار بالمستوى الذي اخترته.",
+
+                startWith:
+                    "ابدأ بـ",
+
+                whyItMatters:
+                    "لماذا يهم ذلك",
+
+                videoSearch:
+                    "البحث عن فيديوهات",
+
+                bookSearch:
+                    "البحث عن كتب",
+
+                exploreNext:
+                    "استكشف الخطوة التالية",
 
                 resources:
                     "المصادر المختارة",
@@ -3704,6 +3986,81 @@
 
         }
 
+
+
+        function buildLearningExpansion(localTopic, localKey, level, text, summaryData) {
+            if (!localTopic) return "";
+
+            const paths = localTopic.learningPath || {};
+            const currentPath = paths[level] || [];
+            const beginnerPath = paths.beginner || [];
+            const intermediatePath = paths.intermediate || [];
+            const advancedPath = paths.advanced || [];
+
+            const firstStep = currentPath[0] || beginnerPath[0] || localTopic.title;
+            const nextStep = currentPath[1] || currentPath[0] || localTopic.title;
+            const currentIndex = Math.max(0, currentPath.indexOf(nextStep));
+
+            const pathHTML = currentPath.length
+                ? `<ol>${currentPath.map((item, index) => `
+                    <li>
+                        <button class="path-step-button" onclick='searchTopicText(${JSON.stringify(item)})'>
+                            ${escapeHTML(item)}
+                        </button>
+                    </li>
+                `).join("")}</ol>`
+                : `<p>${escapeHTML(localTopic.title)}</p>`;
+
+            const prereqHTML = (localTopic.prerequisites || []).length
+                ? `<ul>${localTopic.prerequisites.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul>`
+                : `<p>${escapeHTML(text.learningHowNote)}</p>`;
+
+            const conceptHTML = (localTopic.concepts || []).slice(0, 5).map(item => `<li>${escapeHTML(item)}</li>`).join("");
+
+            const videoURL = `https://www.youtube.com/results?search_query=${encodeURIComponent(localTopic.title + " tutorial")}`;
+            const bookURL = `https://openlibrary.org/search?q=${encodeURIComponent(localTopic.title)}`;
+            const wikiURL = summaryData && summaryData.content_urls && summaryData.content_urls.desktop
+                ? summaryData.content_urls.desktop.page
+                : `https://${selectedLanguage}.wikipedia.org/wiki/${encodeURIComponent(summaryData ? summaryData.title : localTopic.title)}`;
+
+            return `
+                <div class="section learning-expansion">
+                    <h3>${escapeHTML(text.learningHow)}</h3>
+                    <p class="learning-note">${escapeHTML(text.learningHowNote)}</p>
+
+                    <div class="learning-expansion-grid">
+                        <div class="learning-expansion-card">
+                            <h4>${escapeHTML(text.actualPrerequisites)}</h4>
+                            ${prereqHTML}
+                        </div>
+
+                        <div class="learning-expansion-card">
+                            <h4>${escapeHTML(text.suggestedOrder)}</h4>
+                            ${pathHTML}
+                        </div>
+
+                        <div class="learning-expansion-card">
+                            <h4>${escapeHTML(text.whyItMatters)}</h4>
+                            <ul>${conceptHTML || `<li>${escapeHTML(localTopic.title)}</li>`}</ul>
+                        </div>
+                    </div>
+
+                    <div class="next-learning-card">
+                        <div>
+                            <strong>${escapeHTML(text.yourNextStep)}</strong>
+                            <p>${escapeHTML(text.startWith)} ${escapeHTML(firstStep)} → ${escapeHTML(nextStep)}</p>
+                        </div>
+                        <button onclick='searchTopicText(${JSON.stringify(nextStep)})'>${escapeHTML(text.exploreNext)}</button>
+                    </div>
+
+                    <div class="learning-resource-links">
+                        <a class="learning-resource-link" href="${videoURL}" target="_blank" rel="noopener noreferrer">${escapeHTML(text.videoSearch)}</a>
+                        <a class="learning-resource-link" href="${bookURL}" target="_blank" rel="noopener noreferrer">${escapeHTML(text.bookSearch)}</a>
+                        <a class="learning-resource-link" href="${escapeHTML(wikiURL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(text.source)}</a>
+                    </div>
+                </div>
+            `;
+        }
 
 
         async function exploreTopic() {
@@ -4605,6 +4962,9 @@
                     ${localSection}
 
 
+                    ${buildLearningExpansion(localTopic, localKey, level, text, summaryData)}
+
+
                     ${automaticSection}
 
 
@@ -4805,6 +5165,55 @@
 
 
 
+        function initStarfield() {
+            const canvas = document.querySelector("#starfieldCanvas");
+            if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+            const ctx = canvas.getContext("2d");
+            const stars = [];
+            const density = 0.00011;
+
+            function resize() {
+                const ratio = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = Math.floor(window.innerWidth * ratio);
+                canvas.height = Math.floor(window.innerHeight * ratio);
+                canvas.style.width = window.innerWidth + "px";
+                canvas.style.height = window.innerHeight + "px";
+                ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+                const target = Math.max(80, Math.min(260, Math.floor(window.innerWidth * window.innerHeight * density)));
+                stars.length = 0;
+                for (let i = 0; i < target; i++) {
+                    stars.push({
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        r: 0.45 + Math.random() * 1.25,
+                        base: 0.18 + Math.random() * 0.52,
+                        phase: Math.random() * Math.PI * 2,
+                        speed: 0.00035 + Math.random() * 0.0008
+                    });
+                }
+            }
+
+            function draw(time) {
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                for (const star of stars) {
+                    const pulse = (Math.sin(time * star.speed + star.phase) + 1) / 2;
+                    const alpha = Math.min(0.92, star.base + pulse * 0.34);
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+                    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw);
+            }
+
+            resize();
+            window.addEventListener("resize", resize);
+            requestAnimationFrame(draw);
+        }
+
+
         function initializeApp() {
             const languageSelect = document.querySelector("#languageSelect");
             const learningLevel = document.querySelector("#learningLevel");
@@ -4823,6 +5232,7 @@
             updateInterface();
             createTopicCategories();
             renderMyLearning();
+            initStarfield();
         }
 
 
