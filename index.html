@@ -1744,22 +1744,12 @@
             body { background-attachment: scroll; }
         }
 
-    
-/* Living starry sky */
-#starField{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:radial-gradient(circle at 50% 110%,rgba(55,80,125,.18),transparent 48%),linear-gradient(180deg,#030712 0%,#07101f 55%,#02050b 100%)}
-.star{position:absolute;width:var(--size,2px);height:var(--size,2px);border-radius:50%;background:rgba(255,255,255,.82);opacity:var(--opacity,.55);box-shadow:0 0 5px rgba(255,255,255,.35);animation:starPulse var(--duration,5s) ease-in-out var(--delay,0s) infinite}
-@keyframes starPulse{0%,100%{opacity:var(--opacity,.55);transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
-@media(prefers-reduced-motion:reduce){.star{animation:none}}
-/* Learning expansion */
-.roadmap-grid,.resource-format-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.roadmap-card,.format-card,.dashboard-next,.dashboard-topic-card{background:#f3f5f7;padding:16px;border-radius:14px}.roadmap-card h4,.format-card h4,.dashboard-topic-card h4{margin:0 0 7px}.roadmap-card p,.format-card p,.dashboard-topic-card p{margin:5px 0;line-height:1.5}.resource-format-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.resource-format-actions a{display:inline-block;padding:9px 12px;border-radius:9px;background:#fff;color:#222;text-decoration:none;font-weight:700;border:1px solid #ddd}.next-step{margin-top:10px;padding:12px 14px;border-left:3px solid #555;background:#f7f8f9;border-radius:8px}.dashboard-next{margin:16px 0 24px}.dashboard-next h3{margin-top:0}@media(max-width:700px){.roadmap-grid,.resource-format-grid{grid-template-columns:1fr}}
-
-</style>
+    </style>
 
 </head>
 
 
 <body>
-<div id="starField" aria-hidden="true"></div>
 
 
     <div class="top-bar">
@@ -1908,7 +1898,7 @@
                 </h2>
 
                 <p id="myLearningDescription">
-                    Your saved topics, resources, books, recent searches, and suggested next steps.
+                    Your saved topics, resources, books, and recent searches.
                 </p>
             </div>
 
@@ -4618,9 +4608,6 @@
                     ${automaticSection}
 
 
-                    ${learningExpansion}
-
-
                     ${booksSection}
 
 
@@ -4838,26 +4825,6 @@
             renderMyLearning();
         }
 
-
-
-        function createStarField(){
-            const field=document.getElementById("starField");
-            if(!field)return;
-            const count=Math.min(150,Math.max(70,Math.floor(window.innerWidth/9)));
-            for(let i=0;i<count;i++){const star=document.createElement("span");star.className="star";star.style.left=(Math.random()*100).toFixed(2)+"%";star.style.top=(Math.random()*100).toFixed(2)+"%";star.style.setProperty("--size",(Math.random()*1.7+.7).toFixed(2)+"px");star.style.setProperty("--opacity",(Math.random()*.55+.25).toFixed(2));star.style.setProperty("--duration",(Math.random()*5+3).toFixed(2)+"s");star.style.setProperty("--delay",(-Math.random()*7).toFixed(2)+"s");field.appendChild(star)}}
-        function youtubeSearchUrl(t){return "https://www.youtube.com/results?search_query="+encodeURIComponent(t+" tutorial lecture explained")}
-        function websiteSearchUrl(t){return "https://www.google.com/search?q="+encodeURIComponent(t+" learning guide")}
-        function courseSearchUrl(t){return "https://www.google.com/search?q="+encodeURIComponent(t+" free course")}
-        function buildLearningExpansion(topicTitle,localData){
-            const prerequisites=Array.isArray(localData.prerequisites)?localData.prerequisites:[];
-            const concepts=Array.isArray(localData.concepts)?localData.concepts:[];
-            const path=Array.isArray(localData.learningPath)?localData.learningPath:[];
-            const prereq=prerequisites.length?prerequisites.map(escapeHTML).join(", "):"No explicit prerequisites are listed for this topic.";
-            const concept=concepts.length?concepts.slice(0,4).map(escapeHTML).join(", "):"Start with the overview, then use the roadmap below.";
-            const cards=path.length?path.slice(0,6).map((step,i)=>{const title=typeof step==="string"?step:(step.title||step.name||"Learning step");const desc=typeof step==="string"?"Explore this step before moving deeper.":(step.description||"Explore this step before moving deeper.");return `<div class="roadmap-card"><h4>${i+1}. ${escapeHTML(title)}</h4><p>${escapeHTML(desc)}</p><div class="resource-format-actions"><button onclick="document.getElementById('searchInput').value=${JSON.stringify(title)};exploreTopic()">Explore</button></div></div>`}).join(""):"<div class='roadmap-card'><h4>Start with the basics</h4><p>Read the overview, identify the key concepts, then find one beginner-friendly explanation.</p></div>";
-            return `<div class="section learning-roadmap"><h3>How to Learn It</h3><div class="roadmap-grid"><div class="roadmap-card"><h4>Before you start</h4><p>${prereq}</p></div><div class="roadmap-card"><h4>What to understand first</h4><p>${concept}</p></div></div><div class="next-step"><strong>Recommended order:</strong> Start with the fundamentals, make sure the key concepts are clear, then move deeper.</div><div class="roadmap-grid" style="margin-top:14px">${cards}</div></div><div class="section learning-resources"><h3>Learn It Your Way</h3><div class="resource-format-grid"><div class="format-card"><h4>Video</h4><p>Use YouTube for explanations, lectures, demonstrations, and visual examples.</p><div class="resource-format-actions"><a href="${youtubeSearchUrl(topicTitle)}" target="_blank" rel="noopener noreferrer">Find videos</a></div></div><div class="format-card"><h4>Books</h4><p>Use the public learning library for longer-form explanations.</p><div class="resource-format-actions"><a href="#books">Browse books</a></div></div><div class="format-card"><h4>Websites & articles</h4><p>Find written guides when you want to read or compare explanations.</p><div class="resource-format-actions"><a href="${websiteSearchUrl(topicTitle)}" target="_blank" rel="noopener noreferrer">Find guides</a><a href="${websiteSearchUrl(topicTitle+" article")}" target="_blank" rel="noopener noreferrer">Find articles</a></div></div><div class="format-card"><h4>Courses</h4><p>Courses give you a sequence of lessons and exercises.</p><div class="resource-format-actions"><a href="${courseSearchUrl(topicTitle)}" target="_blank" rel="noopener noreferrer">Find free courses</a></div></div></div></div>`;
-        }
-        createStarField();
 
         initializeApp();
 
