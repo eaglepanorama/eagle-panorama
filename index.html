@@ -2759,7 +2759,7 @@
     </section>
 
 
-    <section id="knowledgeMapPage" class="knowledge-map-page" aria-label="Knowledge Map page">
+    <section id="knowledgeMapPage" class="knowledge-map-page app-page-hidden" aria-label="Knowledge Map page">
 
         <div class="knowledge-map-page-header">
             <div>
@@ -7663,6 +7663,13 @@ const topics = {
                     text,
                     relatedPages
                 );
+
+                // Keep the learning space at the top after a new search.
+                // The Knowledge Map is a separate page and should never force
+                // the browser to its old position.
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                });
                 const mapPageContent = document.querySelector("#knowledgeMapPageContent");
                 if (mapPageContent) {
                     mapPageContent.innerHTML = mapHTML || `
@@ -7919,6 +7926,7 @@ const topics = {
             updateInterface();
             createTopicCategories();
             renderMyLearning();
+            setLearningSpaceVisibility(false);
             initStarfield();
         }
 
