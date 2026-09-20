@@ -2168,26 +2168,26 @@
 }
 
 .knowledge-map-node circle {
-    fill: rgba(20, 40, 34, 0.96);
-    stroke: rgba(180, 209, 157, 0.46);
+    fill: rgba(207, 224, 183, 0.98);
+    stroke: rgba(87, 112, 72, 0.62);
     stroke-width: 2;
     transition: fill 0.18s ease, stroke 0.18s ease;
 }
 
 .knowledge-map-node:hover circle,
 .knowledge-map-node:focus circle {
-    fill: rgba(48, 76, 57, 0.98);
-    stroke: rgba(224, 239, 207, 0.86);
+    fill: rgba(226, 238, 207, 0.99);
+    stroke: rgba(55, 82, 50, 0.9);
 }
 
 .knowledge-map-node.center circle {
-    fill: rgba(71, 103, 67, 0.98);
-    stroke: rgba(224, 239, 207, 0.9);
+    fill: rgba(169, 198, 143, 0.99);
+    stroke: rgba(55, 82, 50, 0.88);
     stroke-width: 3;
 }
 
 .knowledge-map-node text {
-    fill: #f5f6ee;
+    fill: #142018;
     font-size: 15px;
     font-weight: 700;
     text-anchor: middle;
@@ -2195,9 +2195,9 @@
 }
 
 .knowledge-map-node .map-node-type {
-    fill: rgba(225, 234, 214, 0.62);
+    fill: rgba(20, 32, 24, 0.72);
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .knowledge-map-legend {
@@ -5578,12 +5578,34 @@ const topics = {
 
 
 
-        function searchTopicText(text) {
+        function searchTopicText(text, event) {
 
 
-            document.querySelector(
-                "#searchInput"
-            ).value = text;
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+
+            const searchInput =
+                document.querySelector(
+                    "#searchInput"
+                );
+
+
+            searchInput.value = text;
+
+
+            /*
+                Map nodes are focusable SVG elements.
+                Without this, clicking a node can leave the
+                browser focused/scrolled on the map instead of
+                returning the user to the search/result area.
+            */
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
 
             exploreTopic();
@@ -6017,7 +6039,7 @@ const topics = {
                 return `
                     <g class="knowledge-map-node ${isCenter ? "center" : ""}"
                        ${node.key ? `data-topic-key="${escapeHTML(node.key)}"` : ""}
-                       onclick="searchTopicText(${clickTitle})"
+                       onclick="searchTopicText(${clickTitle}, event)"
                        tabindex="0" role="button" aria-label="Explore ${escapeHTML(node.title)}">
                         <circle cx="${node.x}" cy="${node.y}" r="${radius}"></circle>
                         ${lines.map((line, index) => `
