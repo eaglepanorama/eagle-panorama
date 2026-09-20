@@ -2227,6 +2227,72 @@
 }
 
 /* =========================================================
+   EAGLES PANORAMA — KNOWLEDGE CHECK v1
+   ========================================================= */
+.knowledge-check {
+    margin-top: 26px;
+    padding: 24px;
+    border-radius: 24px;
+    border: 1px solid rgba(53, 111, 166, 0.22);
+    background: linear-gradient(145deg, #f4f9fd, #e8f2fa);
+    color: #1d2a35;
+    box-shadow: 0 16px 42px rgba(35, 75, 105, 0.10);
+}
+
+.knowledge-check-header h3 { margin: 0 0 7px; color: #173b57; }
+.knowledge-check-header p { margin: 0; color: #536675; line-height: 1.55; }
+.knowledge-check-score {
+    display: inline-flex;
+    margin-top: 14px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #dbeaf5;
+    color: #28506d;
+    font-size: 13px;
+    font-weight: 800;
+}
+.knowledge-check-question {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid #d4e2ec;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.86);
+}
+.knowledge-check-question h4 { margin: 0 0 12px; color: #203c51; }
+.knowledge-check-options { display: grid; gap: 8px; }
+.knowledge-check-option {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #cbdce8;
+    border-radius: 11px;
+    background: #fff;
+    color: #263d4c;
+    text-align: left;
+    cursor: pointer;
+    transition: .16s ease;
+}
+.knowledge-check-option:hover { transform: translateY(-1px); border-color: #78a9ca; background: #f4f9fd; }
+.knowledge-check-option.correct { background: #e4f3e8; border-color: #83b38f; color: #245b32; }
+.knowledge-check-option.wrong { background: #fae8e6; border-color: #d49a92; color: #71352e; }
+.knowledge-check-option:disabled { cursor: default; opacity: .96; }
+.knowledge-check-feedback { min-height: 20px; margin-top: 10px; color: #526675; font-size: 13px; }
+.knowledge-check-footer {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid #d4e2ec;
+}
+.knowledge-check-result { margin: 0; color: #38566b; font-weight: 700; }
+.knowledge-check-actions { display: flex; gap: 8px; }
+.knowledge-check-action {
+    padding: 10px 14px; border: 0; border-radius: 11px; background: #356d9b;
+    color: #fff; cursor: pointer; font-weight: 700;
+}
+.knowledge-check-action.secondary { background: #dce9f2; color: #294d65; }
+@media (max-width: 650px) {
+    .knowledge-check-footer { flex-direction: column; align-items: stretch; }
+    .knowledge-check-actions { flex-direction: column; }
+}
+
+/* =========================================================
    EAGLES PANORAMA — KNOWLEDGE MAP v1
    ========================================================= */
 
@@ -5816,6 +5882,103 @@ const topics = {
 
 
 
+        function knowledgeCheckText() {
+            const labels = {
+                en: { title: "🧠 Knowledge Check", note: "Don't just explore it. See whether you can recognize the ideas and your next step.", score: "Score", core: "Which is one of the core ideas of", next: "What comes next in your learning path?", prereq: "Which is a prerequisite for this topic?", correct: "Correct — keep going.", wrong: "Not quite — use this as a clue and try again on your next pass.", result: "You finished the check.", review: "Review topic", continue: "Continue journey", noData: "This topic does not have enough curated data for a full check yet." },
+                fr: { title: "🧠 Vérification des connaissances", note: "N'explore pas seulement. Vérifie si tu reconnais les idées et la prochaine étape.", score: "Score", core: "Laquelle est une idée centrale de", next: "Quelle est la prochaine étape de ton parcours ?", prereq: "Laquelle est un prérequis pour ce sujet ?", correct: "Correct — continue.", wrong: "Pas tout à fait — utilise cela comme indice.", result: "Vérification terminée.", review: "Revoir le sujet", continue: "Continuer le parcours", noData: "Ce sujet n'a pas encore assez de données organisées." },
+                es: { title: "🧠 Comprobación de conocimientos", note: "No solo explores. Comprueba si reconoces las ideas y el siguiente paso.", score: "Puntuación", core: "¿Cuál es una idea central de", next: "¿Qué viene después en tu ruta de aprendizaje?", prereq: "¿Cuál es un requisito previo para este tema?", correct: "Correcto — continúa.", wrong: "No del todo — úsalo como pista.", result: "Comprobación terminada.", review: "Repasar tema", continue: "Continuar ruta", noData: "Este tema aún no tiene suficientes datos organizados." },
+                ar: { title: "🧠 اختبار الفهم", note: "لا تكتفِ بالاستكشاف. اختبر قدرتك على تمييز الأفكار والخطوة التالية.", score: "النتيجة", core: "أيّ مما يلي فكرة أساسية في", next: "ما الخطوة التالية في مسارك التعليمي؟", prereq: "أيّ مما يلي متطلب سابق لهذا الموضوع؟", correct: "صحيح — تابع.", wrong: "ليس تمامًا — استخدمها كتلميح.", result: "انتهى الاختبار.", review: "مراجعة الموضوع", continue: "متابعة المسار", noData: "لا توجد بيانات منظمة كافية لهذا الموضوع بعد." },
+                de: { title: "🧠 Wissenscheck", note: "Erkunde nicht nur. Prüfe, ob du die Ideen und den nächsten Schritt erkennst.", score: "Punktzahl", core: "Was ist eine zentrale Idee von", next: "Was kommt als Nächstes auf deinem Lernweg?", prereq: "Was ist eine Voraussetzung für dieses Thema?", correct: "Richtig — weiter so.", wrong: "Noch nicht ganz — nutze es als Hinweis.", result: "Check abgeschlossen.", review: "Thema wiederholen", continue: "Lernweg fortsetzen", noData: "Für dieses Thema gibt es noch nicht genug strukturierte Daten." },
+                pt: { title: "🧠 Verificação de conhecimento", note: "Não explore apenas. Veja se reconhece as ideias e o próximo passo.", score: "Pontuação", core: "Qual é uma ideia central de", next: "O que vem a seguir no seu percurso de aprendizagem?", prereq: "Qual é um pré-requisito para este tema?", correct: "Correto — continue.", wrong: "Ainda não — use isto como pista.", result: "Verificação concluída.", review: "Rever tema", continue: "Continuar percurso", noData: "Este tema ainda não tem dados estruturados suficientes." }
+            };
+            return labels[selectedLanguage] || labels.en;
+        }
+
+        function buildKnowledgeCheck(localTopic, level, relatedPages, summaryData) {
+            if (!localTopic || !summaryData) return "";
+
+            const ui = knowledgeCheckText();
+            const currentTitle = summaryData.title || localTopic.title || "";
+            const path = (localTopic.learningPath && (localTopic.learningPath[level] || localTopic.learningPath.beginner)) || [];
+            const concepts = Array.isArray(localTopic.concepts) ? localTopic.concepts.filter(Boolean) : [];
+            const prerequisites = Array.isArray(localTopic.prerequisites) ? localTopic.prerequisites.filter(Boolean) : [];
+            if (!concepts.length || !prerequisites.length || path.length < 2) {
+                return `<div class="knowledge-check"><div class="knowledge-check-header"><h3>${escapeHTML(ui.title)}</h3><p>${escapeHTML(ui.noData)}</p></div></div>`;
+            }
+
+            const otherConcepts = [];
+            Object.keys(topics).forEach(key => {
+                const candidate = getLocalizedTopic(key);
+                if (!candidate || candidate.title === localTopic.title) return;
+                (candidate.concepts || []).forEach(item => {
+                    if (item && !otherConcepts.includes(item)) otherConcepts.push(item);
+                });
+            });
+            const related = (relatedPages || []).map(item => item.title).filter(Boolean);
+            const nextIndex = Math.max(1, path.findIndex(item => normalizeMapText(item) === normalizeMapText(currentTitle)) + 1);
+            const nextStep = path[nextIndex] || path[1];
+            const distractorConcepts = otherConcepts.filter(item => !concepts.includes(item)).slice(0, 2);
+            const distractorRelated = related.filter(item => normalizeMapText(item) !== normalizeMapText(currentTitle)).slice(0, 2);
+            const prerequisiteDistractors = [...distractorRelated, ...path.slice(2)].filter(item => item && !prerequisites.includes(item)).slice(0, 2);
+            const conceptOptions = [concepts[0], ...distractorConcepts].slice(0, 3);
+            const nextOptions = [nextStep, ...path.filter(item => item !== nextStep && item !== currentTitle).slice(0, 2)].slice(0, 3);
+            const prereqOptions = [prerequisites[0], ...prerequisiteDistractors].slice(0, 3);
+
+            const makeQuestion = (number, question, options, correct) => `
+                <div class="knowledge-check-question" data-check-question>
+                    <h4>${number}. ${escapeHTML(question)}</h4>
+                    <div class="knowledge-check-options">
+                        ${options.map(option => `<button type="button" class="knowledge-check-option" data-correct="${option === correct ? "true" : "false"}" onclick="answerKnowledgeCheck(this)">${escapeHTML(option)}</button>`).join("")}
+                    </div>
+                    <div class="knowledge-check-feedback" aria-live="polite"></div>
+                </div>`;
+
+            return `
+                <div class="knowledge-check" data-knowledge-check data-topic="${escapeHTML(currentTitle)}">
+                    <div class="knowledge-check-header">
+                        <h3>${escapeHTML(ui.title)}</h3>
+                        <p>${escapeHTML(ui.note)}</p>
+                        <span class="knowledge-check-score">${escapeHTML(ui.score)}: <span data-check-score>0 / 3</span></span>
+                    </div>
+                    ${makeQuestion(1, `${ui.core} ${currentTitle}?`, conceptOptions, concepts[0])}
+                    ${makeQuestion(2, ui.next, nextOptions, nextStep)}
+                    ${makeQuestion(3, ui.prereq, prereqOptions, prerequisites[0])}
+                    <div class="knowledge-check-footer">
+                        <p class="knowledge-check-result" data-check-result>${escapeHTML(ui.result)}</p>
+                        <div class="knowledge-check-actions">
+                            <button type="button" class="knowledge-check-action secondary" onclick='searchTopicText(${JSON.stringify(currentTitle)})'>${escapeHTML(ui.review)}</button>
+                            <button type="button" class="knowledge-check-action" data-check-continue disabled onclick='searchTopicText(${JSON.stringify(nextStep)})'>${escapeHTML(ui.continue)}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerKnowledgeCheck(button) {
+            const card = button.closest("[data-knowledge-check]");
+            if (!card || button.disabled) return;
+            const question = button.closest("[data-check-question]");
+            if (!question || question.dataset.answered === "true") return;
+            question.dataset.answered = "true";
+            const isCorrect = button.dataset.correct === "true";
+            question.querySelectorAll(".knowledge-check-option").forEach(option => {
+                option.disabled = true;
+                if (option.dataset.correct === "true") option.classList.add("correct");
+            });
+            if (isCorrect) button.classList.add("selected-correct");
+            if (!isCorrect) button.classList.add("wrong");
+            question.querySelector(".knowledge-check-feedback").textContent = isCorrect
+                ? knowledgeCheckText().correct
+                : knowledgeCheckText().wrong;
+            const score = card.querySelectorAll('[data-check-question][data-answered="true"] .selected-correct').length;
+            card.querySelector("[data-check-score]").textContent = `${score} / 3`;
+            if (card.querySelectorAll('[data-check-question][data-answered="true"]').length === 3) {
+                const continueButton = card.querySelector("[data-check-continue]");
+                if (continueButton) continueButton.disabled = false;
+            }
+        }
+
+
         function buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData) {
             const currentTitle = (summaryData && summaryData.title) || (localTopic && localTopic.title) || "";
             const normalize = value => normalizeMapText(value);
@@ -7234,6 +7397,8 @@ const topics = {
 
 
                     ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
+
+                    ${buildKnowledgeCheck(localTopic, level, relatedPages, summaryData)}
 
                     ${buildLearningExpansion(localTopic, localKey, level, text, summaryData)}
 
