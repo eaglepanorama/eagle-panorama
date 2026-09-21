@@ -1778,6 +1778,26 @@
             padding-top: 4px;
         }
 
+        .learning-expansion-overview {
+            margin-top: 16px;
+            padding: 18px 20px;
+            border-radius: 15px;
+            background: rgba(225, 235, 246, 0.72);
+            border: 1px solid rgba(88, 131, 165, 0.13);
+        }
+
+        .learning-expansion-overview strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #23465e;
+        }
+
+        .learning-expansion-overview p {
+            margin: 0;
+            line-height: 1.72;
+            color: #40576a;
+        }
+
         .learning-expansion-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -2491,7 +2511,7 @@
 .knowledge-map-viewport {
     position: relative;
     width: 100%;
-    height: 520px;
+    height: 590px;
     border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(53, 111, 166, 0.22);
@@ -2535,6 +2555,12 @@
     stroke: rgba(55, 82, 50, 0.9);
 }
 
+.knowledge-map-node:focus-visible circle {
+    stroke: #1f4f78;
+    stroke-width: 5;
+    filter: drop-shadow(0 0 5px rgba(31, 79, 120, 0.3));
+}
+
 .knowledge-map-node.center circle {
     fill: rgba(169, 198, 143, 0.99);
     stroke: rgba(55, 82, 50, 0.88);
@@ -2553,6 +2579,41 @@
     fill: rgba(20, 32, 24, 0.72);
     font-size: 10px;
     font-weight: 600;
+}
+
+.knowledge-map-accessible-list {
+    margin-top: 16px;
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.48);
+    border: 1px solid rgba(53,111,166,0.16);
+}
+
+.knowledge-map-accessible-list strong {
+    display: block;
+    margin-bottom: 9px;
+    color: #23465e;
+}
+
+.knowledge-map-topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.knowledge-map-topic-list button {
+    border: 1px solid rgba(53,111,166,0.2);
+    border-radius: 999px;
+    padding: 8px 11px;
+    background: rgba(255,255,255,0.72);
+    color: #23465e;
+    cursor: pointer;
+}
+
+.knowledge-map-topic-list button:hover,
+.knowledge-map-topic-list button:focus-visible {
+    background: #e7f0f8;
+    outline: 3px solid rgba(53,111,166,0.16);
 }
 
 .knowledge-map-legend {
@@ -2773,7 +2834,7 @@
             <div class="knowledge-map-section">
                 <div class="knowledge-map-header">
                     <div>
-                        <h3>Start with a topic</h3>
+                        <h3>Start with any topic</h3>
                         <p>Search for something you want to understand, then return here to explore its connections.</p>
                     </div>
                 </div>
@@ -5529,7 +5590,8 @@ const topics = {
                     knowledgeMapState.localKey,
                     knowledgeMapState.level,
                     knowledgeMapState.text,
-                    knowledgeMapState.relatedPages
+                    knowledgeMapState.relatedPages,
+                    knowledgeMapState.summaryData
                 );
             }
 
@@ -5747,6 +5809,32 @@ const topics = {
                 ".wikipedia.org"
             );
 
+        }
+
+
+        async function getExpandedWikipediaIntro(title) {
+            try {
+                const url =
+                    wikipediaBaseURL() +
+                    "/w/api.php?action=query&prop=extracts&explaintext=1&exintro=1&format=json&origin=*&titles=" +
+                    encodeURIComponent(title);
+
+                const response = await fetch(url);
+                if (!response.ok) return "";
+
+                const data = await response.json();
+                const pages = data && data.query && data.query.pages
+                    ? Object.values(data.query.pages)
+                    : [];
+
+                const extract = pages[0] && pages[0].extract
+                    ? pages[0].extract.trim()
+                    : "";
+
+                return extract;
+            } catch (error) {
+                return "";
+            }
         }
 
 
@@ -6286,8 +6374,6 @@ const topics = {
             const paths = localTopic.learningPath || {};
             const currentPath = paths[level] || [];
             const beginnerPath = paths.beginner || [];
-            const intermediatePath = paths.intermediate || [];
-            const advancedPath = paths.advanced || [];
 
             const firstStep = currentPath[0] || beginnerPath[0] || localTopic.title;
             const nextStep = currentPath[1] || currentPath[0] || localTopic.title;
@@ -6319,6 +6405,11 @@ const topics = {
                 <div class="section learning-expansion">
                     <h3>${escapeHTML(text.learningHow)}</h3>
                     <p class="learning-note">${escapeHTML(text.learningHowNote)}</p>
+
+                    <div class="learning-expansion-overview">
+                        <strong>${escapeHTML(text.overview)}</strong>
+                        <p>${escapeHTML(localTopic.overview || summaryData?.extract || "")}</p>
+                    </div>
 
                     <div class="learning-expansion-grid">
                         <div class="learning-expansion-card">
@@ -6431,7 +6522,7 @@ const topics = {
             if (group) {
                 group.setAttribute(
                     "transform",
-                    `translate(550 280) scale(${knowledgeMapScale}) translate(-550 -280)`
+                    `translate(600 310) scale(${knowledgeMapScale}) translate(-600 -310)`
                 );
             }
         }
@@ -6443,7 +6534,7 @@ const topics = {
             if (group) {
                 group.setAttribute(
                     "transform",
-                    "translate(550 280) scale(1) translate(-550 -280)"
+                    "translate(600 310) scale(1) translate(-600 -310)"
                 );
             }
         }
@@ -6530,7 +6621,8 @@ const topics = {
                 knowledgeMapState.localKey,
                 knowledgeMapState.level,
                 knowledgeMapState.text,
-                knowledgeMapState.relatedPages
+                knowledgeMapState.relatedPages,
+                knowledgeMapState.summaryData
             );
         }
 
@@ -6548,10 +6640,12 @@ const topics = {
             return text.nearbyMap || "Nearby";
         }
 
-        function buildKnowledgeMap(localTopic, localKey, level, text, relatedPages) {
-            const centerTitle = localTopic
-                ? getMapLocalizedTitle(localKey)
-                : ((relatedPages && relatedPages[0]) ? relatedPages[0].title : "");
+        function buildKnowledgeMap(localTopic, localKey, level, text, relatedPages, summaryData) {
+            const centerTitle = (summaryData && summaryData.title)
+                ? summaryData.title
+                : (localTopic
+                    ? getMapLocalizedTitle(localKey)
+                    : ((relatedPages && relatedPages[0]) ? relatedPages[0].title : ""));
 
             if (!centerTitle) return "";
 
@@ -6561,6 +6655,7 @@ const topics = {
                 level,
                 text,
                 relatedPages,
+                summaryData,
                 centerTitle
             };
 
@@ -6595,9 +6690,9 @@ const topics = {
                 `;
             }
 
-            const center = { x: 550, y: 280 };
-            const directRadius = knowledgeMapPerspective === "out" ? 185 : 160;
-            const outerRadius = 350;
+            const center = { x: 600, y: 310 };
+            const directRadius = knowledgeMapPerspective === "out" ? 205 : 180;
+            const outerRadius = 405;
             const directNodes = uniqueTitles.map((title, index) => {
                 const angle = (-Math.PI / 2) + (index * Math.PI * 2 / uniqueTitles.length);
                 return {
@@ -6693,7 +6788,7 @@ const topics = {
                     <p class="knowledge-map-perspective-note">${escapeHTML(perspective.note)}</p>
 
                     <div class="knowledge-map-viewport">
-                        <svg class="knowledge-map-svg" viewBox="0 0 1100 560" preserveAspectRatio="xMidYMid meet" aria-label="Interactive knowledge map">
+                        <svg class="knowledge-map-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-label="Interactive knowledge map">
                             <g id="knowledgeMapGroup">
                                 ${edgeHTML}
                                 ${nodeHTML({ title: centerTitle, x: center.x, y: center.y }, true, "CURRENT")}
@@ -6701,6 +6796,17 @@ const topics = {
                                 ${positionedOuterNodes.map(node => nodeHTML(node, false, "NEXT RING")).join("")}
                             </g>
                         </svg>
+                    </div>
+
+                    <div class="knowledge-map-accessible-list" aria-label="Knowledge map topics">
+                        <strong>Explore these topics</strong>
+                        <div class="knowledge-map-topic-list">
+                            ${[centerTitle, ...uniqueTitles, ...positionedOuterNodes.map(node => node.title)]
+                                .filter((title, index, all) => all.findIndex(item => normalizeMapText(item) === normalizeMapText(title)) === index)
+                                .map(title => `
+                                    <button type="button" onclick='searchTopicText(${JSON.stringify(title)}, event)'>${escapeHTML(title)}</button>
+                                `).join("")}
+                        </div>
                     </div>
 
                     <div class="knowledge-map-legend">
@@ -6881,6 +6987,10 @@ const topics = {
                     await summaryResponse.json();
 
 
+                const expandedWikipediaIntro =
+                    await getExpandedWikipediaIntro(pageTitle);
+
+
                 addRecentSearch(
                     topic,
                     summaryData.title || topic,
@@ -6923,86 +7033,7 @@ const topics = {
 
                     localSection = `
 
-                        <div class="section">
-
-
-                            <h3>
-                                ${text.learningPanorama}
-                            </h3>
-
-
-                            <h3>
-                                ${text.learningPath}
-                            </h3>
-
-
-                            <p class="learning-note">
-                                ${text.learningNote}
-                            </p>
-
-
-                            <div class="learning-path">
-
-                                ${createClickablePath(
-                                    path
-                                )}
-
-                            </div>
-
-
-                            <div class="panorama-grid">
-
-
-                                <div class="panorama-card">
-
-                                    <h4>
-                                        ${text.prerequisites}
-                                    </h4>
-
-
-                                    <p>
-                                        ${localTopic
-                                            .prerequisites
-                                            .map(
-                                                item =>
-                                                    escapeHTML(
-                                                        item
-                                                    )
-                                            )
-                                            .join(
-                                                " • "
-                                            )}
-                                    </p>
-
-                                </div>
-
-
-                                <div class="panorama-card">
-
-                                    <h4>
-                                        ${text.concepts}
-                                    </h4>
-
-
-                                    <p>
-                                        ${localTopic
-                                            .concepts
-                                            .map(
-                                                item =>
-                                                    escapeHTML(
-                                                        item
-                                                    )
-                                            )
-                                            .join(
-                                                " • "
-                                            )}
-                                    </p>
-
-                                </div>
-
-
-                            </div>
-
+                        <div class="section curated-support-section">
 
                             <h3>
                                 ${text.resources}
@@ -7598,7 +7629,12 @@ const topics = {
 
                     <div class="understanding-section">
                         <h3>🧠 ${localTopic ? "Understand this topic first" : text.overview}</h3>
-                        <p class="understanding-lead">${escapeHTML(localTopic?.overview || summaryData.extract || "No summary was available.")}</p>
+                        <p class="understanding-lead">${escapeHTML(
+                            localTopic?.overview ||
+                            expandedWikipediaIntro ||
+                            summaryData.extract ||
+                            "No summary was available."
+                        )}</p>
 
                         <div class="understanding-highlights">
                             <div class="understanding-highlight">
@@ -7617,7 +7653,11 @@ const topics = {
 
                         <div class="understanding-source">
                             <p class="understanding-source-label">${localTopic ? "Live source context" : "Overview"}</p>
-                            <p>${escapeHTML(summaryData.extract || summaryData.description || "No additional summary was available.")}</p>
+                            <p>${escapeHTML(
+                                (expandedWikipediaIntro && expandedWikipediaIntro !== (localTopic?.overview || ""))
+                                    ? expandedWikipediaIntro
+                                    : (summaryData.extract || summaryData.description || "No additional summary was available.")
+                            )}</p>
                         </div>
                     </div>
 
@@ -7629,8 +7669,6 @@ const topics = {
                     ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
 
                     ${buildKnowledgeCheck(localTopic, level, relatedPages, summaryData)}
-
-                    ${buildLearningExpansion(localTopic, localKey, level, text, summaryData)}
 
                     ${automaticSection}
 
@@ -7661,7 +7699,8 @@ const topics = {
                     localKey,
                     level,
                     text,
-                    relatedPages
+                    relatedPages,
+                    summaryData
                 );
 
                 // Keep the learning space at the top after a new search.
@@ -7677,7 +7716,7 @@ const topics = {
                             <div class="knowledge-map-header">
                                 <div>
                                     <h3>🗺️ Knowledge Map</h3>
-                                    <p>Search a curated topic to build its map.</p>
+                                    <p>Search any topic to build its map and explore the connections around it.</p>
                                 </div>
                             </div>
                         </div>`;
