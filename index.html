@@ -6854,7 +6854,13 @@ const topics = {
                 Fill a sparse graph with connected subjects where possible.
                 This is especially useful for smaller curated topics.
             */
-            if (selectedGroups.length < 5 && localTopic) {
+            /*
+                Do not silently replace a perspective with another one.
+                In particular, Zoom In must actually show inward/foundation
+                relationships rather than falling back to the same Connected
+                topics shown by Nearby.
+            */
+            if (knowledgeMapPerspective === "nearby" && selectedGroups.length < 5 && localTopic) {
                 const fallback = [
                     ...relationGroups.connected,
                     ...relationGroups.path,
