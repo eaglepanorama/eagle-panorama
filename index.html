@@ -2668,6 +2668,112 @@
     }
 }
 
+/* ===== KNOWLEDGE GRAPH v4 ===== */
+.knowledge-map-section {
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.knowledge-map-viewport {
+    height: 650px;
+    min-height: 560px;
+}
+
+.knowledge-map-edge.foundation {
+    stroke: #6f8f5c;
+    stroke-width: 3;
+}
+.knowledge-map-edge.path {
+    stroke: #557bb0;
+    stroke-width: 3;
+}
+.knowledge-map-edge.connected {
+    stroke: #7f6a9e;
+    stroke-width: 2.5;
+}
+.knowledge-map-edge.broader {
+    stroke: #a2754e;
+    stroke-width: 3;
+}
+.knowledge-map-edge.secondary {
+    stroke: rgba(70, 100, 130, 0.24);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 5;
+}
+
+.knowledge-map-node.foundation circle {
+    fill: rgba(222, 238, 205, 0.98);
+    stroke: #6f8f5c;
+}
+.knowledge-map-node.path circle {
+    fill: rgba(218, 229, 249, 0.98);
+    stroke: #557bb0;
+}
+.knowledge-map-node.connected circle {
+    fill: rgba(231, 222, 242, 0.98);
+    stroke: #7f6a9e;
+}
+.knowledge-map-node.broader circle {
+    fill: rgba(243, 226, 205, 0.98);
+    stroke: #a2754e;
+}
+.knowledge-map-node.center circle {
+    fill: rgba(184, 211, 158, 0.99);
+    stroke: #49633f;
+}
+
+.knowledge-map-node text {
+    font-size: 15px;
+}
+.knowledge-map-node .map-node-type {
+    font-size: 10px;
+    letter-spacing: .4px;
+}
+
+.knowledge-graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin: 0 0 14px;
+    color: #40576a;
+    font-size: 13px;
+}
+.knowledge-graph-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+.legend-line {
+    width: 26px;
+    height: 3px;
+    display: inline-block;
+    border-radius: 999px;
+}
+.legend-line.foundation { background: #6f8f5c; }
+.legend-line.path { background: #557bb0; }
+.legend-line.connected { background: #7f6a9e; }
+.legend-line.broader { background: #a2754e; }
+
+.knowledge-map-topic-list button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+}
+.knowledge-map-topic-list button small {
+    font-size: 10px;
+    opacity: .7;
+    letter-spacing: .35px;
+}
+
+@media (max-width: 720px) {
+    .knowledge-map-viewport {
+        height: 470px;
+        min-height: 0;
+    }
+}
+
 </style>
 
 </head>
@@ -6659,118 +6765,306 @@ const topics = {
                 centerTitle
             };
 
-            const perspective = knowledgeMapPerspectiveTitles();
-            const uniqueTitles = [];
-            const seen = new Set([normalizeMapText(centerTitle)]);
+            /*
+                KNOWLEDGE GRAPH
+                ----------------
+                The graph now distinguishes between relationship types:
+                - FOUNDATION: prerequisites / things to learn first
+                - LEARNING PATH: where the current subject sits in the path
+                - CONNECTED: related subjects
+                - BROADER: the larger field/category
+            */
+            const centerNorm = normalizeMapText(centerTitle);
+            const relationGroups = {
+                foundation: [],
+                path: [],
+                connected: [],
+                broader: []
+            };
 
-            perspective.titles.forEach(title => {
-                const normalized = normalizeMapText(title);
-                if (normalized && !seen.has(normalized)) {
-                    seen.add(normalized);
-                    uniqueTitles.push(title);
+            const addRelation = (title, type) => {
+                if (!title) return;
+                const clean = String(title).trim();
+                const norm = normalizeMapText(clean);
+                if (!norm || norm === centerNorm) return;
+
+                const allExisting = Object.values(relationGroups).flat();
+                if (allExisting.some(item => normalizeMapText(item.title) === norm)) return;
+
+                relationGroups[type].push({
+                    title: clean,
+                    key: findKnowledgeTopicKey(clean),
+                    type
+                });
+            };
+
+            if (localTopic) {
+                const localized = getLocalizedTopic(localKey) || {};
+                const prerequisites = Array.isArray(localized.prerequisites)
+                    ? localized.prerequisites
+                    : [];
+
+                prerequisites.slice(0, 5).forEach(item => addRelation(item, "foundation"));
+
+                const path = localized.learningPath &&
+                    Array.isArray(localized.learningPath[level])
+                    ? localized.learningPath[level]
+                    : [];
+
+                path.slice(0, 6).forEach(item => addRelation(item, "path"));
+
+                const related = Array.isArray(localized.related)
+                    ? localized.related
+                    : [];
+
+                related.slice(0, 7).forEach(item => addRelation(item, "connected"));
+
+                if (localized.category) {
+                    addRelation(localized.category, "broader");
                 }
+            } else {
+                (relatedPages || []).slice(0, 10).forEach(page => {
+                    addRelation(page.title, "connected");
+                });
+            }
+
+            const perspective = knowledgeMapPerspectiveTitles();
+
+            let selectedGroups;
+            if (knowledgeMapPerspective === "in") {
+                selectedGroups = [
+                    ...relationGroups.foundation,
+                    ...relationGroups.path
+                ];
+            } else if (knowledgeMapPerspective === "out") {
+                selectedGroups = [
+                    ...relationGroups.broader,
+                    ...relationGroups.connected
+                ];
+            } else {
+                selectedGroups = [
+                    ...relationGroups.foundation,
+                    ...relationGroups.path,
+                    ...relationGroups.connected,
+                    ...relationGroups.broader
+                ];
+            }
+
+            /*
+                Fill a sparse graph with connected subjects where possible.
+                This is especially useful for smaller curated topics.
+            */
+            if (selectedGroups.length < 5 && localTopic) {
+                const fallback = [
+                    ...relationGroups.connected,
+                    ...relationGroups.path,
+                    ...relationGroups.foundation,
+                    ...relationGroups.broader
+                ];
+
+                fallback.forEach(item => {
+                    if (selectedGroups.length >= 10) return;
+                    if (!selectedGroups.some(existing =>
+                        normalizeMapText(existing.title) === normalizeMapText(item.title)
+                    )) {
+                        selectedGroups.push(item);
+                    }
+                });
+            }
+
+            const uniqueRelations = [];
+            const relationSeen = new Set([centerNorm]);
+
+            selectedGroups.forEach(item => {
+                const norm = normalizeMapText(item.title);
+                if (!norm || relationSeen.has(norm)) return;
+                relationSeen.add(norm);
+                uniqueRelations.push(item);
             });
 
-            if (!uniqueTitles.length) {
+            const directRelations = uniqueRelations.slice(0, 14);
+
+            if (!directRelations.length) {
                 return `
                     <div class="knowledge-map-section">
                         <div class="knowledge-map-header">
                             <div>
-                                <h3>🗺️ Knowledge Map</h3>
-                                <p>${escapeHTML(perspective.note)}</p>
+                                <h3>🧠 Knowledge Graph</h3>
+                                <p>No structured relationships were found yet for this topic. Try a broader or related topic to continue exploring.</p>
                             </div>
                         </div>
-                        <div class="knowledge-perspective">
-                            <button class="knowledge-perspective-button ${knowledgeMapPerspective === "out" ? "active" : ""}" type="button" onclick="setKnowledgeMapPerspective('out')">${escapeHTML(knowledgeMapPerspectiveLabel("out"))}</button>
-                            <button class="knowledge-perspective-button ${knowledgeMapPerspective === "nearby" ? "active" : ""}" type="button" onclick="setKnowledgeMapPerspective('nearby')">${escapeHTML(knowledgeMapPerspectiveLabel("nearby"))}</button>
-                            <button class="knowledge-perspective-button ${knowledgeMapPerspective === "in" ? "active" : ""}" type="button" onclick="setKnowledgeMapPerspective('in')">${escapeHTML(knowledgeMapPerspectiveLabel("in"))}</button>
+                        <div class="knowledge-map-accessible-list">
+                            <strong>Current subject</strong>
+                            <button type="button" onclick='searchTopicText(${JSON.stringify(centerTitle)}, event)'>
+                                ${escapeHTML(centerTitle)}
+                            </button>
                         </div>
-                        <p class="knowledge-map-perspective-note">${escapeHTML(perspective.note)}</p>
                     </div>
                 `;
             }
 
-            const center = { x: 600, y: 310 };
-            const directRadius = knowledgeMapPerspective === "out" ? 205 : 180;
-            const outerRadius = 405;
-            const directNodes = uniqueTitles.map((title, index) => {
-                const angle = (-Math.PI / 2) + (index * Math.PI * 2 / uniqueTitles.length);
+            const center = { x: 700, y: 390 };
+            const radius = directRelations.length <= 6 ? 230 : 285;
+
+            const directNodes = directRelations.map((relation, index) => {
+                const angle = (-Math.PI / 2) +
+                    (index * Math.PI * 2 / directRelations.length);
+
                 return {
-                    title,
-                    key: findKnowledgeTopicKey(title),
-                    x: center.x + Math.cos(angle) * directRadius,
-                    y: center.y + Math.sin(angle) * directRadius
+                    ...relation,
+                    x: center.x + Math.cos(angle) * radius,
+                    y: center.y + Math.sin(angle) * radius
                 };
             });
 
+            /*
+                Second-ring nodes come from the relationships of curated
+                direct nodes. They are deliberately limited so the graph
+                remains readable.
+            */
             const outerNodes = [];
+            const outerSeen = new Set([
+                centerNorm,
+                ...directNodes.map(node => normalizeMapText(node.title))
+            ]);
+
             if (knowledgeMapPerspective === "nearby" && localTopic) {
-                const outerSeen = new Set([normalizeMapText(centerTitle), ...uniqueTitles.map(normalizeMapText)]);
-                uniqueTitles.forEach(title => {
-                    const key = findKnowledgeTopicKey(title);
+                directNodes.forEach(parent => {
+                    const key = parent.key;
                     if (!key) return;
-                    const related = getLocalizedTopic(key)?.related || [];
-                    related.slice(0, 2).forEach(outerTitle => {
-                        const normalized = normalizeMapText(outerTitle);
-                        if (normalized && !outerSeen.has(normalized) && outerNodes.length < 8) {
-                            outerSeen.add(normalized);
-                            outerNodes.push(outerTitle);
-                        }
+
+                    const childTopic = getLocalizedTopic(key);
+                    const childRelated = childTopic &&
+                        Array.isArray(childTopic.related)
+                        ? childTopic.related
+                        : [];
+
+                    childRelated.slice(0, 2).forEach(title => {
+                        const norm = normalizeMapText(title);
+                        if (!norm || outerSeen.has(norm) || outerNodes.length >= 8) return;
+
+                        outerSeen.add(norm);
+                        outerNodes.push({
+                            title,
+                            key: findKnowledgeTopicKey(title),
+                            type: "DISCOVERY"
+                        });
                     });
                 });
             }
 
-            const positionedOuterNodes = outerNodes.map((title, index) => {
-                const angle = (-Math.PI / 2) + (index * Math.PI * 2 / Math.max(outerNodes.length, 1)) + 0.25;
+            const outerRadius = 420;
+            const positionedOuterNodes = outerNodes.map((node, index) => {
+                const angle = (-Math.PI / 2) +
+                    (index * Math.PI * 2 / Math.max(outerNodes.length, 1)) +
+                    0.25;
+
                 return {
-                    title,
-                    key: findKnowledgeTopicKey(title),
+                    ...node,
                     x: center.x + Math.cos(angle) * outerRadius,
                     y: center.y + Math.sin(angle) * outerRadius
                 };
             });
 
+            const typeLabel = {
+                foundation: "FOUNDATION",
+                path: "LEARNING PATH",
+                connected: "CONNECTED",
+                broader: "BROADER",
+                DISCOVERY: "DISCOVERY"
+            };
+
             const edgeHTML = [
                 ...directNodes.map(node => `
-                    <line class="knowledge-map-edge" x1="${center.x}" y1="${center.y}" x2="${node.x}" y2="${node.y}"></line>
+                    <line
+                        class="knowledge-map-edge ${node.type}"
+                        x1="${center.x}"
+                        y1="${center.y}"
+                        x2="${node.x}"
+                        y2="${node.y}"
+                    ></line>
                 `),
                 ...positionedOuterNodes.map((node, index) => {
                     const parent = directNodes[index % Math.max(directNodes.length, 1)];
                     return parent ? `
-                        <line class="knowledge-map-edge secondary" x1="${parent.x}" y1="${parent.y}" x2="${node.x}" y2="${node.y}"></line>
+                        <line
+                            class="knowledge-map-edge secondary"
+                            x1="${parent.x}"
+                            y1="${parent.y}"
+                            x2="${node.x}"
+                            y2="${node.y}"
+                        ></line>
                     ` : "";
                 })
             ].join("");
 
-            function nodeHTML(node, isCenter, typeLabel) {
+            function nodeHTML(node, isCenter, fallbackType) {
                 const lines = mapNodeTitleLines(node.title);
-                const radius = isCenter ? 82 : 65;
+                const radiusValue = isCenter ? 96 : 72;
                 const clickTitle = escapeHTML(JSON.stringify(node.title));
+                const label = isCenter
+                    ? "CURRENT"
+                    : (typeLabel[node.type] || fallbackType);
+
                 return `
-                    <g class="knowledge-map-node ${isCenter ? "center" : ""}"
-                       ${node.key ? `data-topic-key="${escapeHTML(node.key)}"` : ""}
-                       onclick="searchTopicText(${clickTitle}, event)"
-                       tabindex="0" role="button" aria-label="Explore ${escapeHTML(node.title)}">
-                        <circle cx="${node.x}" cy="${node.y}" r="${radius}"></circle>
+                    <g
+                        class="knowledge-map-node ${isCenter ? "center" : ""} ${node.type || ""}"
+                        ${node.key ? `data-topic-key="${escapeHTML(node.key)}"` : ""}
+                        onclick="searchTopicText(${clickTitle}, event)"
+                        tabindex="0"
+                        role="button"
+                        aria-label="Explore ${escapeHTML(node.title)} — ${escapeHTML(label)}"
+                        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();searchTopicText(${clickTitle}, event);}"
+                    >
+                        <circle
+                            cx="${node.x}"
+                            cy="${node.y}"
+                            r="${radiusValue}"
+                        ></circle>
+
                         ${lines.map((line, index) => `
-                            <text x="${node.x}" y="${node.y + (index - (lines.length - 1) / 2) * 17}">${escapeHTML(line)}</text>
+                            <text
+                                x="${node.x}"
+                                y="${node.y + (index - (lines.length - 1) / 2) * 18}"
+                            >${escapeHTML(line)}</text>
                         `).join("")}
-                        <text class="map-node-type" x="${node.x}" y="${node.y + radius - 17}">${escapeHTML(typeLabel)}</text>
+
+                        <text
+                            class="map-node-type"
+                            x="${node.x}"
+                            y="${node.y + radiusValue - 18}"
+                        >${escapeHTML(label)}</text>
                     </g>
                 `;
             }
+
+            const accessibleRelations = [
+                ...directNodes,
+                ...positionedOuterNodes
+            ];
 
             return `
                 <div class="knowledge-map-section">
                     <div class="knowledge-map-header">
                         <div>
-                            <h3>🗺️ Knowledge Map</h3>
-                            <p>The center is your current subject. Change perspective to see what is nearby, more specific, or broader.</p>
+                            <h3>🧠 Knowledge Graph</h3>
+                            <p>
+                                See how <strong>${escapeHTML(centerTitle)}</strong>
+                                fits into the surrounding landscape of knowledge.
+                                Different connections show different kinds of relationships.
+                            </p>
                         </div>
-                        <div class="knowledge-map-controls" aria-label="Knowledge map visual controls">
-                            <button class="knowledge-map-control" type="button" onclick="knowledgeMapZoom(1.18)" title="Enlarge map" aria-label="Enlarge map">+</button>
-                            <button class="knowledge-map-control" type="button" onclick="knowledgeMapZoom(0.85)" title="Shrink map" aria-label="Shrink map">−</button>
-                            <button class="knowledge-map-control" type="button" onclick="knowledgeMapReset()" title="Reset map size" aria-label="Reset map size">↺</button>
+
+                        <div class="knowledge-map-controls" aria-label="Knowledge graph controls">
+                            <button class="knowledge-map-control" type="button"
+                                onclick="knowledgeMapZoom(1.18)"
+                                title="Enlarge graph" aria-label="Enlarge graph">+</button>
+                            <button class="knowledge-map-control" type="button"
+                                onclick="knowledgeMapZoom(0.85)"
+                                title="Shrink graph" aria-label="Shrink graph">−</button>
+                            <button class="knowledge-map-control" type="button"
+                                onclick="knowledgeMapReset()"
+                                title="Reset graph size" aria-label="Reset graph size">↺</button>
                         </div>
                     </div>
 
@@ -6779,40 +7073,76 @@ const topics = {
                         <span class="current">${escapeHTML(centerTitle)}</span>
                     </div>
 
-                    <div class="knowledge-perspective" aria-label="Knowledge map perspective">
-                        <button class="knowledge-perspective-button ${knowledgeMapPerspective === "out" ? "active" : ""}" type="button" onclick="setKnowledgeMapPerspective('out')">↙ ${escapeHTML(knowledgeMapPerspectiveLabel("out"))}</button>
-                        <button class="knowledge-perspective-button ${knowledgeMapPerspective === "nearby" ? "active" : ""}" type="button" onclick="setKnowledgeMapPerspective('nearby')">◎ ${escapeHTML(knowledgeMapPerspectiveLabel("nearby"))}</button>
-                        <button class="knowledge-perspective-button ${knowledgeMapPerspective === "in" ? "active" : ""}" type="button" onclick="setKnowledgeMapPerspective('in')">↗ ${escapeHTML(knowledgeMapPerspectiveLabel("in"))}</button>
+                    <div class="knowledge-perspective" aria-label="Knowledge graph perspective">
+                        <button class="knowledge-perspective-button ${knowledgeMapPerspective === "out" ? "active" : ""}"
+                            type="button" onclick="setKnowledgeMapPerspective('out')">
+                            ↙ ${escapeHTML(knowledgeMapPerspectiveLabel("out"))}
+                        </button>
+                        <button class="knowledge-perspective-button ${knowledgeMapPerspective === "nearby" ? "active" : ""}"
+                            type="button" onclick="setKnowledgeMapPerspective('nearby')">
+                            ◎ ${escapeHTML(knowledgeMapPerspectiveLabel("nearby"))}
+                        </button>
+                        <button class="knowledge-perspective-button ${knowledgeMapPerspective === "in" ? "active" : ""}"
+                            type="button" onclick="setKnowledgeMapPerspective('in')">
+                            ↗ ${escapeHTML(knowledgeMapPerspectiveLabel("in"))}
+                        </button>
                     </div>
 
-                    <p class="knowledge-map-perspective-note">${escapeHTML(perspective.note)}</p>
+                    <p class="knowledge-map-perspective-note">
+                        ${escapeHTML(perspective.note)}
+                    </p>
+
+                    <div class="knowledge-graph-legend" aria-label="Relationship types">
+                        <span><i class="legend-line foundation"></i>Foundation</span>
+                        <span><i class="legend-line path"></i>Learning path</span>
+                        <span><i class="legend-line connected"></i>Connected</span>
+                        <span><i class="legend-line broader"></i>Broader</span>
+                    </div>
 
                     <div class="knowledge-map-viewport">
-                        <svg class="knowledge-map-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-label="Interactive knowledge map">
+                        <svg
+                            class="knowledge-map-svg"
+                            viewBox="0 0 1400 780"
+                            preserveAspectRatio="xMidYMid meet"
+                            aria-label="Interactive knowledge graph"
+                        >
                             <g id="knowledgeMapGroup">
                                 ${edgeHTML}
-                                ${nodeHTML({ title: centerTitle, x: center.x, y: center.y }, true, "CURRENT")}
-                                ${directNodes.map(node => nodeHTML(node, false, knowledgeMapPerspective === "in" ? "MORE SPECIFIC" : knowledgeMapPerspective === "out" ? "BROADER" : "CONNECTED")).join("")}
-                                ${positionedOuterNodes.map(node => nodeHTML(node, false, "NEXT RING")).join("")}
+                                ${nodeHTML(
+                                    { title: centerTitle, x: center.x, y: center.y },
+                                    true,
+                                    "CURRENT"
+                                )}
+                                ${directNodes.map(node =>
+                                    nodeHTML(node, false, "CONNECTED")
+                                ).join("")}
+                                ${positionedOuterNodes.map(node =>
+                                    nodeHTML(node, false, "DISCOVERY")
+                                ).join("")}
                             </g>
                         </svg>
                     </div>
 
-                    <div class="knowledge-map-accessible-list" aria-label="Knowledge map topics">
-                        <strong>Explore these topics</strong>
+                    <div class="knowledge-map-accessible-list" aria-label="Knowledge graph topics">
+                        <strong>Explore the graph without clicking the map</strong>
                         <div class="knowledge-map-topic-list">
-                            ${[centerTitle, ...uniqueTitles, ...positionedOuterNodes.map(node => node.title)]
-                                .filter((title, index, all) => all.findIndex(item => normalizeMapText(item) === normalizeMapText(title)) === index)
-                                .map(title => `
-                                    <button type="button" onclick='searchTopicText(${JSON.stringify(title)}, event)'>${escapeHTML(title)}</button>
-                                `).join("")}
+                            ${accessibleRelations.map(node => `
+                                <button
+                                    type="button"
+                                    onclick='searchTopicText(${JSON.stringify(node.title)}, event)'
+                                    aria-label="Explore ${escapeHTML(node.title)} — ${escapeHTML(typeLabel[node.type] || node.type || "DISCOVERY")}"
+                                >
+                                    <span>${escapeHTML(node.title)}</span>
+                                    <small>${escapeHTML(typeLabel[node.type] || node.type || "DISCOVERY")}</small>
+                                </button>
+                            `).join("")}
                         </div>
                     </div>
 
                     <div class="knowledge-map-legend">
                         <span><i class="knowledge-map-dot center"></i>Current subject</span>
-                        <span><i class="knowledge-map-dot"></i>${escapeHTML(perspective.label)}</span>
-                        <span>Click a node to explore it</span>
+                        <span><i class="knowledge-map-dot"></i>Knowledge relationship</span>
+                        <span>Click a node, or use the accessible topic list</span>
                     </div>
                 </div>
             `;
