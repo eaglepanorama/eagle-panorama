@@ -5692,7 +5692,15 @@ const topics = {
                         }
                     }
 
-                    if (queryTokens.length > 0 && candidateTokens.length > 0) {
+                    /*
+                       Do not force multi-word natural-language searches into a
+                       curated topic just because one or two words overlap.
+                       For example, searches such as "creation", "eagle",
+                       "love", or "creation eagle love" should be allowed to
+                       go to Wikipedia instead of being incorrectly mapped to a
+                       completely different curated subject.
+                    */
+                    if (queryTokens.length === 1 && candidateTokens.length > 0) {
                         const candidateSet = new Set(candidateTokens);
                         const matched = queryTokens.filter(function(token) {
                             return candidateSet.has(token);
@@ -5700,7 +5708,7 @@ const topics = {
 
                         const score = matched / queryTokens.length;
 
-                        if (score >= 0.75 && score > bestScore) {
+                        if (score === 1 && score > bestScore) {
                             bestScore = score;
                             bestMatch = topicKey;
                         }
