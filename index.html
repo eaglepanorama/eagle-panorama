@@ -6474,6 +6474,42 @@ const topics = {
         }
 
 
+        function buildOverviewSegments(overview) {
+            const clean = String(overview || "").replace(/\s+/g, " ").trim();
+            if (!clean) return "";
+
+            // Break the overview at natural sentence boundaries, then group
+            // short sentences together so the reader gets several calm blocks
+            // instead of one large wall of text.
+            const sentences = clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [clean];
+            const groups = [];
+            let current = "";
+
+            sentences.forEach(sentence => {
+                const part = sentence.trim();
+                if (!part) return;
+                if (current && (current.length + part.length + 1 > 230)) {
+                    groups.push(current);
+                    current = part;
+                } else {
+                    current = current ? current + " " + part : part;
+                }
+            });
+            if (current) groups.push(current);
+
+            const labels = ["The big picture", "What it studies", "Why it matters", "In context"];
+            return groups.slice(0, 4).map((group, index) => `
+                <div class="overview-segment">
+                    <span class="overview-segment-number">${String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                        <h4>${labels[index] || "More to explore"}</h4>
+                        <p>${escapeHTML(group)}</p>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+
         function buildLearningExpansion(localTopic, localKey, level, text, summaryData) {
             if (!localTopic) return "";
 
@@ -6511,11 +6547,6 @@ const topics = {
                 <div class="section learning-expansion">
                     <h3>${escapeHTML(text.learningHow)}</h3>
                     <p class="learning-note">${escapeHTML(text.learningHowNote)}</p>
-
-                    <div class="learning-expansion-overview">
-                        <strong>${escapeHTML(text.overview)}</strong>
-                        <p>${escapeHTML(localTopic.overview || summaryData?.extract || "")}</p>
-                    </div>
 
                     <div class="learning-expansion-grid">
                         <div class="learning-expansion-card">
@@ -7208,18 +7239,12 @@ const topics = {
 
             result.innerHTML = `
 
-                <div class="loading">
-
-                    <h2>
-                        Exploring...
-                    </h2>
-
-                    <p>
-                        ${escapeHTML(
-                            text.tagline
-                        )}
-                    </p>
-
+                <div class="loading-tiktok" role="status" aria-live="polite">
+                    <div class="loading-dots" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <h2>Exploring...</h2>
+                    <p>${escapeHTML(text.tagline)}</p>
                 </div>
 
             `;
@@ -7965,12 +7990,14 @@ const topics = {
 
                     <div class="understanding-section">
                         <h3>🧠 ${localTopic ? "Understand this topic first" : text.overview}</h3>
-                        <p class="understanding-lead">${escapeHTML(
-                            localTopic?.overview ||
-                            expandedWikipediaIntro ||
-                            summaryData.extract ||
-                            "No summary was available."
-                        )}</p>
+                        <div class="understanding-overview-segments">
+                            ${buildOverviewSegments(
+                                localTopic?.overview ||
+                                expandedWikipediaIntro ||
+                                summaryData.extract ||
+                                "No summary was available."
+                            )}
+                        </div>
 
                         <div class="understanding-highlights">
                             <div class="understanding-highlight">
