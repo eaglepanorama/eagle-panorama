@@ -2971,6 +2971,7 @@
 
 
                 <button
+                    type="button"
                     onclick="exploreTopic()"
                     id="exploreButton"
                 >
@@ -6020,7 +6021,13 @@ const topics = {
 
 
 
+        let suggestionRequestId = 0;
+
+
         async function getSuggestions() {
+
+
+            const requestId = ++suggestionRequestId;
 
 
             const input =
@@ -6059,6 +6066,9 @@ const topics = {
             suggestionTimer =
                 setTimeout(
                     async function () {
+
+
+                        if (requestId !== suggestionRequestId) return;
 
 
                         try {
@@ -6575,7 +6585,6 @@ const topics = {
             const labels = ["The big picture", "What it studies", "Why it matters", "In context"];
             return groups.slice(0, 4).map((group, index) => `
                 <div class="overview-segment">
-                    <span class="overview-segment-number">${String(index + 1).padStart(2, "0")}</span>
                     <div>
                         <h4>${labels[index] || "More to explore"}</h4>
                         <p>${escapeHTML(group)}</p>
@@ -7285,15 +7294,17 @@ const topics = {
             const text = currentUI();
             const loadingStartedAt = performance.now();
 
+            // A search should always take priority over autocomplete.
+            // Cancel any pending suggestion timer/request so its response
+            // cannot repaint the suggestions after Explore is clicked.
+            clearTimeout(suggestionTimer);
+            suggestionRequestId++;
+            document.querySelector("#suggestions").innerHTML = "";
+
 
             if (document.querySelector("#knowledgeMapPage") && !document.querySelector("#knowledgeMapPage").classList.contains("app-page-hidden")) {
                 setLearningSpaceVisibility(false);
             }
-
-
-            document.querySelector(
-                "#suggestions"
-            ).innerHTML = "";
 
 
             if (topic === "") {
