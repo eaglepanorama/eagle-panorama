@@ -3179,6 +3179,241 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* =========================================================
+   EAGLES PANORAMA — FINAL VISUAL HARMONY PASS
+   Palette: deep navy / ocean teal / ice blue / restrained gold
+   ========================================================= */
+:root {
+  --ep-navy-950:#050d17;
+  --ep-navy-900:#081522;
+  --ep-navy-850:#0b1b2b;
+  --ep-navy-800:#10263a;
+  --ep-teal-600:#168f8a;
+  --ep-teal-500:#24aaa1;
+  --ep-teal-300:#73d4ce;
+  --ep-ice-200:#c9eaf2;
+  --ep-ice-100:#edf8fb;
+  --ep-surface:#f4f8fa;
+  --ep-surface-2:#eaf2f5;
+  --ep-line:#d2e1e7;
+  --ep-text:#142b3b;
+  --ep-muted:#5c7180;
+  --ep-gold:#c79a4b;
+  --ep-shadow:0 18px 44px rgba(4,22,36,.14);
+}
+
+/* Main surfaces */
+body { color:var(--ep-text); }
+button, input, select { font-family:inherit; }
+
+.top-bar-button {
+  background:rgba(8,21,34,.72) !important;
+  border-color:rgba(115,212,206,.24) !important;
+  color:#edf8fb !important;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+.top-bar-button:hover { background:rgba(22,143,138,.82) !important; }
+
+/* Search area */
+.search-container, .search-box, .search-panel {
+  border-color:rgba(36,170,161,.22) !important;
+}
+input[type="text"], input[type="search"], select {
+  border-color:#cbdde4 !important;
+  background:rgba(248,252,253,.96) !important;
+  color:var(--ep-text) !important;
+}
+input[type="text"]:focus, input[type="search"]:focus, select:focus {
+  outline:none;
+  border-color:var(--ep-teal-500) !important;
+  box-shadow:0 0 0 3px rgba(36,170,161,.13) !important;
+}
+
+/* Primary actions */
+button.search-button, .search-button, .primary-button,
+.knowledge-journey-next, .knowledge-check-action {
+  background:linear-gradient(135deg,var(--ep-teal-600),var(--ep-teal-500)) !important;
+  color:#fff !important;
+  border-color:transparent !important;
+  box-shadow:0 8px 20px rgba(22,143,138,.20);
+}
+button.search-button:hover, .search-button:hover, .primary-button:hover,
+.knowledge-journey-next:hover, .knowledge-check-action:hover {
+  filter:brightness(1.05);
+  transform:translateY(-1px);
+}
+
+/* General learning cards */
+.section, .understanding-section, .learning-expansion,
+.topic-browser, .resources-section, .books-section,
+.learning-dashboard {
+  background:rgba(244,248,250,.97) !important;
+  border-color:var(--ep-line) !important;
+  color:var(--ep-text) !important;
+  box-shadow:var(--ep-shadow) !important;
+}
+.section h3, .understanding-section h3, .learning-expansion h3,
+.topic-browser h3, .resources-section h3, .books-section h3 {
+  color:var(--ep-navy-800) !important;
+}
+.section p, .understanding-section p, .learning-expansion p {
+  color:var(--ep-muted) !important;
+}
+
+/* Overview segmentation */
+.understanding-overview-segments > * {
+  background:linear-gradient(145deg,#f8fcfd,#edf6f8) !important;
+  border-color:#d5e6eb !important;
+  color:var(--ep-text) !important;
+}
+
+/* Journey */
+.knowledge-journey {
+  background:linear-gradient(145deg,#f4f9fa,#eaf3f5) !important;
+  border-color:#cbdfe5 !important;
+}
+.knowledge-journey-step, .knowledge-journey-button {
+  background:#f8fbfc !important;
+  border-color:#d3e2e7 !important;
+  color:var(--ep-text) !important;
+}
+.knowledge-journey-button.current {
+  background:linear-gradient(145deg,#e2f6f3,#d7eff0) !important;
+  border-color:var(--ep-teal-500) !important;
+  color:#124e4c !important;
+  box-shadow:0 8px 22px rgba(22,143,138,.14) !important;
+}
+.knowledge-journey-number { background:#e3f1f4 !important; color:#24606a !important; }
+.knowledge-journey-button.current .knowledge-journey-number {
+  background:var(--ep-teal-600) !important;
+  color:#fff !important;
+}
+.knowledge-journey-footer { border-top-color:#d4e2e7 !important; }
+.knowledge-journey-footer p { color:var(--ep-muted) !important; }
+
+/* Knowledge Check — match the same visual language */
+.knowledge-check {
+  background:linear-gradient(145deg,#eef7f8,#e5f0f3) !important;
+  border-color:rgba(36,170,161,.24) !important;
+  box-shadow:0 18px 42px rgba(5,36,49,.12) !important;
+}
+.knowledge-check-header h3 { color:var(--ep-navy-800) !important; }
+.knowledge-check-header p, .knowledge-check-feedback { color:var(--ep-muted) !important; }
+.knowledge-check-score {
+  background:#d9efee !important;
+  color:#126c69 !important;
+  border:1px solid #bce1df;
+}
+.knowledge-check-question {
+  background:rgba(255,255,255,.88) !important;
+  border-color:#d0e1e6 !important;
+}
+.knowledge-check-question h4 { color:var(--ep-navy-800) !important; }
+.knowledge-check-option {
+  background:#f9fcfd !important;
+  border-color:#cbdde3 !important;
+  color:#233f50 !important;
+}
+.knowledge-check-option:hover {
+  border-color:var(--ep-teal-500) !important;
+  background:#edf9f8 !important;
+}
+.knowledge-check-option.correct {
+  background:#e0f3ed !important;
+  border-color:#64bba8 !important;
+  color:#145b4b !important;
+}
+.knowledge-check-option.wrong {
+  background:#f8ece6 !important;
+  border-color:#d5a178 !important;
+  color:#70452f !important;
+}
+.knowledge-check-footer { border-top-color:#d3e1e6 !important; }
+.knowledge-check-result { color:#315b6d !important; }
+.knowledge-check-action.secondary {
+  background:#dcebef !important;
+  color:#275368 !important;
+}
+
+/* Graph/map controls and panels */
+.knowledge-map-page, .knowledge-map-page-header { color:var(--ep-text); }
+.knowledge-map-page button {
+  border-color:#c7dce2 !important;
+}
+.knowledge-map-viewport {
+  border-color:rgba(115,212,206,.24) !important;
+  box-shadow:0 18px 42px rgba(3,20,32,.18) !important;
+}
+
+/* My Learning: remove the old beige/olive family */
+.learning-dashboard {
+  background:rgba(244,248,250,.98) !important;
+}
+.learning-dashboard-header { border-bottom-color:#d4e1e6 !important; }
+.learning-dashboard-header p, .dashboard-card-meta { color:var(--ep-muted) !important; }
+.dashboard-close {
+  background:#e3eef2 !important;
+  color:#294957 !important;
+}
+.dashboard-close:hover { background:#d4e6eb !important; }
+.dashboard-card {
+  background:#edf4f6 !important;
+  border-color:#d5e2e7 !important;
+}
+.dashboard-action, .save-topic-button, .save-item-button {
+  background:#d9efed !important;
+  color:#17635f !important;
+}
+.dashboard-action:hover, .save-topic-button:hover, .save-item-button:hover {
+  background:#c8e7e4 !important;
+}
+.dashboard-empty { background:#f7fafb !important; border-color:#cfdee3 !important; color:var(--ep-muted) !important; }
+.dashboard-footer { border-top-color:#d4e1e6 !important; }
+.clear-data-button { background:#e7eef0 !important; color:#4e626d !important; }
+.clear-data-button:hover { background:#dbe7ea !important; }
+
+/* Related/recommendation cards */
+.related-topic-card, .recommendation-card, .resource-card, .book-card {
+  border-color:#d2e1e6 !important;
+  background:rgba(248,251,252,.96) !important;
+  color:var(--ep-text) !important;
+}
+.related-topic-card:hover, .recommendation-card:hover, .resource-card:hover, .book-card:hover {
+  border-color:#83c9c5 !important;
+  box-shadow:0 12px 28px rgba(5,39,52,.10) !important;
+}
+
+/* Small labels/pills: teal as the common accent, gold only for emphasis */
+.badge, .pill, .tag, .category-badge {
+  background:#dff1f0 !important;
+  color:#176a67 !important;
+  border-color:#bfe0de !important;
+}
+
+/* Links */
+a { color:#167d86; }
+a:hover { color:#0e626a; }
+
+/* Loading state */
+.loading-tiktok { color:var(--ep-ice-200) !important; }
+.loading-dots span { background:var(--ep-teal-300) !important; box-shadow:0 0 12px rgba(115,212,206,.35); }
+
+/* Scrollbars */
+* { scrollbar-color:#5d9e9d rgba(7,21,34,.10); scrollbar-width:thin; }
+
+/* Focus accessibility */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline:2px solid var(--ep-teal-300) !important;
+  outline-offset:2px;
+}
+
+/* Mobile spacing polish */
+@media (max-width:650px) {
+  .knowledge-check, .learning-dashboard { border-radius:18px !important; }
+  .knowledge-check { padding:18px !important; }
+}
+
 </style>
 
 </head>
