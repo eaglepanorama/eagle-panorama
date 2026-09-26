@@ -3102,6 +3102,83 @@
     }
 }
 
+
+/* Knowledge Check v2.1 — answer explanations + stronger interaction */
+.knowledge-check-question-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    color: #70cbe8;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+.knowledge-check-question-meta span { color: #5d7890; }
+.knowledge-check-option {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 48px;
+}
+.knowledge-check-option-letter {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 27px;
+    width: 27px;
+    height: 27px;
+    border: 1px solid rgba(111, 202, 232, .28);
+    border-radius: 8px;
+    background: rgba(46, 115, 145, .18);
+    color: #9fe3f7;
+    font-size: 11px;
+    font-weight: 900;
+}
+.knowledge-check-option::before { display: none; }
+.knowledge-check-option.correct .knowledge-check-option-letter {
+    background: rgba(75, 194, 155, .24);
+    border-color: rgba(110, 216, 185, .58);
+    color: #a9ffe0;
+}
+.knowledge-check-option.wrong .knowledge-check-option-letter {
+    background: rgba(210, 126, 78, .24);
+    border-color: rgba(230, 160, 109, .58);
+    color: #ffd0b2;
+}
+.knowledge-check-feedback {
+    padding-left: 2px;
+    font-weight: 700;
+}
+.knowledge-check-explanation {
+    display: block;
+    margin-top: 12px;
+    padding: 13px 15px;
+    border-left: 3px solid #5fc4e4;
+    border-radius: 10px;
+    background: rgba(31, 102, 131, .18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+    animation: knowledgeExplanationIn .28s ease both;
+}
+.knowledge-check-explanation[hidden] { display: none; }
+.knowledge-check-explanation-label {
+    margin-bottom: 4px;
+    color: #8ee0f5;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.knowledge-check-explanation-text {
+    color: #c4d9e4;
+    font-size: 13px;
+    line-height: 1.55;
+}
+@keyframes knowledgeExplanationIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 
 </head>
@@ -6684,14 +6761,23 @@ const topics = {
             const nextOptions = [nextStep, ...path.filter(item => item !== nextStep && item !== currentTitle).slice(0, 2)].slice(0, 3);
             const prereqOptions = [prerequisites[0], ...prerequisiteDistractors].slice(0, 3);
 
-            const makeQuestion = (number, question, options, correct) => `
+            const makeQuestion = (number, question, options, correct, explanation) => `
                 <div class="knowledge-check-question" data-check-question>
-                    <h4>${number}. ${escapeHTML(question)}</h4>
+                    <div class="knowledge-check-question-meta">Question ${number} <span>•</span> Choose one</div>
+                    <h4>${escapeHTML(question)}</h4>
                     <div class="knowledge-check-options">
-                        ${options.map(option => `<button type="button" class="knowledge-check-option" data-correct="${option === correct ? "true" : "false"}" onclick="answerKnowledgeCheck(this)">${escapeHTML(option)}</button>`).join("")}
+                        ${options.map((option, index) => `<button type="button" class="knowledge-check-option" data-option-index="${index + 1}" data-correct="${option === correct ? "true" : "false"}" onclick="answerKnowledgeCheck(this)"><span class="knowledge-check-option-letter">${String.fromCharCode(65 + index)}</span><span>${escapeHTML(option)}</span></button>`).join("")}
                     </div>
                     <div class="knowledge-check-feedback" aria-live="polite"></div>
+                    <div class="knowledge-check-explanation" aria-live="polite" hidden>
+                        <div class="knowledge-check-explanation-label">Why this answer?</div>
+                        <div class="knowledge-check-explanation-text">${escapeHTML(explanation)}</div>
+                    </div>
                 </div>`;
+
+            const coreExplanation = `${concepts[0]} is one of the core ideas currently defined for ${currentTitle}. It gives you a key piece of the topic before you move deeper into the subject.`;
+            const nextExplanation = `${nextStep} is the next step in the selected ${level} learning path for ${localTopic.title}. The path uses it to build on what you are learning here.`;
+            const prereqExplanation = `${prerequisites[0]} is listed as a prerequisite for ${currentTitle}. It is background knowledge that helps make this topic easier to understand.`;
 
             return `
                 <div class="knowledge-check" data-knowledge-check data-topic="${escapeHTML(currentTitle)}">
@@ -6700,9 +6786,9 @@ const topics = {
                         <p>${escapeHTML(ui.note)}</p>
                         <span class="knowledge-check-score">${escapeHTML(ui.score)}: <span data-check-score>0 / 3</span></span>
                     </div>
-                    ${makeQuestion(1, `${ui.core} ${currentTitle}?`, conceptOptions, concepts[0])}
-                    ${makeQuestion(2, ui.next, nextOptions, nextStep)}
-                    ${makeQuestion(3, ui.prereq, prereqOptions, prerequisites[0])}
+                    ${makeQuestion(1, `${ui.core} ${currentTitle}?`, conceptOptions, concepts[0], coreExplanation)}
+                    ${makeQuestion(2, ui.next, nextOptions, nextStep, nextExplanation)}
+                    ${makeQuestion(3, ui.prereq, prereqOptions, prerequisites[0], prereqExplanation)}
                     <div class="knowledge-check-footer">
                         <p class="knowledge-check-result" data-check-result>${escapeHTML(ui.result)}</p>
                         <div class="knowledge-check-actions">
@@ -6730,6 +6816,8 @@ const topics = {
             question.querySelector(".knowledge-check-feedback").textContent = isCorrect
                 ? knowledgeCheckText().correct
                 : knowledgeCheckText().wrong;
+            const explanation = question.querySelector(".knowledge-check-explanation");
+            if (explanation) explanation.hidden = false;
             const score = card.querySelectorAll('[data-check-question][data-answered="true"] .selected-correct').length;
             card.querySelector("[data-check-score]").textContent = `${score} / 3`;
             if (card.querySelectorAll('[data-check-question][data-answered="true"]').length === 3) {
