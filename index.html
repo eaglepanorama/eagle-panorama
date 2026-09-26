@@ -3450,6 +3450,42 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
         .research-card p { margin:0 0 10px; color:rgba(226,242,247,.65); font-size:.84rem; line-height:1.45; }
         .research-meta { color:#8edce5; font-size:.76rem; }
         @media (max-width: 850px) { .source-lane-grid, .source-card-grid, .research-grid { grid-template-columns:1fr; } .source-explorer { padding:18px; } }
+
+
+        /* FINAL TITLE LEGIBILITY PASS */
+        .topics h2#topicsTitle,
+        #aboutTitle,
+        .knowledge-map-page-header h1,
+        .knowledge-map-header h3 {
+            color: #f4fdff !important;
+            text-shadow:
+                0 0 10px rgba(116, 224, 220, 0.28),
+                0 2px 10px rgba(0, 0, 0, 0.72);
+            letter-spacing: -0.02em;
+        }
+
+        .topics h2#topicsTitle {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+        }
+
+        #aboutTitle,
+        .knowledge-map-page-header h1 {
+            font-weight: 800;
+        }
+
+        .topics-description,
+        .about-intro,
+        .knowledge-map-page-header p,
+        .knowledge-map-header p {
+            color: rgba(232, 248, 252, 0.84) !important;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.42);
+        }
+
+        .top-bar-button {
+            color: #effcff !important;
+            text-shadow: 0 1px 6px rgba(0,0,0,.48);
+        }
 </style>
 
 </head>
@@ -8153,6 +8189,10 @@ const topics = {
                         : null;
 
 
+                const relatedPages =
+                    searchData.pages.slice(1);
+
+
                 let localSection = buildSourceExplorer(
                     localTopic,
                     localKey,
@@ -8167,9 +8207,6 @@ const topics = {
                     5. AUTOMATIC EXPLORATION
                     FOR UNCURATED TOPICS
                 */
-
-                const relatedPages =
-                    searchData.pages.slice(1);
 
 
                 let automaticSection = "";
