@@ -9071,3 +9071,89 @@ const topics = {
 </body>
 
 </html>
+<style>
+/* FINAL SOURCE LEGIBILITY PASS — keep the cosmic theme, increase hierarchy contrast */
+.source-explorer,
+.source-explorer * {
+  color-scheme: dark;
+}
+
+.source-explorer-header h3 {
+  color: #f5fdff !important;
+  text-shadow: 0 2px 14px rgba(0,0,0,.55), 0 0 18px rgba(103,210,220,.14);
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+
+.source-explorer-header p {
+  color: #c8e0e7 !important;
+}
+
+.source-lane h4,
+.source-card h4,
+.research-card h4 {
+  color: #f3fbff !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,.48);
+  font-weight: 750;
+}
+
+.source-lane p,
+.source-card p,
+.research-card p {
+  color: #b9d0d8 !important;
+}
+
+.source-badge {
+  color: #bff7fb !important;
+  background: rgba(69,190,201,.16) !important;
+  border-color: rgba(115,212,206,.30) !important;
+  box-shadow: 0 0 14px rgba(69,190,201,.08);
+}
+
+.source-lane,
+.source-card,
+.research-card {
+  background: linear-gradient(145deg, rgba(8,24,39,.92), rgba(6,19,33,.82)) !important;
+  border-color: rgba(148,221,226,.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 10px 26px rgba(0,0,0,.12);
+}
+
+.source-lane-actions a,
+.source-card-link {
+  color: #dffbff !important;
+  background: rgba(50,174,187,.16) !important;
+  border-color: rgba(115,212,206,.28) !important;
+  text-shadow: 0 1px 5px rgba(0,0,0,.3);
+}
+
+.source-lane-actions a:hover,
+.source-card-link:hover {
+  color: #ffffff !important;
+  background: rgba(50,174,187,.28) !important;
+  border-color: rgba(150,231,233,.55) !important;
+}
+
+.research-meta {
+  color: #9de5eb !important;
+  font-weight: 650;
+}
+
+.research-loading {
+  color: #bfd8df !important;
+}
+
+/* Make resource names unmistakable against every themed surface. */
+.source-card a:not(.source-card-link),
+.source-lane a {
+  color: #eefcff !important;
+}
+
+.source-card .save-item-button {
+  color: #174f56 !important;
+}
+
+@media (max-width:650px) {
+  .source-explorer-header h3 { font-size: 1.25rem; }
+  .source-card h4, .source-lane h4 { font-size: 1rem; line-height: 1.35; }
+}
+</style>
