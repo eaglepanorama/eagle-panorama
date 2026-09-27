@@ -5102,6 +5102,8 @@ const topics = {
                 timestamp: Date.now()
             };
 
+            upsertAtlasTopic(pageTitle || query, { language: selectedLanguage });
+
             recentSearches = recentSearches.filter(function(recent) {
                 return !(recent.query === query && recent.language === selectedLanguage);
             });
@@ -5223,11 +5225,13 @@ const topics = {
             savedTopics = [];
             savedResources = [];
             savedBooks = [];
+            atlasStates = [];
 
             setStoredArray("eaglesRecentSearches", []);
             setStoredArray("eaglesSavedTopics", []);
             setStoredArray("eaglesSavedResources", []);
             setStoredArray("eaglesSavedBooks", []);
+            setStoredArray("eaglesKnowledgeAtlas", []);
 
             renderMyLearning();
         }
@@ -5280,6 +5284,186 @@ const topics = {
         }
 
 
+
+        /* ==============================
+           PERSONAL KNOWLEDGE ATLAS
+           ============================== */
+        let atlasStates = getStoredArray("eaglesKnowledgeAtlas");
+
+        function atlasKey(item) {
+            const language = item.language || selectedLanguage || "en";
+            const title = item.title || item.pageTitle || item.query || "";
+            return language + "::" + normalizeMapText(title);
+        }
+
+        function atlasFind(title, language) {
+            const key = (language || selectedLanguage || "en") + "::" + normalizeMapText(title || "");
+            return atlasStates.find(item => atlasKey(item) === key);
+        }
+
+        function saveAtlasStates() {
+            atlasStates = atlasStates.slice(-100);
+            setStoredArray("eaglesKnowledgeAtlas", atlasStates);
+        }
+
+        function upsertAtlasTopic(title, options = {}) {
+            if (!title) return;
+            const language = options.language || selectedLanguage || "en";
+            const key = language + "::" + normalizeMapText(title);
+            let item = atlasStates.find(entry => atlasKey(entry) === key);
+            if (!item) {
+                item = {
+                    title,
+                    language,
+                    status: options.status || "explored",
+                    firstSeen: Date.now(),
+                    lastSeen: Date.now(),
+                    visits: 0
+                };
+                atlasStates.push(item);
+            }
+            item.title = title;
+            item.language = language;
+            item.lastSeen = Date.now();
+            item.visits = (item.visits || 0) + (options.countVisit === false ? 0 : 1);
+            if (options.status && ["explored", "learning", "mastered"].includes(options.status)) {
+                if (options.forceStatus || item.status === "explored") item.status = options.status;
+            }
+            saveAtlasStates();
+        }
+
+        function setAtlasStatus(title, status, language) {
+            if (!title || !["explored", "learning", "mastered"].includes(status)) return;
+            upsertAtlasTopic(title, { language: language || selectedLanguage, status, countVisit: false, forceStatus: true });
+            renderMyLearning();
+        }
+
+        function openAtlasTopic(title, language, level) {
+            searchTopicText(title);
+        }
+
+        function atlasStatusLabel(status) {
+            const labels = {
+                explored: "Explored",
+                learning: "Learning",
+                mastered: "Mastered"
+            };
+            return labels[status] || labels.explored;
+        }
+
+        function atlasTopicCategory(title) {
+            const key = findTopicKey(title || "");
+            if (!key || !topics[key]) return "Other";
+            const localized = getLocalizedTopic(key) || {};
+            return localized.category || key;
+        }
+
+        function renderPersonalKnowledgeAtlas() {
+            const text = currentUI();
+            const states = atlasStates.slice().sort((a,b) => (b.lastSeen || 0) - (a.lastSeen || 0));
+            const explored = states.filter(item => item.status === "explored").length;
+            const learning = states.filter(item => item.status === "learning").length;
+            const mastered = states.filter(item => item.status === "mastered").length;
+            const saved = savedTopics.length;
+
+            const topicCards = states.slice(0, 10).map(item => {
+                const status = item.status || "explored";
+                const key = findTopicKey(item.title || "");
+                const local = key ? getLocalizedTopic(key) : null;
+                const category = local && local.category ? local.category : atlasTopicCategory(item.title);
+                return `
+                    <div class="atlas-topic-card">
+                        <div class="atlas-topic-main">
+                            <p class="atlas-topic-title">${escapeHTML(item.title)}</p>
+                            <p class="atlas-topic-meta">${escapeHTML(category)} · ${Number(item.visits || 0)} visit${Number(item.visits || 0) === 1 ? "" : "s"}</p>
+                            <span class="atlas-status ${status}">${escapeHTML(atlasStatusLabel(status))}</span>
+                        </div>
+                        <div class="atlas-topic-actions">
+                            <button type="button" class="atlas-action" onclick='openAtlasTopic(${JSON.stringify(item.title)}, ${JSON.stringify(item.language || selectedLanguage)})'>Open</button>
+                            ${status !== "learning" ? `<button type="button" class="atlas-action" onclick='setAtlasStatus(${JSON.stringify(item.title)}, "learning", ${JSON.stringify(item.language || selectedLanguage)})'>Learning</button>` : ""}
+                            ${status !== "mastered" ? `<button type="button" class="atlas-action" onclick='setAtlasStatus(${JSON.stringify(item.title)}, "mastered", ${JSON.stringify(item.language || selectedLanguage)})'>Mastered</button>` : ""}
+                        </div>
+                    </div>`;
+            }).join("");
+
+            const regionMap = {};
+            states.forEach(item => {
+                const region = atlasTopicCategory(item.title);
+                regionMap[region] = (regionMap[region] || 0) + 1;
+            });
+            const regions = Object.entries(regionMap).sort((a,b) => b[1] - a[1]).slice(0, 7);
+            const regionHTML = regions.length ? regions.map(([name,count]) => `
+                <div class="atlas-region">
+                    <div><div class="atlas-region-name">${escapeHTML(name)}</div><div class="atlas-region-meta">Topics explored in this area</div></div>
+                    <div class="atlas-region-count">${count}</div>
+                </div>`).join("") : `<div class="atlas-empty">Your atlas is empty for now. Explore a topic and it will appear here automatically.</div>`;
+
+            const connectionPool = [];
+            states.slice(0, 5).forEach(item => {
+                const key = findTopicKey(item.title || "");
+                const local = key ? getLocalizedTopic(key) : null;
+                if (local && Array.isArray(local.related)) {
+                    local.related.slice(0, 2).forEach(related => connectionPool.push({from:item.title, to:related}));
+                }
+                if (local && local.learningPath && local.learningPath.beginner) {
+                    const path = local.learningPath.beginner;
+                    const index = path.findIndex(step => normalizeMapText(step) === normalizeMapText(item.title));
+                    if (index >= 0 && path[index + 1]) connectionPool.push({from:item.title, to:path[index + 1]});
+                }
+            });
+            const seenConnections = new Set();
+            const connections = connectionPool.filter(connection => {
+                const key = normalizeMapText(connection.from) + "::" + normalizeMapText(connection.to);
+                if (seenConnections.has(key)) return false;
+                seenConnections.add(key);
+                return true;
+            }).slice(0, 6);
+            const connectionHTML = connections.length ? connections.map(connection => `
+                <div class="atlas-connection">
+                    <strong>${escapeHTML(connection.from)}</strong><br>
+                    <span>connects to → ${escapeHTML(connection.to)}</span>
+                </div>`).join("") : `<div class="atlas-empty">Connections will appear as your atlas grows.</div>`;
+
+            return `
+                <div class="atlas-section">
+                    <div class="atlas-header">
+                        <div>
+                            <h3>🗺️ Personal Knowledge Atlas</h3>
+                            <p>Your own map of knowledge. Topics become part of the atlas when you explore them; you decide which ones are still being learned and which ones you consider mastered.</p>
+                        </div>
+                    </div>
+                    <div class="atlas-stats">
+                        <div class="atlas-stat"><strong>${explored}</strong><span>Explored</span></div>
+                        <div class="atlas-stat"><strong>${learning}</strong><span>Learning</span></div>
+                        <div class="atlas-stat"><strong>${mastered}</strong><span>Mastered</span></div>
+                        <div class="atlas-stat"><strong>${saved}</strong><span>Saved topics</span></div>
+                    </div>
+                    <div class="atlas-layout">
+                        <div class="atlas-panel">
+                            <h4>Your explored territory</h4>
+                            <p class="atlas-panel-note">Your most recently visited topics appear here. Status is yours to define.</p>
+                            <div class="atlas-topics">${topicCards || `<div class="atlas-empty">Start exploring. Your first topic will become the first point on your atlas.</div>`}</div>
+                        </div>
+                        <div>
+                            <div class="atlas-panel">
+                                <h4>Knowledge regions</h4>
+                                <p class="atlas-panel-note">A quick view of where your exploration is concentrated.</p>
+                                <div class="atlas-region-list">${regionHTML}</div>
+                            </div>
+                            <div class="atlas-panel" style="margin-top:16px;">
+                                <h4>Connections discovered</h4>
+                                <p class="atlas-panel-note">Links drawn from Eagles Panorama's curated relationships.</p>
+                                <div class="atlas-connection-list">${connectionHTML}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="atlas-footer">
+                        <p class="atlas-footer-note">Stored locally in this browser. Nothing here requires an account or backend.</p>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderMyLearning() {
             const dashboard = document.querySelector("#learningDashboard");
             const content = document.querySelector("#learningDashboardContent");
@@ -5289,6 +5473,8 @@ const topics = {
 
             document.querySelector("#myLearningTitle").textContent = text.myLearning;
             document.querySelector("#myLearningDescription").textContent = text.myLearningDescription;
+
+            const atlasHTML = renderPersonalKnowledgeAtlas();
 
             const recentHTML = `
                 <div class="dashboard-group">
@@ -5386,7 +5572,7 @@ const topics = {
                 </div>
             ` : "";
 
-            content.innerHTML = suggestionsHTML + recentHTML + topicsHTML + resourcesHTML + booksHTML + `
+            content.innerHTML = atlasHTML + suggestionsHTML + recentHTML + topicsHTML + resourcesHTML + booksHTML + `
                 <div class="dashboard-footer">
                     <button class="clear-data-button" onclick="clearLearningData()">
                         ${escapeHTML(text.clearData)}
@@ -9156,4 +9342,129 @@ const topics = {
   .source-explorer-header h3 { font-size: 1.25rem; }
   .source-card h4, .source-lane h4 { font-size: 1rem; line-height: 1.35; }
 }
+
+
+        /* ==============================
+           PERSONAL KNOWLEDGE ATLAS v1
+           ============================== */
+        .atlas-section {
+            margin: 18px 0 22px;
+            padding: 22px;
+            border-radius: 20px;
+            background: rgba(10, 24, 42, 0.92);
+            border: 1px solid rgba(125, 211, 252, 0.18);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.18);
+        }
+        .atlas-header {
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:18px;
+            margin-bottom:18px;
+        }
+        .atlas-header h3 { margin:0 0 6px; color:#f4f8ff; }
+        .atlas-header p { margin:0; color:#b9c9dc; max-width:760px; line-height:1.55; }
+        .atlas-stats {
+            display:grid;
+            grid-template-columns:repeat(4, minmax(0,1fr));
+            gap:12px;
+            margin-bottom:18px;
+        }
+        .atlas-stat {
+            padding:15px 16px;
+            border-radius:15px;
+            background:rgba(19, 40, 63, 0.9);
+            border:1px solid rgba(125,211,252,0.14);
+        }
+        .atlas-stat strong { display:block; font-size:1.45rem; color:#f7fbff; }
+        .atlas-stat span { display:block; margin-top:3px; color:#aebfd2; font-size:.86rem; }
+        .atlas-layout {
+            display:grid;
+            grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);
+            gap:16px;
+        }
+        .atlas-panel {
+            padding:18px;
+            border-radius:17px;
+            background:rgba(14, 31, 51, 0.88);
+            border:1px solid rgba(125,211,252,0.12);
+        }
+        .atlas-panel h4 { margin:0 0 12px; color:#eef7ff; }
+        .atlas-panel-note { margin:-5px 0 13px; color:#9fb2c7; font-size:.9rem; line-height:1.45; }
+        .atlas-topics { display:grid; gap:10px; }
+        .atlas-topic-card {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:14px;
+            padding:13px 14px;
+            border-radius:13px;
+            background:rgba(25, 49, 75, 0.82);
+            border:1px solid rgba(125,211,252,0.10);
+        }
+        .atlas-topic-main { min-width:0; }
+        .atlas-topic-title { margin:0; color:#f4f8ff; font-weight:700; }
+        .atlas-topic-meta { margin:4px 0 0; color:#a9bbcf; font-size:.82rem; }
+        .atlas-topic-actions { display:flex; flex-wrap:wrap; gap:7px; justify-content:flex-end; }
+        .atlas-status {
+            display:inline-flex;
+            align-items:center;
+            width:max-content;
+            margin-top:7px;
+            padding:4px 8px;
+            border-radius:999px;
+            font-size:.72rem;
+            font-weight:700;
+            color:#dceeff;
+            background:rgba(61, 145, 190, .22);
+            border:1px solid rgba(125,211,252,.14);
+        }
+        .atlas-status.learning { background:rgba(30, 136, 168, .28); }
+        .atlas-status.mastered { background:rgba(173, 139, 67, .25); border-color:rgba(230, 195, 110, .18); }
+        .atlas-action {
+            border:1px solid rgba(125,211,252,.16);
+            background:rgba(8, 22, 38, .9);
+            color:#dceeff;
+            border-radius:9px;
+            padding:7px 9px;
+            cursor:pointer;
+            font:inherit;
+            font-size:.78rem;
+        }
+        .atlas-action:hover { background:rgba(28, 57, 85, .95); }
+        .atlas-region-list { display:grid; gap:9px; }
+        .atlas-region {
+            display:grid;
+            grid-template-columns:1fr auto;
+            gap:12px;
+            align-items:center;
+            padding:11px 12px;
+            border-radius:11px;
+            background:rgba(25,49,75,.65);
+        }
+        .atlas-region-name { color:#eaf5ff; font-weight:650; }
+        .atlas-region-meta { color:#9fb2c7; font-size:.8rem; margin-top:2px; }
+        .atlas-region-count { color:#bfe9ff; font-weight:700; }
+        .atlas-connection-list { display:grid; gap:8px; margin-top:13px; }
+        .atlas-connection {
+            padding:10px 12px;
+            border-left:3px solid rgba(125,211,252,.5);
+            background:rgba(25,49,75,.55);
+            border-radius:0 10px 10px 0;
+        }
+        .atlas-connection strong { color:#edf7ff; }
+        .atlas-connection span { color:#9fb2c7; font-size:.8rem; }
+        .atlas-empty { color:#9fb2c7; line-height:1.55; padding:8px 0; }
+        .atlas-footer { margin-top:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+        .atlas-footer-note { margin:0; color:#8fa5ba; font-size:.78rem; }
+        @media (max-width: 900px) {
+            .atlas-stats { grid-template-columns:repeat(2, minmax(0,1fr)); }
+            .atlas-layout { grid-template-columns:1fr; }
+        }
+        @media (max-width: 620px) {
+            .atlas-section { padding:16px; }
+            .atlas-header { flex-direction:column; }
+            .atlas-topic-card { align-items:flex-start; flex-direction:column; }
+            .atlas-topic-actions { justify-content:flex-start; }
+        }
 </style>
