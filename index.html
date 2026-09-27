@@ -3775,6 +3775,35 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             .atlas-topic-actions { justify-content:flex-start; }
         }
 
+
+
+
+
+/* ===== v14 — deep knowledge model + evidence lab ===== */
+.deep-knowledge-section{margin:24px 0;padding:22px;border-radius:22px;background:linear-gradient(145deg,rgba(18,36,57,.96),rgba(21,49,67,.94));border:1px solid rgba(115,211,224,.18);color:#eaf7fa;box-shadow:0 16px 40px rgba(0,0,0,.12)}
+.deep-knowledge-header{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:16px}.deep-knowledge-header h3{margin:0;color:#f2fbfd}.deep-knowledge-header p{margin:7px 0 0;color:#bdd5dc;line-height:1.55}.depth-badge{display:inline-flex;padding:7px 10px;border-radius:999px;background:rgba(104,205,219,.1);border:1px solid rgba(104,205,219,.22);color:#c9f0f5;font-size:12px;white-space:nowrap}
+.deep-knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.depth-node{padding:15px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);cursor:pointer;transition:.18s}.depth-node:hover,.depth-node:focus-within{transform:translateY(-2px);border-color:rgba(104,205,219,.38);background:rgba(104,205,219,.07)}.depth-node.current{border-color:rgba(218,190,108,.55);box-shadow:0 0 0 1px rgba(218,190,108,.12) inset}.depth-node-title{font-weight:800;color:#f4fbfd}.depth-node-role{display:inline-block;margin-top:6px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8fd5df}.depth-node p{margin:8px 0 0;color:#c5d9de;line-height:1.5;font-size:13px}.depth-node button{margin-top:10px;background:transparent;border:0;padding:0;color:#9de1ea;font-weight:700;cursor:pointer}
+.depth-relation-list{margin-top:16px;display:grid;gap:9px}.depth-relation{display:grid;grid-template-columns:minmax(120px,.7fr) 1.5fr;gap:12px;align-items:start;padding:12px 14px;border-radius:13px;background:rgba(0,0,0,.13);border-left:3px solid #6dcbd8}.depth-relation strong{color:#edfafd}.depth-relation span{color:#bfd4da;font-size:13px;line-height:1.5}.depth-relation-type{font-size:10px!important;text-transform:uppercase;letter-spacing:.08em;color:#8fd5df!important;margin-top:3px}
+.explanation-quality{margin-top:10px;padding:12px;border-radius:13px;background:rgba(109,203,216,.06);border:1px solid rgba(109,203,216,.15)}.explanation-quality strong{color:#dff7fa}.explanation-quality p{margin:5px 0 0;color:#bfd5da;font-size:13px;line-height:1.5}.evidence-chip{display:inline-flex;padding:5px 8px;border-radius:999px;margin:5px 5px 0 0;font-size:11px;background:rgba(255,255,255,.07);color:#d7eaee}.evidence-chip.hit{background:rgba(115,190,132,.15);color:#bfe8c8}.evidence-chip.miss{background:rgba(221,147,117,.12);color:#efc1af}
+.atlas-evidence-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:14px 0}.atlas-evidence-stat{padding:13px;border-radius:14px;background:rgba(104,205,219,.055);border:1px solid rgba(104,205,219,.13)}.atlas-evidence-stat strong{display:block;font-size:20px;color:#dff8fb}.atlas-evidence-stat span{font-size:12px;color:#78909c}.atlas-experiment{margin-top:14px;padding:16px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}.atlas-experiment h4{margin:0 0 6px}.atlas-experiment p{margin:5px 0;color:#718b97;line-height:1.5;font-size:13px}.atlas-experiment textarea{width:100%;min-height:70px;margin-top:9px}.experiment-result{margin-top:8px;font-size:12px;color:#7fa9b2}.evidence-method-note{margin-top:12px;font-size:12px;color:#718b97;line-height:1.5}
+.knowledge-map-edge.causal{stroke:#3c9e9f;stroke-width:3}.knowledge-map-edge.application{stroke:#b98a45;stroke-width:3}.knowledge-map-edge.method{stroke:#8768a9;stroke-width:3}.knowledge-map-edge.contrast{stroke:#b26b67;stroke-width:3;stroke-dasharray:7 5}.knowledge-map-node.causal circle{fill:rgba(211,239,237,.98);stroke:#3c9e9f}.knowledge-map-node.application circle{fill:rgba(244,231,204,.98);stroke:#b98a45}.knowledge-map-node.method circle{fill:rgba(232,222,242,.98);stroke:#8768a9}.knowledge-map-node.contrast circle{fill:rgba(243,220,218,.98);stroke:#b26b67}.legend-line.causal{background:#3c9e9f}.legend-line.application{background:#b98a45}.legend-line.method{background:#8768a9}.legend-line.contrast{background:#b26b67}
+@media(max-width:720px){.deep-knowledge-header{flex-direction:column}.depth-relation{grid-template-columns:1fr}.deep-knowledge-grid{grid-template-columns:1fr}}
+
+/* v13 — deeper learning evidence, study feedback, relationship explanations */
+.learning-evidence-panel{margin:18px 0;padding:20px;border:1px solid rgba(112,190,207,.28);border-radius:18px;background:rgba(7,18,31,.72)}
+.learning-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.learning-evidence-item{padding:13px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+.learning-evidence-item strong{display:block;font-size:1.05rem}.learning-evidence-item span{display:block;margin-top:4px;opacity:.72;font-size:.86rem}
+.evidence-meter{height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:10px}.evidence-meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#62c7d8,#b8dff0);border-radius:inherit}
+.explain-box{margin-top:14px}.explain-box textarea{width:100%;min-height:105px;resize:vertical;border-radius:12px;border:1px solid rgba(184,223,240,.2);background:rgba(0,0,0,.2);color:inherit;padding:12px;font:inherit}
+.evidence-save{margin-top:9px}.evidence-note{font-size:.85rem;opacity:.7}
+.study-feedback{margin-top:18px;padding:18px;border-radius:16px;background:rgba(184,223,240,.06);border:1px solid rgba(184,223,240,.16)}
+.feedback-buttons{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.feedback-buttons button{border:1px solid rgba(184,223,240,.22);background:rgba(255,255,255,.05);color:inherit;border-radius:999px;padding:8px 13px;cursor:pointer}.feedback-buttons button.active{background:rgba(98,199,216,.2);border-color:rgba(98,199,216,.55)}
+.study-feedback textarea{width:100%;min-height:75px;border-radius:12px;background:rgba(0,0,0,.2);color:inherit;border:1px solid rgba(184,223,240,.2);padding:10px;font:inherit}.feedback-actions{display:flex;gap:8px;align-items:center;margin-top:9px}.feedback-status{font-size:.84rem;opacity:.75}
+.relationship-explainer{margin:14px 0;padding:16px;border-radius:16px;background:rgba(98,199,216,.06);border:1px solid rgba(98,199,216,.16)}
+.relationship-explainer strong{color:#c7e9f2}.relationship-explainer p{margin:6px 0 0;line-height:1.55}
+.atlas-evidence{margin-top:8px;font-size:.82rem;opacity:.78}.atlas-verified{color:#bfe7ef;font-weight:700}.atlas-study-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.atlas-study-tools button{border:1px solid rgba(184,223,240,.2);background:rgba(255,255,255,.05);color:inherit;border-radius:10px;padding:8px 11px;cursor:pointer}
+@media(max-width:760px){.learning-evidence-grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -3901,7 +3930,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                     <div class="presentation-grid three">
                         <div class="presentation-card"><b>🧭 Learning Paths</b><p>Beginner, Intermediate, and Advanced routes with prerequisites and key concepts.</p></div>
                         <div class="presentation-card"><b>🗺️ Knowledge Map</b><p>Explore relationships between subjects and move through connected ideas.</p></div>
-                        <div class="presentation-card"><b>🧠 Knowledge Check</b><p>Answer questions and see explanations rather than only receiving a score.</p></div>
+                        <div class="presentation-card"><b>🧠 Knowledge Verification</b><p>Check, explain, apply, connect, and record evidence of understanding.</p></div>
                         <div class="presentation-card"><b>📚 Better Sources</b><p>Reach reference, educational, research, and book resources from a topic.</p></div>
                         <div class="presentation-card"><b>🗃️ Personal Atlas</b><p>Keep an evolving record of explored, learning, and mastered topics locally.</p></div>
                         <div class="presentation-card"><b>🌐 Languages</b><p>Switch supported interface and Wikipedia languages while exploring.</p></div>
@@ -3934,7 +3963,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                     <h2>A real project should explain what it cannot do.</h2>
                     <div class="presentation-grid two">
                         <div class="presentation-card"><b>Current limitations</b><ul><li>Personal data is stored locally in the browser.</li><li>Live search depends on external public APIs.</li><li>Automatically generated paths are exploration aids, not formally validated curricula.</li><li>The curated knowledge base still covers a limited set of subjects.</li></ul></div>
-                        <div class="presentation-card featured"><b>Next possibilities</b><ul><li>Persistent accounts and cross-device progress.</li><li>More curated subjects and stronger source diversity.</li><li>More sophisticated knowledge relationships.</li><li>Deeper multilingual coverage.</li></ul></div>
+                        <div class="presentation-card featured"><b>Next possibilities</b><ul><li>Persistent accounts and cross-device progress.</li><li>More curated subjects and stronger source diversity.</li><li>More deeply authored knowledge relationships and larger curated knowledge regions.</li><li>Deeper multilingual coverage.</li></ul></div>
                     </div>
                 </article>
 
@@ -5731,14 +5760,14 @@ const topics = {
             item.language = language;
             item.lastSeen = Date.now();
             item.visits = (item.visits || 0) + (options.countVisit === false ? 0 : 1);
-            if (options.status && ["explored", "learning", "mastered"].includes(options.status)) {
+            if (options.status && ["explored", "learning", "mastered", "verified"].includes(options.status)) {
                 if (options.forceStatus || item.status === "explored") item.status = options.status;
             }
             saveAtlasStates();
         }
 
         function setAtlasStatus(title, status, language) {
-            if (!title || !["explored", "learning", "mastered"].includes(status)) return;
+            if (!title || !["explored", "learning", "mastered", "verified"].includes(status)) return;
             upsertAtlasTopic(title, { language: language || selectedLanguage, status, countVisit: false, forceStatus: true });
             renderMyLearning();
         }
@@ -5751,7 +5780,8 @@ const topics = {
             const labels = {
                 explored: "Explored",
                 learning: "Learning",
-                mastered: "Mastered"
+                mastered: "Mastered (self)",
+                verified: "Verified"
             };
             return labels[status] || labels.explored;
         }
@@ -5761,6 +5791,122 @@ const topics = {
             if (!key || !topics[key]) return "Other";
             const localized = getLocalizedTopic(key) || {};
             return localized.category || key;
+        }
+
+        function recordLearningEvidence(title, evidence = {}) {
+            if (!title) return;
+            const language = selectedLanguage || "en";
+            const item = atlasFind(title, language);
+            if (!item) upsertAtlasTopic(title, { language, countVisit: false });
+            const target = atlasFind(title, language);
+            if (!target) return;
+            target.evidence = target.evidence || {};
+            if (typeof evidence.score === "number") target.evidence.score = evidence.score;
+            if (typeof evidence.total === "number") target.evidence.total = evidence.total;
+            if (typeof evidence.explanationSubmitted === "boolean") target.evidence.explanationSubmitted = evidence.explanationSubmitted;
+            if (typeof evidence.connectionCompleted === "boolean") target.evidence.connectionCompleted = evidence.connectionCompleted;
+            if (typeof evidence.explanationText === "string") target.evidence.explanationText = evidence.explanationText;
+            if (typeof evidence.explanationCoverage === "number") target.evidence.explanationCoverage = evidence.explanationCoverage;
+            if (Array.isArray(evidence.matchedConcepts)) target.evidence.matchedConcepts = evidence.matchedConcepts;
+            target.evidence.lastChecked = Date.now();
+            const score = Number(target.evidence.score || 0);
+            const total = Number(target.evidence.total || 0);
+            if (total >= 5 && score >= 4 && target.evidence.explanationSubmitted && target.evidence.connectionCompleted && Number(target.evidence.explanationCoverage || 0) >= 2) {
+                target.status = "verified";
+            }
+            saveAtlasStates();
+            renderMyLearning();
+        }
+
+        function saveLearningExplanation(button) {
+            const box = button.closest(".learning-evidence-panel");
+            if (!box) return;
+            const title = box.dataset.topic || "";
+            const textarea = box.querySelector("textarea");
+            const value = textarea ? textarea.value.trim() : "";
+            if (!value) return;
+            const context = getDeepKnowledgeContext(findTopicKey(title), title);
+            const currentNode = context && context.nodes.find(node => normalizeMapText(node.title) === normalizeMapText(title));
+            const keywords = currentNode ? currentNode.keywords : [];
+            const lower = value.toLowerCase();
+            const matched = keywords.filter(keyword => lower.includes(String(keyword).toLowerCase()));
+            const coverage = new Set(matched.map(item => String(item).toLowerCase())).size;
+            recordLearningEvidence(title, {
+                explanationSubmitted: true,
+                explanationText: value,
+                explanationCoverage: coverage,
+                matchedConcepts: matched
+            });
+            const quality = box.querySelector(".explanation-quality");
+            if (quality) {
+                quality.innerHTML = `<strong>Explanation evidence: ${coverage >= 2 ? "demonstrated" : "still developing"}</strong><p>${coverage >= 2 ? "Your explanation included multiple concepts from the authored knowledge model. That is useful evidence of understanding." : "Your explanation was recorded, but it did not yet contain enough of the key concepts for verification."}</p>${keywords.map(k => `<span class="evidence-chip ${matched.includes(k) ? "hit" : "miss"}">${escapeHTML(k)}</span>`).join("")}`;
+            }
+            const note = box.querySelector(".evidence-save-note");
+            if (note) note.textContent = coverage >= 2 ? "Explanation evidence recorded." : "Explanation recorded; add more key ideas if you want to verify this topic.";
+            button.disabled = true;
+            if (textarea) textarea.disabled = true;
+            updateEvidencePanel(title);
+        }
+
+        function updateEvidencePanel(title) {
+            const box = document.querySelector(`.learning-evidence-panel[data-topic="${CSS.escape(title)}"]`);
+            if (!box) return;
+            const item = atlasFind(title, selectedLanguage) || {};
+            const evidence = item.evidence || {};
+            const score = Number(evidence.score || 0);
+            const total = Number(evidence.total || 5);
+            const pct = Math.max(0, Math.min(100, Math.round((score / total) * 100)));
+            const meter = box.querySelector(".evidence-meter i");
+            if (meter) meter.style.width = pct + "%";
+            const scoreText = box.querySelector("[data-evidence-score]");
+            if (scoreText) scoreText.textContent = `${score} / ${total}`;
+        }
+
+        function saveStudyFeedback(topic, usefulness, note) {
+            const feedback = getStoredArray("eaglesStudyFeedback");
+            feedback.push({ id: Date.now(), topic: topic || "", usefulness: usefulness || "", note: note || "", timestamp: new Date().toISOString() });
+            setStoredArray("eaglesStudyFeedback", feedback.slice(-100));
+        }
+
+        function submitStudyFeedback(button) {
+            const panel = button.closest(".study-feedback");
+            if (!panel) return;
+            const choice = panel.querySelector("button.active")?.dataset.value || "";
+            const note = panel.querySelector("textarea")?.value.trim() || "";
+            if (!choice) return;
+            saveStudyFeedback(panel.dataset.topic || "", choice, note);
+            const status = panel.querySelector(".feedback-status");
+            if (status) status.textContent = "Feedback saved locally. Thank you.";
+            button.disabled = true;
+        }
+
+        function selectStudyFeedback(button) {
+            const panel = button.closest(".study-feedback");
+            panel.querySelectorAll(".feedback-buttons button").forEach(b => b.classList.remove("active"));
+            button.classList.add("active");
+        }
+
+        function saveAtlasStudyNote() {
+            const textarea = document.querySelector("#atlasStudyNote");
+            const note = textarea ? textarea.value.trim() : "";
+            if (!note) return;
+            const notes = getStoredArray("eaglesStudyNotes");
+            notes.push({note, timestamp:new Date().toISOString()});
+            setStoredArray("eaglesStudyNotes", notes.slice(-50));
+            const status = document.querySelector("#atlasStudyNoteStatus");
+            if (status) status.textContent = "Study note saved locally.";
+            if (textarea) textarea.value = "";
+        }
+
+        function downloadStudyEvidence() {
+            const payload = { atlas: atlasStates, feedback: getStoredArray("eaglesStudyFeedback"), studyNotes: getStoredArray("eaglesStudyNotes"), exportedAt: new Date().toISOString(), methodology: "Local prototype evidence. Verification uses quiz performance, connection completion, explanation submission, and transparent keyword coverage against authored topic concepts. User feedback is self-reported." };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "eagles-panorama-study-evidence.json";
+            document.body.appendChild(a); a.click(); a.remove();
+            URL.revokeObjectURL(url);
         }
 
         function renderPersonalKnowledgeAtlas() {
@@ -5782,11 +5928,12 @@ const topics = {
                             <p class="atlas-topic-title">${escapeHTML(item.title)}</p>
                             <p class="atlas-topic-meta">${escapeHTML(category)} · ${Number(item.visits || 0)} visit${Number(item.visits || 0) === 1 ? "" : "s"}</p>
                             <span class="atlas-status ${status}">${escapeHTML(atlasStatusLabel(status))}</span>
+                            ${item.evidence ? `<div class="atlas-evidence">Check: ${Number(item.evidence.score || 0)}/${Number(item.evidence.total || 5)} · ${item.evidence.explanationSubmitted ? "explanation submitted" : "explanation pending"} · ${item.evidence.connectionCompleted ? "connection demonstrated" : "connection pending"}</div>` : ""}
                         </div>
                         <div class="atlas-topic-actions">
                             <button type="button" class="atlas-action" onclick='openAtlasTopic(${JSON.stringify(item.title)}, ${JSON.stringify(item.language || selectedLanguage)})'>Open</button>
-                            ${status !== "learning" ? `<button type="button" class="atlas-action" onclick='setAtlasStatus(${JSON.stringify(item.title)}, "learning", ${JSON.stringify(item.language || selectedLanguage)})'>Learning</button>` : ""}
-                            ${status !== "mastered" ? `<button type="button" class="atlas-action" onclick='setAtlasStatus(${JSON.stringify(item.title)}, "mastered", ${JSON.stringify(item.language || selectedLanguage)})'>Mastered</button>` : ""}
+                            ${status !== "learning" && status !== "verified" ? `<button type="button" class="atlas-action" onclick='setAtlasStatus(${JSON.stringify(item.title)}, "learning", ${JSON.stringify(item.language || selectedLanguage)})'>Learning</button>` : ""}
+                            ${status !== "mastered" && status !== "verified" ? `<button type="button" class="atlas-action" onclick='setAtlasStatus(${JSON.stringify(item.title)}, "mastered", ${JSON.stringify(item.language || selectedLanguage)})'>Mark mastered (self)</button>` : ""}
                         </div>
                     </div>`;
             }).join("");
@@ -5834,7 +5981,8 @@ const topics = {
                     <div class="atlas-header">
                         <div>
                             <h3>🗺️ Personal Knowledge Atlas</h3>
-                            <p>Your own map of knowledge. Topics become part of the atlas when you explore them; you decide which ones are still being learned and which ones you consider mastered.</p>
+                            <p>Your own map of knowledge. Topics become part of the atlas when you explore them. Verified status is earned from learning evidence; self-marked mastery remains separate.</p>
+                            <div class="atlas-study-tools"><button type="button" onclick="downloadStudyEvidence()">Export study evidence</button></div>
                         </div>
                     </div>
                     <div class="atlas-stats">
@@ -5862,8 +6010,32 @@ const topics = {
                             </div>
                         </div>
                     </div>
+                    ${(() => {
+                        const evidenceItems = states.filter(item => item.evidence);
+                        const verified = states.filter(item => item.status === "verified").length;
+                        const avg = evidenceItems.length ? Math.round(evidenceItems.reduce((sum,item) => sum + ((Number(item.evidence.score)||0)/(Number(item.evidence.total)||5)*100),0)/evidenceItems.length) : 0;
+                        const feedback = getStoredArray("eaglesStudyFeedback");
+                        const helpful = feedback.filter(item => item.usefulness === "helpful").length;
+                        return `<div class="atlas-panel" style="margin-top:16px;">
+                            <h4>📊 Learning evidence</h4>
+                            <p class="atlas-panel-note">These are observations from your own sessions, not claims about all learners.</p>
+                            <div class="atlas-evidence-summary">
+                                <div class="atlas-evidence-stat"><strong>${verified}</strong><span>Verified topics</span></div>
+                                <div class="atlas-evidence-stat"><strong>${evidenceItems.length ? avg + "%" : "—"}</strong><span>Average check score</span></div>
+                                <div class="atlas-evidence-stat"><strong>${feedback.length}</strong><span>Feedback responses</span></div>
+                                <div class="atlas-evidence-stat"><strong>${feedback.length ? Math.round(helpful/feedback.length*100)+"%" : "—"}</strong><span>Marked helpful</span></div>
+                            </div>
+                            <div class="atlas-experiment">
+                                <h4>Run a small learner study</h4>
+                                <p>Use this app with a few students, record the same task before and after exploration, then export the evidence. Keep the comparison fair and report the result honestly.</p>
+                                <textarea id="atlasStudyNote" placeholder="Optional study note: task, group, date, or observation..."></textarea>
+                                <button type="button" class="knowledge-check-action" onclick="saveAtlasStudyNote()">Save study note</button>
+                                <span class="experiment-result" id="atlasStudyNoteStatus"></span>
+                            </div>
+                        </div>`;
+                    })()}
                     <div class="atlas-footer">
-                        <p class="atlas-footer-note">Stored locally in this browser. Nothing here requires an account or backend.</p>
+                        <p class="atlas-footer-note">Stored locally in this browser. Nothing here requires an account or backend. Export the evidence before clearing browser data.</p>
                     </div>
                 </div>
             `;
@@ -7658,6 +7830,10 @@ const topics = {
             const conceptOptions = [concepts[0], ...distractorConcepts].slice(0, 3);
             const nextOptions = [nextStep, ...path.filter(item => item !== nextStep && item !== currentTitle).slice(0, 2)].slice(0, 3);
             const prereqOptions = [prerequisites[0], ...prerequisiteDistractors].slice(0, 3);
+            const applicationAnswer = concepts[1] || concepts[0];
+            const applicationOptions = [applicationAnswer, concepts[0], prerequisites[0]].filter((v,i,a) => v && a.indexOf(v) === i).slice(0, 3);
+            const connectionAnswer = related.find(item => normalizeMapText(item) !== normalizeMapText(currentTitle)) || (localTopic.related || [])[0] || nextStep;
+            const connectionOptions = [connectionAnswer, ...related.filter(item => normalizeMapText(item) !== normalizeMapText(connectionAnswer)), ...path].filter((v,i,a) => v && a.indexOf(v) === i).slice(0, 3);
 
             const makeQuestion = (number, question, options, correct, explanation) => `
                 <div class="knowledge-check-question" data-check-question>
@@ -7676,17 +7852,21 @@ const topics = {
             const coreExplanation = `${concepts[0]} is one of the core ideas currently defined for ${currentTitle}. It gives you a key piece of the topic before you move deeper into the subject.`;
             const nextExplanation = `${nextStep} is the next step in the selected ${level} learning path for ${localTopic.title}. The path uses it to build on what you are learning here.`;
             const prereqExplanation = `${prerequisites[0]} is listed as a prerequisite for ${currentTitle}. It is background knowledge that helps make this topic easier to understand.`;
+            const applicationExplanation = `${applicationAnswer} is a concept that helps you reason about ${currentTitle}; applying the topic means using its concepts rather than only recognizing a definition.`;
+            const connectionExplanation = `${connectionAnswer} is connected to ${currentTitle} through the relationships currently defined in Eagles Panorama. The important step is being able to explain why the two belong in the same landscape.`;
 
             return `
                 <div class="knowledge-check" data-knowledge-check data-topic="${escapeHTML(currentTitle)}">
                     <div class="knowledge-check-header">
                         <h3>${escapeHTML(ui.title)}</h3>
                         <p>${escapeHTML(ui.note)}</p>
-                        <span class="knowledge-check-score">${escapeHTML(ui.score)}: <span data-check-score>0 / 3</span></span>
+                        <span class="knowledge-check-score">${escapeHTML(ui.score)}: <span data-check-score>0 / 5</span></span>
                     </div>
                     ${makeQuestion(1, `${ui.core} ${currentTitle}?`, conceptOptions, concepts[0], coreExplanation)}
                     ${makeQuestion(2, ui.next, nextOptions, nextStep, nextExplanation)}
                     ${makeQuestion(3, ui.prereq, prereqOptions, prerequisites[0], prereqExplanation)}
+                    ${makeQuestion(4, `Which idea would you use when applying what you learned about ${currentTitle}?`, applicationOptions, applicationAnswer, applicationExplanation)}
+                    ${makeQuestion(5, `Which subject is meaningfully connected to ${currentTitle}?`, connectionOptions, connectionAnswer, connectionExplanation)}
                     <div class="knowledge-check-footer">
                         <p class="knowledge-check-result" data-check-result>${escapeHTML(ui.result)}</p>
                         <div class="knowledge-check-actions">
@@ -7717,10 +7897,36 @@ const topics = {
             const explanation = question.querySelector(".knowledge-check-explanation");
             if (explanation) explanation.hidden = false;
             const score = card.querySelectorAll('[data-check-question][data-answered="true"] .selected-correct').length;
-            card.querySelector("[data-check-score]").textContent = `${score} / 3`;
-            if (card.querySelectorAll('[data-check-question][data-answered="true"]').length === 3) {
+            card.querySelector("[data-check-score]").textContent = `${score} / 5`;
+            const answered = card.querySelectorAll('[data-check-question][data-answered="true"]').length;
+            if (answered === 5) {
+                const title = card.dataset.topic || "";
+                recordLearningEvidence(title, { score, total: 5, connectionCompleted: card.querySelectorAll('[data-check-question][data-answered="true"]')[4]?.querySelector('.selected-correct') !== null });
                 const continueButton = card.querySelector("[data-check-continue]");
                 if (continueButton) continueButton.disabled = false;
+                const footer = card.querySelector(".knowledge-check-footer");
+                if (footer && !footer.querySelector(".learning-evidence-panel")) {
+                    footer.insertAdjacentHTML("beforebegin", `
+                        <div class="learning-evidence-panel" data-topic="${escapeHTML(title)}">
+                            <strong>Evidence of understanding</strong>
+                            <p class="evidence-note">A quiz score is only one signal. Explain the idea in your own words and connect it to another subject before Eagles Panorama can mark it as verified.</p>
+                            <div class="learning-evidence-grid">
+                                <div class="learning-evidence-item"><strong><span data-evidence-score>${score}</span> / 5</strong><span>Knowledge check</span><div class="evidence-meter"><i style="width:${Math.round(score/5*100)}%"></i></div></div>
+                                <div class="learning-evidence-item"><strong>${card.querySelectorAll('[data-check-question][data-answered="true"]')[4]?.querySelector('.selected-correct') ? "Demonstrated" : "Not yet"}</strong><span>Connection question</span></div>
+                                <div class="learning-evidence-item"><strong>Pending</strong><span>Own explanation</span></div>
+                            </div>
+                            <div class="explain-box"><label><strong>Explain it in your own words</strong></label><textarea placeholder="What is the main idea? Explain how it works and connect it to another idea."></textarea><button type="button" class="knowledge-check-action evidence-save" onclick="saveLearningExplanation(this)">Save explanation</button><span class="evidence-save-note"></span><div class="explanation-quality"><strong>Explanation evidence: pending</strong><p>Your explanation will be compared with key concepts in the authored knowledge model. This is a transparent heuristic, not an AI judgment.</p></div></div>
+                            <p class="evidence-note">Verified = 4/5 or better + an explanation submitted + a demonstrated connection + at least 2 matched key concepts. It is evidence of demonstrated understanding, not a claim of mastery.</p>
+                        </div>`);
+                    footer.insertAdjacentHTML("afterbegin", `
+                        <div class="study-feedback" data-topic="${escapeHTML(title)}">
+                            <strong>Quick learner feedback</strong>
+                            <p>Did this learning flow help you understand the topic?</p>
+                            <div class="feedback-buttons"><button type="button" data-value="helpful" onclick="selectStudyFeedback(this)">Helpful</button><button type="button" data-value="mixed" onclick="selectStudyFeedback(this)">Somewhat</button><button type="button" data-value="not-helpful" onclick="selectStudyFeedback(this)">Not yet</button></div>
+                            <textarea placeholder="Optional: what confused you or helped most?"></textarea>
+                            <div class="feedback-actions"><button type="button" class="knowledge-check-action" onclick="submitStudyFeedback(this)">Save feedback</button><span class="feedback-status"></span></div>
+                        </div>`);
+                }
             }
         }
 
@@ -7915,6 +8121,149 @@ const topics = {
 
 
 
+
+        /* =====================================================
+           DEEP KNOWLEDGE MODEL v14
+           A small, authored semantic layer for the core regions.
+           This is deliberately finite and explicit rather than pretending
+           that automatically generated links are validated knowledge.
+           ===================================================== */
+        const deepKnowledgeRegions = {
+            astronomy: {
+                title: "Astronomy",
+                thesis: "Astronomy connects physical laws to the objects, history, and structure of the universe.",
+                nodes: [
+                    {title:"Mathematics",role:"Foundation",why:"Provides the language for measuring motion, scale, probability, and change.",keywords:["math","mathematics","equation","measurement"]},
+                    {title:"Physics",role:"Foundation",why:"Supplies the physical laws used to model gravity, light, matter, and energy.",keywords:["physics","laws","gravity","energy","matter"]},
+                    {title:"Stars",role:"Core region",why:"Stars are laboratories where gravity, plasma, radiation, and nuclear fusion interact.",keywords:["stars","fusion","nuclear","hydrogen","helium"]},
+                    {title:"Stellar Evolution",role:"Process",why:"Explains how stars change over time as their fuel and internal structure change.",keywords:["stellar evolution","fuel","star","core"]},
+                    {title:"Nucleosynthesis",role:"Bridge",why:"Connects stellar physics to the formation of many chemical elements.",keywords:["nucleosynthesis","elements","heavy elements","fusion"]},
+                    {title:"Galaxies",role:"Structure",why:"Shows how stars, gas, dark matter, and gravity organize matter on larger scales.",keywords:["galaxies","stars","dark matter","gravity"]},
+                    {title:"Cosmology",role:"Large scale",why:"Studies the origin, evolution, and large-scale structure of the universe.",keywords:["cosmology","universe","expansion","big bang"]},
+                    {title:"Planetary Science",role:"Application",why:"Connects astronomy to the formation, composition, and evolution of planetary systems.",keywords:["planets","planetary","formation","systems"]}
+                ],
+                relations:[
+                    ["Mathematics","Physics","method","Mathematics provides quantitative tools for physical models."],["Physics","Stars","causal","Physical laws explain stellar structure and behavior."],["Stars","Stellar Evolution","causal","A star's internal processes change as its fuel and structure evolve."],["Stellar Evolution","Nucleosynthesis","causal","Different stages of stellar evolution enable different element-forming processes."],["Nucleosynthesis","Planetary Science","application","Elements produced in cosmic processes become ingredients of planetary matter."],["Stars","Galaxies","connected","Stars are major visible components of galaxies and trace their structure."],["Galaxies","Cosmology","connected","Galaxy populations provide evidence about large-scale cosmic history."],["Physics","Cosmology","foundation","Cosmological models rely on physical laws and measurements."],["Planetary Science","Life","application","Planetary environments provide the setting for questions about habitability and life."]
+                ]
+            },
+            physics: {
+                title:"Physics", thesis:"Physics builds models that connect measurable phenomena through laws, mathematics, and experiments.",
+                nodes:[
+                    {title:"Mathematics",role:"Foundation",why:"Formalizes physical relationships and lets models make quantitative predictions.",keywords:["mathematics","equations","calculus","probability"]},
+                    {title:"Mechanics",role:"Classical core",why:"Describes motion, forces, momentum, and energy at everyday scales.",keywords:["mechanics","motion","force","momentum","energy"]},
+                    {title:"Electromagnetism",role:"Classical field",why:"Explains electric and magnetic phenomena and the behavior of electromagnetic radiation.",keywords:["electromagnetism","electric","magnetic","fields","light"]},
+                    {title:"Thermodynamics",role:"Macroscopic",why:"Connects energy, heat, work, and the direction of physical processes.",keywords:["thermodynamics","heat","energy","entropy","work"]},
+                    {title:"Quantum Mechanics",role:"Modern foundation",why:"Describes physical systems where classical models cease to be sufficient.",keywords:["quantum","probability","wave","particle"]},
+                    {title:"Relativity",role:"Spacetime",why:"Reframes space, time, motion, and gravity at high speeds and strong gravitational fields.",keywords:["relativity","spacetime","gravity","speed"]},
+                    {title:"Particle Physics",role:"Fundamental",why:"Investigates matter and interactions at the smallest experimentally accessible scales.",keywords:["particles","standard model","matter","interaction"]},
+                    {title:"Statistical Physics",role:"Bridge",why:"Connects microscopic behavior to macroscopic properties using probability and large ensembles.",keywords:["statistical","probability","microstate","macroscopic"]}
+                ],
+                relations:[
+                    ["Mathematics","Mechanics","method","Mechanics expresses motion and forces through mathematical models."],["Mechanics","Relativity","contrast","Classical mechanics becomes an approximation when relativistic effects matter."],["Electromagnetism","Quantum Mechanics","foundation","Quantum theory is needed for a deeper description of electromagnetic interactions."],["Thermodynamics","Statistical Physics","causal","Statistical physics explains macroscopic thermodynamic behavior from microscopic states."],["Quantum Mechanics","Particle Physics","foundation","Particle physics uses quantum principles to describe fundamental interactions."],["Relativity","Cosmology","application","Relativistic gravity is central to modern models of cosmic evolution."],["Mathematics","Quantum Mechanics","method","Quantum states and predictions require mathematical structures and probability."],["Mechanics","Thermodynamics","connected","Both describe physical systems but focus on different kinds of variables and scales."]
+                ]
+            },
+            history: {
+                title:"History", thesis:"History is not simply a timeline: it is an evidence-based reconstruction of past human change.",
+                nodes:[
+                    {title:"Chronology",role:"Foundation",why:"Provides temporal order without by itself explaining causes or significance.",keywords:["chronology","time","dates","period"]},
+                    {title:"Primary Sources",role:"Evidence",why:"Provide direct traces from the period being studied, with context and limitations.",keywords:["primary source","source","document","evidence"]},
+                    {title:"Source Criticism",role:"Method",why:"Tests provenance, context, perspective, reliability, and what a source can actually support.",keywords:["source criticism","bias","context","provenance","reliability"]},
+                    {title:"Historiography",role:"Interpretation",why:"Studies how historians construct, debate, and revise interpretations of the past.",keywords:["historiography","interpretation","historians","debate"]},
+                    {title:"Causation",role:"Reasoning",why:"Separates sequences of events from defensible explanations of why change occurred.",keywords:["causation","cause","effect","explanation"]},
+                    {title:"Comparative History",role:"Connection",why:"Compares societies or periods to reveal patterns and differences without assuming they are identical.",keywords:["comparative","comparison","societies","differences"]},
+                    {title:"Social History",role:"Perspective",why:"Examines lived experience, institutions, work, family, class, and everyday life.",keywords:["social history","society","class","everyday"]},
+                    {title:"Historical Method",role:"Synthesis",why:"Combines source analysis, chronology, comparison, argument, and uncertainty into historical research.",keywords:["historical method","research","argument","evidence"]}
+                ],
+                relations:[
+                    ["Chronology","Causation","method","Knowing what happened first does not by itself establish why it happened."],["Primary Sources","Source Criticism","foundation","Sources must be evaluated before their claims are used as evidence."],["Source Criticism","Historical Method","method","Critical source evaluation is part of defensible historical research."],["Historiography","Historical Method","method","Historiography exposes competing interpretations and the assumptions behind them."],["Causation","Comparative History","method","Comparison can test whether a proposed cause appears across different contexts."],["Social History","Comparative History","connected","Comparing everyday life across societies can reveal both recurring structures and local differences."],["Primary Sources","Social History","application","Diaries, records, objects, and other traces can illuminate lived experience."],["Historiography","Causation","contrast","Different historical interpretations can disagree about which causes deserve emphasis."]
+                ]
+            },
+            philosophy: {
+                title:"Philosophy", thesis:"Philosophy examines concepts and arguments by making assumptions explicit and testing whether conclusions follow.",
+                nodes:[
+                    {title:"Logic",role:"Foundation",why:"Provides tools for identifying valid forms of reasoning and hidden assumptions.",keywords:["logic","argument","valid","premise","conclusion"]},
+                    {title:"Epistemology",role:"Knowledge",why:"Asks what knowledge is, what justifies belief, and how certainty can be assessed.",keywords:["epistemology","knowledge","belief","justification","certainty"]},
+                    {title:"Metaphysics",role:"Reality",why:"Investigates what exists and what kinds of things reality fundamentally contains.",keywords:["metaphysics","reality","existence","being"]},
+                    {title:"Ethics",role:"Value",why:"Examines what makes actions, character, or outcomes morally significant.",keywords:["ethics","moral","action","value","good"]},
+                    {title:"Philosophy of Mind",role:"Mind",why:"Investigates consciousness, mental states, identity, and their relation to the physical world.",keywords:["mind","consciousness","mental","identity"]},
+                    {title:"Philosophy of Science",role:"Method",why:"Examines explanation, evidence, models, theory choice, and the limits of scientific knowledge.",keywords:["science","evidence","theory","explanation","method"]},
+                    {title:"Political Philosophy",role:"Society",why:"Analyzes justice, authority, freedom, rights, and the organization of collective life.",keywords:["political","justice","authority","freedom","rights"]},
+                    {title:"Philosophy of Language",role:"Meaning",why:"Studies meaning, reference, interpretation, and how language relates to thought and reality.",keywords:["language","meaning","reference","interpretation"]}
+                ],
+                relations:[
+                    ["Logic","Epistemology","foundation","Arguments about knowledge depend on reasoning from premises to conclusions."],["Epistemology","Philosophy of Science","application","Questions about evidence and justification shape how scientific claims are evaluated."],["Metaphysics","Philosophy of Mind","connected","Questions about what exists intersect with questions about minds and consciousness."],["Ethics","Political Philosophy","connected","Individual moral reasoning intersects with questions about justice and collective institutions."],["Philosophy of Language","Epistemology","method","What a claim means affects what evidence could support or challenge it."],["Logic","Philosophy of Science","method","Scientific arguments require careful reasoning about models, evidence, and inference."],["Philosophy of Mind","Metaphysics","foundation","Accounts of consciousness often depend on assumptions about what kinds of things minds are."],["Ethics","Epistemology","connected","Moral reasoning raises questions about whether and how moral beliefs can be justified."]
+                ]
+            },
+            technology: {
+                title:"Technology", thesis:"Technology turns knowledge into designed systems, tools, and processes that operate under constraints.",
+                nodes:[
+                    {title:"Algorithms",role:"Foundation",why:"Provide step-by-step procedures for transforming inputs into useful outputs.",keywords:["algorithm","procedure","input","output","complexity"]},
+                    {title:"Data Structures",role:"Foundation",why:"Organize information so software can store, access, and transform it efficiently.",keywords:["data structures","arrays","trees","graphs","data"]},
+                    {title:"Computer Architecture",role:"Hardware",why:"Connects software abstractions to processors, memory, storage, and physical computation.",keywords:["architecture","processor","memory","hardware","cpu"]},
+                    {title:"Operating Systems",role:"Systems",why:"Manage hardware resources and provide abstractions that applications rely on.",keywords:["operating system","process","memory","filesystem","kernel"]},
+                    {title:"Networks",role:"Systems",why:"Allow independent computers and services to communicate and exchange information.",keywords:["network","protocol","internet","communication"]},
+                    {title:"Distributed Systems",role:"Scale",why:"Coordinate computation and data across multiple machines where failures and latency matter.",keywords:["distributed","servers","latency","failure","consensus"]},
+                    {title:"Artificial Intelligence",role:"Application",why:"Uses computational methods to perform tasks involving prediction, generation, or decision-making.",keywords:["artificial intelligence","machine learning","model","prediction"]},
+                    {title:"Human-Computer Interaction",role:"Human layer",why:"Studies how people interact with technology and how interfaces shape use and understanding.",keywords:["interaction","interface","user","usability"]}
+                ],
+                relations:[
+                    ["Algorithms","Data Structures","foundation","Algorithms often depend on how information is represented and accessed."],["Data Structures","Algorithms","method","The chosen representation affects what operations are efficient."],["Computer Architecture","Operating Systems","foundation","Operating systems manage resources exposed by hardware."],["Operating Systems","Networks","connected","Networked applications rely on operating-system facilities and abstractions."],["Networks","Distributed Systems","foundation","Distributed systems operate across communicating machines where network behavior matters."],["Algorithms","Artificial Intelligence","application","Many AI systems are built from algorithms operating on data and models."],["Human-Computer Interaction","Artificial Intelligence","application","AI systems still depend on interfaces through which people interpret and control them."],["Distributed Systems","Artificial Intelligence","foundation","Large AI services can require distributed computation and storage at scale."]
+                ]
+            }
+        };
+
+        function getDeepKnowledgeRegion(key) {
+            return key && deepKnowledgeRegions[key] ? deepKnowledgeRegions[key] : null;
+        }
+
+        function getDeepKnowledgeContext(localKey, centerTitle) {
+            const region = getDeepKnowledgeRegion(localKey);
+            if (region) return region;
+            const wanted = normalizeMapText(centerTitle);
+            for (const candidate of Object.values(deepKnowledgeRegions)) {
+                if (candidate.nodes.some(node => normalizeMapText(node.title) === wanted)) return candidate;
+            }
+            return null;
+        }
+
+        function buildDeepKnowledgeSection(localKey, centerTitle) {
+            const region = getDeepKnowledgeContext(localKey, centerTitle);
+            if (!region) return "";
+            const wanted = normalizeMapText(centerTitle);
+            const nodes = region.nodes;
+            const relations = region.relations;
+            const current = nodes.find(node => normalizeMapText(node.title) === wanted);
+            const visibleNodes = current ? [current, ...nodes.filter(node => node !== current)] : nodes;
+            const nodeHTML = visibleNodes.map(node => `
+                <article class="depth-node ${normalizeMapText(node.title) === wanted ? "current" : ""}">
+                    <div class="depth-node-title">${escapeHTML(node.title)}</div>
+                    <span class="depth-node-role">${escapeHTML(node.role)}</span>
+                    <p>${escapeHTML(node.why)}</p>
+                    <button type="button" onclick='searchTopicText(${JSON.stringify(node.title)})'>Explore this idea →</button>
+                </article>
+            `).join("");
+            const relationHTML = relations.slice(0,10).map(([from,to,type,why]) => `
+                <div class="depth-relation">
+                    <div><strong>${escapeHTML(from)}</strong> → <strong>${escapeHTML(to)}</strong><div class="depth-relation-type">${escapeHTML(type)}</div></div>
+                    <span>${escapeHTML(why)}</span>
+                </div>
+            `).join("");
+            return `
+                <section class="deep-knowledge-section" aria-label="Deep knowledge model">
+                    <div class="deep-knowledge-header">
+                        <div><h3>🌌 Deep Knowledge Region</h3><p>${escapeHTML(region.thesis)}</p></div>
+                        <span class="depth-badge">Authored relationship model</span>
+                    </div>
+                    <div class="deep-knowledge-grid">${nodeHTML}</div>
+                    <div class="depth-relation-list">
+                        <strong>How the ideas connect</strong>
+                        ${relationHTML}
+                    </div>
+                    <p class="evidence-method-note">These relationships are explicitly authored for this prototype. They are deeper than generic related-topic links, but they are still a curated model—not a complete representation of the field.</p>
+                </section>
+            `;
+        }
+
         /* =====================================================
            KNOWLEDGE MAP ENGINE — v1
            Uses the existing curated relationships as the first
@@ -8108,6 +8457,21 @@ const topics = {
             return text.nearbyMap || "Nearby";
         }
 
+        function relationshipExplanation(type, centerTitle, targetTitle) {
+            const templates = {
+                foundation: `${targetTitle} is shown as a foundation for ${centerTitle}: it is background knowledge that makes the current subject easier to understand.`,
+                path: `${targetTitle} belongs to the learning path around ${centerTitle}: it represents a step that helps build understanding progressively.`,
+                connected: `${targetTitle} is a connected subject to ${centerTitle}: exploring the relationship can reveal how ideas from the two areas interact.`,
+                broader: `${targetTitle} is a broader field around ${centerTitle}: it places the current subject inside a larger area of knowledge.`,
+                causal: `${targetTitle} has a process or causal relationship with ${centerTitle}: the connection explains how one idea changes, produces, or constrains another.`,
+                application: `${targetTitle} is an application or consequence of ${centerTitle}: knowledge here is used to explain or build something there.`,
+                method: `${targetTitle} is a method or formal tool connected to ${centerTitle}: it helps describe, test, or reason about the subject.`,
+                contrast: `${targetTitle} provides a contrast with ${centerTitle}: comparing them clarifies where a model or explanation applies and where it does not.`,
+                DISCOVERY: `${targetTitle} came from the surrounding exploration results for ${centerTitle}. Its exact relationship should be investigated rather than assumed.`
+            };
+            return templates[type] || templates.DISCOVERY;
+        }
+
         function buildKnowledgeMap(localTopic, localKey, level, text, relatedPages, summaryData) {
             const centerTitle = (summaryData && summaryData.title)
                 ? summaryData.title
@@ -8141,7 +8505,11 @@ const topics = {
                 foundation: [],
                 path: [],
                 connected: [],
-                broader: []
+                broader: [],
+                causal: [],
+                application: [],
+                method: [],
+                contrast: []
             };
 
             const addRelation = (title, type) => {
@@ -8184,6 +8552,17 @@ const topics = {
                 if (localized.category) {
                     addRelation(localized.category, "broader");
                 }
+
+                const deepRegion = getDeepKnowledgeContext(localKey, centerTitle);
+                if (deepRegion) {
+                    const deepWanted = normalizeMapText(centerTitle);
+                    const deepRelations = deepRegion.relations.filter(([from,to]) => normalizeMapText(from) === deepWanted || normalizeMapText(to) === deepWanted);
+                    deepRelations.forEach(([from,to,type]) => {
+                        const target = normalizeMapText(from) === deepWanted ? to : from;
+                        const mapped = ["causal","application","method","contrast"].includes(type) ? type : "connected";
+                        addRelation(target, mapped);
+                    });
+                }
             } else {
                 (relatedPages || []).slice(0, 10).forEach(page => {
                     addRelation(page.title, "connected");
@@ -8196,12 +8575,17 @@ const topics = {
             if (knowledgeMapPerspective === "in") {
                 selectedGroups = [
                     ...relationGroups.foundation,
-                    ...relationGroups.path
+                    ...relationGroups.path,
+                    ...relationGroups.causal,
+                    ...relationGroups.application,
+                    ...relationGroups.method
                 ];
             } else if (knowledgeMapPerspective === "out") {
                 selectedGroups = [
                     ...relationGroups.broader,
-                    ...relationGroups.connected
+                    ...relationGroups.connected,
+                    ...relationGroups.application,
+                    ...relationGroups.causal
                 ];
             } else {
                 selectedGroups = [
@@ -8227,6 +8611,9 @@ const topics = {
                     ...relationGroups.connected,
                     ...relationGroups.path,
                     ...relationGroups.foundation,
+                    ...relationGroups.causal,
+                    ...relationGroups.application,
+                    ...relationGroups.method,
                     ...relationGroups.broader
                 ];
 
@@ -8339,6 +8726,10 @@ const topics = {
                 path: "LEARNING PATH",
                 connected: "CONNECTED",
                 broader: "BROADER",
+                causal: "CAUSE / PROCESS",
+                application: "APPLICATION",
+                method: "METHOD",
+                contrast: "CONTRAST",
                 DISCOVERY: "DISCOVERY"
             };
 
@@ -8460,11 +8851,20 @@ const topics = {
                         ${escapeHTML(perspective.note)}
                     </p>
 
+                    <div class="relationship-explainer">
+                        <strong>Why these connections matter</strong>
+                        <p>Each relationship has a different meaning. Foundations tell you what supports the topic; learning-path links show progression; cause/process links describe mechanisms; applications show where an idea is used; methods explain how we reason or measure; contrasts show boundaries; broader links place the topic in a larger field.</p>
+                    </div>
+
                     <div class="knowledge-graph-legend" aria-label="Relationship types">
                         <span><i class="legend-line foundation"></i>Foundation</span>
                         <span><i class="legend-line path"></i>Learning path</span>
                         <span><i class="legend-line connected"></i>Connected</span>
                         <span><i class="legend-line broader"></i>Broader</span>
+                        <span><i class="legend-line causal"></i>Cause / process</span>
+                        <span><i class="legend-line application"></i>Application</span>
+                        <span><i class="legend-line method"></i>Method</span>
+                        <span><i class="legend-line contrast"></i>Contrast</span>
                     </div>
 
                     <div class="knowledge-map-viewport">
@@ -8501,7 +8901,7 @@ const topics = {
                                     aria-label="Explore ${escapeHTML(node.title)} — ${escapeHTML(typeLabel[node.type] || node.type || "DISCOVERY")}"
                                 >
                                     <span>${escapeHTML(node.title)}</span>
-                                    <small>${escapeHTML(typeLabel[node.type] || node.type || "DISCOVERY")}</small>
+                                    <small>${escapeHTML(typeLabel[node.type] || node.type || "DISCOVERY")} · ${escapeHTML(relationshipExplanation(node.type || "DISCOVERY", centerTitle, node.title))}</small>
                                 </button>
                             `).join("")}
                         </div>
@@ -9345,6 +9745,9 @@ const topics = {
 
 
                     ${localSection}
+
+
+                    ${buildDeepKnowledgeSection(localKey, summaryData.title)}
 
 
                     ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
