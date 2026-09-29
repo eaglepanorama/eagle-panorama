@@ -3824,6 +3824,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .relationship-explainer strong{color:#c7e9f2}.relationship-explainer p{margin:6px 0 0;line-height:1.55}
 .atlas-evidence{margin-top:8px;font-size:.82rem;opacity:.78}.atlas-verified{color:#bfe7ef;font-weight:700}.atlas-study-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.atlas-study-tools button{border:1px solid rgba(184,223,240,.2);background:rgba(255,255,255,.05);color:inherit;border-radius:10px;padding:8px 11px;cursor:pointer}
 @media(max-width:760px){.learning-evidence-grid{grid-template-columns:1fr}}
+
+/* v16 — learning-loop depth, adaptive compass/bridge, and knowledge-gap guidance */
+.learning-depth-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:10px 14px;border:1px solid rgba(125,211,252,.12);border-radius:14px;background:rgba(7,18,31,.58);color:#8fa8bc;font-size:.76rem}
+.learning-depth-bar .depth-current{color:#e9f8ff;font-weight:800}.learning-depth-bar .depth-path{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.learning-depth-bar .depth-path span{white-space:nowrap}.learning-depth-bar .depth-path b{color:#52738b;font-weight:600}.learning-depth-note{font-size:.72rem;color:#71899d}
+.stage-workspace{display:grid;grid-template-columns:185px minmax(0,1fr) 210px;gap:14px;align-items:start}
+.stage-compass,.stage-bridge{position:sticky;top:154px;padding:14px;border-radius:16px;border:1px solid rgba(125,211,252,.11);background:rgba(8,21,35,.72);box-shadow:0 10px 28px rgba(0,0,0,.08)}
+.stage-compass h4,.stage-bridge h4{margin:0 0 8px;color:#eaf8ff;font-size:.84rem}.stage-compass p,.stage-bridge p{margin:0 0 10px;color:#8fa8bc;font-size:.75rem;line-height:1.5}
+.compass-current{padding:9px;border-radius:11px;background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.1);color:#dff5ff;font-weight:750;font-size:.8rem;margin-bottom:9px}
+.compass-list{display:grid;gap:5px}.compass-list button{width:100%;padding:7px 8px;border:0;border-radius:8px;background:transparent;color:#91aabd;text-align:left;cursor:pointer;font:inherit;font-size:.74rem}.compass-list button:hover{background:rgba(125,211,252,.07);color:#e7f8ff}.compass-list button.current{color:#dff7ff;background:rgba(125,211,252,.09)}
+.stage-bridge .bridge-item{padding:8px 0;border-top:1px solid rgba(255,255,255,.06)}.stage-bridge .bridge-item:first-of-type{border-top:0}.bridge-item strong{display:block;color:#cfe9f5;font-size:.74rem}.bridge-item span{display:block;margin-top:3px;color:#7f98ab;font-size:.72rem;line-height:1.45}
+.learning-gap-panel{margin:16px 0;padding:16px;border-radius:16px;border:1px solid rgba(214,181,107,.18);background:linear-gradient(145deg,rgba(45,38,24,.35),rgba(12,29,44,.55))}.learning-gap-panel h4{margin:0;color:#f0e4c6}.learning-gap-panel p{margin:5px 0 10px;color:#9fb2c2;font-size:.82rem;line-height:1.5}.gap-items{display:flex;flex-wrap:wrap;gap:7px}.gap-item{border:1px solid rgba(214,181,107,.2);background:rgba(214,181,107,.07);color:#e7d9b9;border-radius:999px;padding:7px 10px;font-size:.75rem;cursor:pointer}.gap-item:hover{background:rgba(214,181,107,.13)}
+.learning-gateway{margin:18px 0;padding:17px;border-radius:17px;border:1px solid rgba(125,211,252,.18);background:linear-gradient(145deg,rgba(18,50,68,.72),rgba(10,27,43,.78))}.learning-gateway h4{margin:0;color:#edfaff}.learning-gateway p{margin:5px 0 12px;color:#9eb6c8;line-height:1.5;font-size:.84rem}.gateway-options{display:flex;flex-wrap:wrap;gap:8px}.gateway-option{border:1px solid rgba(125,211,252,.16);background:rgba(255,255,255,.045);color:#cfeaf4;border-radius:10px;padding:9px 11px;cursor:pointer;font:inherit;font-size:.8rem}.gateway-option.correct{border-color:rgba(112,190,207,.45);background:rgba(112,190,207,.12)}.gateway-option.wrong{border-color:rgba(190,112,112,.35);background:rgba(190,112,112,.08)}.gateway-result{margin-top:9px;color:#9fb9c8;font-size:.78rem;min-height:1.2em}
+@media(max-width:1050px){.stage-workspace{grid-template-columns:1fr}.stage-compass,.stage-bridge{position:static}.stage-compass,.stage-bridge{display:block}.stage-compass .compass-list{grid-template-columns:repeat(2,minmax(0,1fr));display:grid}.stage-bridge{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stage-bridge h4,.stage-bridge>p{grid-column:1/-1}.stage-bridge .bridge-item{border-top:0;padding:6px}.learning-depth-note{display:none}}
+@media(max-width:760px){.learning-depth-bar{align-items:flex-start;flex-direction:column}.stage-compass,.stage-bridge{padding:12px}.stage-compass .compass-list{grid-template-columns:1fr 1fr}.stage-bridge{grid-template-columns:1fr}.stage-bridge h4,.stage-bridge>p{grid-column:auto}.learning-gateway{padding:14px}}
+@media(max-width:430px){.stage-compass .compass-list{grid-template-columns:1fr}.learning-depth-bar{font-size:.7rem}.learning-depth-bar .depth-path{gap:4px}}
+
 </style>
 </head>
 
@@ -9742,9 +9758,13 @@ const topics = {
                             <button type="button" class="learning-stage-tab" data-learning-stage="sources" onclick="setLearningStage('sources')"><span class="stage-number">4</span><span><strong>Sources</strong><small>Go deeper</small></span></button>
                         </nav>
                         <div class="learning-stage-progress" aria-hidden="true"><i id="learningStageProgress"></i></div>
+                        <div class="learning-depth-bar" aria-label="Knowledge depth"><div class="depth-path"><span>🌐 Horizon</span><b>→</b><span class="depth-current">🔎 Landmark</span><b>→</b><span>🔬 Detail</span><b>→</b><span>✓ Evidence</span></div><span class="learning-depth-note">Explore the landscape, then prove what you can use.</span></div>
 
                         <section class="learning-stage-page active" data-learning-stage-page="understand" aria-labelledby="learningStageUnderstandTitle">
                             <div class="learning-stage-page-header"><h3 id="learningStageUnderstandTitle">🧠 Understand the subject</h3><p>Start with the core idea, prerequisites, and a sensible path before branching into the wider landscape.</p></div>
+                            <div class="stage-workspace">
+                                ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
+                                <div class="stage-main">
                             <div class="understanding-section">
                                 <h3>🧠 ${localTopic ? "Understand this topic first" : text.overview}</h3>
                                 <div class="understanding-overview-segments">
@@ -9757,29 +9777,52 @@ const topics = {
                                 </div>
                             </div>
                             ${automaticSection}
+                            ${buildLearningGateway(localTopic, localKey, summaryData.title)}
+                            ${buildLearningGapFinder(localTopic, localKey, summaryData.title)}
                             ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
                             <div class="learning-stage-next"><p>Foundation built? Move from understanding the topic to understanding how its ideas fit together.</p><button type="button" onclick="setLearningStage('connect')">Connect ideas →</button></div>
+                                </div>
+                                ${buildLearningBridge(localTopic, localKey, summaryData.title, level, relatedPages, 'understand')}
+                            </div>
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="connect" aria-labelledby="learningStageConnectTitle" hidden>
                             <div class="learning-stage-page-header"><h3 id="learningStageConnectTitle">🗺️ Connect the ideas</h3><p>Relationships turn isolated facts into a mental model. Explore authored connections and then open the full Knowledge Map.</p></div>
+                            <div class="stage-workspace">
+                                ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
+                                <div class="stage-main">
                             ${buildDeepKnowledgeSection(localKey, summaryData.title)}
                             ${relatedSection}
                             <div class="learning-stage-map-card"><h4>Explore the full Knowledge Map</h4><p>Step outside the topic page and navigate its wider network without crowding this learning stage.</p><button type="button" onclick="openKnowledgeMap()">Open Knowledge Map →</button></div>
                             <div class="learning-stage-next"><p>Think you can explain the topic and its connections? Test that understanding instead of relying on exposure.</p><button type="button" onclick="setLearningStage('verify')">Verify understanding →</button></div>
+                                </div>
+                                ${buildLearningBridge(localTopic, localKey, summaryData.title, level, relatedPages, 'connect')}
+                            </div>
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="verify" aria-labelledby="learningStageVerifyTitle" hidden>
                             <div class="learning-stage-page-header"><h3 id="learningStageVerifyTitle">🧠 Verify your understanding</h3><p>Recall, explain, and connect. A result here is evidence of learning activity—not a claim of mastery.</p></div>
+                            <div class="stage-workspace">
+                                ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
+                                <div class="stage-main">
                             ${buildKnowledgeCheck(localTopic, level, relatedPages, summaryData)}
                             <div class="learning-stage-next"><p>Use multiple perspectives to continue beyond the built-in explanation.</p><button type="button" onclick="setLearningStage('sources')">Explore sources →</button></div>
+                                </div>
+                                ${buildLearningBridge(localTopic, localKey, summaryData.title, level, relatedPages, 'verify')}
+                            </div>
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="sources" aria-labelledby="learningStageSourcesTitle" hidden>
                             <div class="learning-stage-page-header"><h3 id="learningStageSourcesTitle">📚 Go deeper with sources</h3><p>Compare reference material, educational resources, research, and books rather than depending on a single explanation.</p></div>
+                            <div class="stage-workspace">
+                                ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
+                                <div class="stage-main">
                             ${localSection}
                             ${booksSection}
                             <div class="source"><a href="${summaryData.content_urls.desktop.page}" target="_blank" rel="noopener noreferrer">${text.source}</a></div>
+                                </div>
+                                ${buildLearningBridge(localTopic, localKey, summaryData.title, level, relatedPages, 'sources')}
+                            </div>
                         </section>
                     </div>
                 `;
@@ -10068,6 +10111,73 @@ const topics = {
 
 
 
+
+        function buildLearningCompass(localTopic, localKey, currentTitle, level, relatedPages) {
+            const localized = localKey ? (getLocalizedTopic(localKey) || localTopic || {}) : (localTopic || {});
+            const prerequisites = Array.isArray(localized.prerequisites) ? localized.prerequisites.slice(0, 4) : [];
+            const related = Array.isArray(localized.related) ? localized.related.slice(0, 4) : (relatedPages || []).slice(0, 4).map(p => p.title);
+            const items = [];
+            prerequisites.forEach(item => items.push({title:item, label:'Foundation'}));
+            related.forEach(item => items.push({title:item, label:'Nearby'}));
+            const unique = [];
+            items.forEach(item => { if (item.title && !unique.some(x => normalizeMapText(x.title) === normalizeMapText(item.title))) unique.push(item); });
+            return `
+                <aside class="stage-compass" aria-label="Learning compass">
+                    <h4>🧭 Compass</h4>
+                    <p>Where this topic sits in the landscape.</p>
+                    <div class="compass-current">${escapeHTML(currentTitle)}</div>
+                    <div class="compass-list">
+                        ${unique.length ? unique.map(item => `<button type="button" title="${escapeHTML(item.label)}" onclick='searchTopicText(${JSON.stringify(item.title)})'>${escapeHTML(item.title)}</button>`).join('') : '<span style="color:#71899d;font-size:.74rem">No nearby authored links yet.</span>'}
+                    </div>
+                </aside>`;
+        }
+
+        function buildLearningBridge(localTopic, localKey, currentTitle, level, relatedPages, stage) {
+            const localized = localKey ? (getLocalizedTopic(localKey) || localTopic || {}) : (localTopic || {});
+            const prerequisites = Array.isArray(localized.prerequisites) ? localized.prerequisites.slice(0,2) : [];
+            const path = Array.isArray(localized.learningPath?.[level]) ? localized.learningPath[level].slice(0,2) : [];
+            const concepts = Array.isArray(localized.concepts) ? localized.concepts.slice(0,2) : [];
+            const data = stage === 'understand'
+                ? [['Start here', prerequisites.join(' • ') || 'Build the core idea first.'], ['Next', path.join(' • ') || 'Move toward the learning path.']]
+                : stage === 'connect'
+                    ? [['Foundation', prerequisites.join(' • ') || 'No curated prerequisites yet.'], ['Connections', concepts.join(' • ') || 'Explore the relationship explanations.']]
+                    : stage === 'verify'
+                        ? [['Recall', 'Answer without relying on the page.'], ['Evidence', 'Explain, apply, and connect what you learned.']]
+                        : [['Reference', 'Compare more than one source.'], ['Next', 'Use research, books, or official material to go deeper.']];
+            return `<aside class="stage-bridge" aria-label="Learning bridge"><h4>🌉 Bridge</h4><p>What helps you move from here.</p>${data.map(([a,b])=>`<div class="bridge-item"><strong>${escapeHTML(a)}</strong><span>${escapeHTML(b)}</span></div>`).join('')}</aside>`;
+        }
+
+        function buildLearningGapFinder(localTopic, localKey, currentTitle) {
+            const localized = localKey ? (getLocalizedTopic(localKey) || localTopic || {}) : (localTopic || {});
+            const prerequisites = Array.isArray(localized.prerequisites) ? localized.prerequisites : [];
+            const gaps = prerequisites.filter(item => {
+                const state = atlasFind(item, selectedLanguage);
+                return !state || !['learning','verified','mastered'].includes(state.status);
+            }).slice(0, 4);
+            if (!gaps.length) return `<div class="learning-gap-panel"><h4>✓ No obvious prerequisite gaps</h4><p>The current Atlas state does not show an unvisited prerequisite from the authored list.</p></div>`;
+            return `<div class="learning-gap-panel"><h4>Possible knowledge gaps</h4><p>These are listed prerequisites you have not recorded as learning yet. They are suggestions, not proof that you lack the knowledge.</p><div class="gap-items">${gaps.map(item=>`<button type="button" class="gap-item" onclick='searchTopicText(${JSON.stringify(item)})'>${escapeHTML(item)} →</button>`).join('')}</div></div>`;
+        }
+
+        function buildLearningGateway(localTopic, localKey, currentTitle) {
+            const localized = localKey ? (getLocalizedTopic(localKey) || localTopic || {}) : (localTopic || {});
+            const concepts = Array.isArray(localized.concepts) ? localized.concepts : [];
+            if (!concepts.length) return '';
+            const answer = concepts[0];
+            const distractors = concepts.slice(1,3);
+            const options = [answer, ...distractors].slice(0,3).sort(() => 0.5 - Math.random());
+            return `<div class="learning-gateway" data-gateway data-answer="${escapeHTML(answer)}"><h4>🧩 Quick gateway: retrieve before you branch</h4><p>Before moving deeper, try to recall one core idea. You can still continue if you are unsure.</p><div class="gateway-options">${options.map(item=>`<button type="button" class="gateway-option" onclick="answerLearningGateway(this)">${escapeHTML(item)}</button>`).join('')}</div><div class="gateway-result" aria-live="polite"></div></div>`;
+        }
+
+        function answerLearningGateway(button) {
+            const box = button.closest('[data-gateway]'); if (!box || box.dataset.done === 'true') return;
+            const answer = normalizeMapText(box.dataset.answer); const chosen = normalizeMapText(button.textContent);
+            box.dataset.done='true'; box.querySelectorAll('.gateway-option').forEach(b=>b.disabled=true);
+            button.classList.add(chosen === answer ? 'correct' : 'wrong');
+            const result = box.querySelector('.gateway-result');
+            result.textContent = chosen === answer ? 'Good recall. You can continue into the connections.' : 'Not quite. That is useful information too—review the core ideas, then continue when ready.';
+        }
+
+
         const LEARNING_STAGES = ["understand", "connect", "verify", "sources"];
 
         function setLearningStage(stage, updateHash = true) {
@@ -10181,3 +10291,4 @@ const topics = {
 
 
 </html>
+
