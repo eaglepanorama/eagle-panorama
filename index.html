@@ -3789,6 +3789,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .knowledge-map-edge.causal{stroke:#3c9e9f;stroke-width:3}.knowledge-map-edge.application{stroke:#b98a45;stroke-width:3}.knowledge-map-edge.method{stroke:#8768a9;stroke-width:3}.knowledge-map-edge.contrast{stroke:#b26b67;stroke-width:3;stroke-dasharray:7 5}.knowledge-map-node.causal circle{fill:rgba(211,239,237,.98);stroke:#3c9e9f}.knowledge-map-node.application circle{fill:rgba(244,231,204,.98);stroke:#b98a45}.knowledge-map-node.method circle{fill:rgba(232,222,242,.98);stroke:#8768a9}.knowledge-map-node.contrast circle{fill:rgba(243,220,218,.98);stroke:#b26b67}.legend-line.causal{background:#3c9e9f}.legend-line.application{background:#b98a45}.legend-line.method{background:#8768a9}.legend-line.contrast{background:#b26b67}
 @media(max-width:720px){.deep-knowledge-header{flex-direction:column}.depth-relation{grid-template-columns:1fr}.deep-knowledge-grid{grid-template-columns:1fr}}
 
+/* v15 — stage-based learning workspace */
+.learning-stage-shell{margin-top:24px}
+.learning-stage-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px;padding:8px;border:1px solid rgba(125,211,252,.16);border-radius:18px;background:rgba(7,18,31,.72);position:sticky;top:72px;z-index:8;backdrop-filter:blur(12px)}
+.learning-stage-tab{display:flex;align-items:center;gap:10px;min-height:58px;padding:10px 12px;border:1px solid transparent;border-radius:13px;background:transparent;color:#8fa8bc;cursor:pointer;text-align:left;font:inherit;transition:.18s ease}
+.learning-stage-tab:hover{background:rgba(125,211,252,.06);color:#dceeff}
+.learning-stage-tab.active{background:linear-gradient(145deg,rgba(35,91,116,.42),rgba(20,50,71,.55));border-color:rgba(125,211,252,.28);color:#eefaff;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.learning-stage-tab .stage-number{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:10px;background:rgba(125,211,252,.08);border:1px solid rgba(125,211,252,.15);font-size:12px;font-weight:800;color:#9edff1}
+.learning-stage-tab.active .stage-number{background:rgba(125,211,252,.16);border-color:rgba(125,211,252,.3);color:#f2fcff}
+.learning-stage-tab strong{display:block;font-size:.9rem;line-height:1.1}.learning-stage-tab small{display:block;margin-top:3px;font-size:.72rem;line-height:1.2;color:#71899d}.learning-stage-tab.active small{color:#a8c7d9}
+.learning-stage-progress{height:3px;margin:-2px 4px 18px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}.learning-stage-progress i{display:block;height:100%;width:25%;border-radius:inherit;background:linear-gradient(90deg,#45c7e8,#d6b56b);transition:width .2s ease}
+.learning-stage-page{display:none;animation:learningStageIn .2s ease}.learning-stage-page.active{display:block}
+.learning-stage-page-header{margin:0 0 18px;padding:18px 20px;border-radius:18px;background:linear-gradient(145deg,rgba(16,34,54,.92),rgba(24,50,67,.88));border:1px solid rgba(125,211,252,.12)}
+.learning-stage-page-header h3{margin:0;color:#edf8ff;font-size:1.35rem}.learning-stage-page-header p{margin:5px 0 0;color:#9fb7ca;line-height:1.55}
+.learning-stage-next{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding:14px 16px;border-radius:15px;border:1px solid rgba(125,211,252,.13);background:rgba(15,31,48,.72)}
+.learning-stage-next p{margin:0;color:#9fb7ca;font-size:.88rem}.learning-stage-next button{border:1px solid rgba(125,211,252,.2);background:rgba(125,211,252,.08);color:#dff6ff;border-radius:10px;padding:9px 12px;cursor:pointer;font:inherit;font-weight:700;white-space:nowrap}
+.learning-stage-map-card{margin-top:18px;padding:18px;border-radius:18px;border:1px solid rgba(125,211,252,.14);background:linear-gradient(145deg,rgba(19,43,62,.78),rgba(13,30,48,.82))}.learning-stage-map-card h4{margin:0;color:#edf8ff}.learning-stage-map-card p{margin:6px 0 12px;color:#9fb7ca;line-height:1.5}.learning-stage-map-card button{border:1px solid rgba(125,211,252,.24);background:rgba(125,211,252,.1);color:#e4f8ff;border-radius:10px;padding:9px 13px;cursor:pointer;font:inherit;font-weight:700}
+@keyframes learningStageIn{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:760px){.learning-stage-nav{grid-template-columns:repeat(2,minmax(0,1fr));top:62px}.learning-stage-tab{min-height:52px}.learning-stage-tab small{display:none}.learning-stage-next{align-items:flex-start;flex-direction:column}.learning-stage-next button{width:100%}}
+@media(max-width:430px){.learning-stage-nav{gap:6px;padding:6px}.learning-stage-tab{padding:8px 7px;gap:7px}.learning-stage-tab .stage-number{width:27px;height:27px;flex-basis:27px}.learning-stage-tab strong{font-size:.78rem}}
+
 /* v13 — deeper learning evidence, study feedback, relationship explanations */
 .learning-evidence-panel{margin:18px 0;padding:20px;border:1px solid rgba(112,190,207,.28);border-radius:18px;background:rgba(7,18,31,.72)}
 .learning-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
@@ -9714,71 +9734,60 @@ const topics = {
 
 
 
-                    <div class="understanding-section">
-                        <h3>🧠 ${localTopic ? "Understand this topic first" : text.overview}</h3>
-                        <div class="understanding-overview-segments">
-                            ${buildOverviewSegments(
-                                localTopic?.overview ||
-                                expandedWikipediaIntro ||
-                                summaryData.extract ||
-                                "No summary was available."
-                            )}
-                        </div>
+                    <div class="learning-stage-shell" id="learningStageShell">
+                        <nav class="learning-stage-nav" aria-label="Learning stages">
+                            <button type="button" class="learning-stage-tab active" data-learning-stage="understand" onclick="setLearningStage('understand')"><span class="stage-number">1</span><span><strong>Understand</strong><small>Build the foundation</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="connect" onclick="setLearningStage('connect')"><span class="stage-number">2</span><span><strong>Connect</strong><small>See the landscape</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="verify" onclick="setLearningStage('verify')"><span class="stage-number">3</span><span><strong>Verify</strong><small>Test your understanding</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="sources" onclick="setLearningStage('sources')"><span class="stage-number">4</span><span><strong>Sources</strong><small>Go deeper</small></span></button>
+                        </nav>
+                        <div class="learning-stage-progress" aria-hidden="true"><i id="learningStageProgress"></i></div>
 
-                        <div class="understanding-highlights">
-                            <div class="understanding-highlight">
-                                <strong>${escapeHTML(text.concepts || "Core ideas")}</strong>
-                                <span>${escapeHTML(localTopic?.concepts?.slice(0, 3).join(" • ") || summaryData.description || "Explore the topic and its connected ideas.")}</span>
+                        <section class="learning-stage-page active" data-learning-stage-page="understand" aria-labelledby="learningStageUnderstandTitle">
+                            <div class="learning-stage-page-header"><h3 id="learningStageUnderstandTitle">🧠 Understand the subject</h3><p>Start with the core idea, prerequisites, and a sensible path before branching into the wider landscape.</p></div>
+                            <div class="understanding-section">
+                                <h3>🧠 ${localTopic ? "Understand this topic first" : text.overview}</h3>
+                                <div class="understanding-overview-segments">
+                                    ${buildOverviewSegments(localTopic?.overview || expandedWikipediaIntro || summaryData.extract || "No summary was available.")}
+                                </div>
+                                <div class="understanding-highlights">
+                                    <div class="understanding-highlight"><strong>${escapeHTML(text.concepts || "Core ideas")}</strong><span>${escapeHTML(localTopic?.concepts?.slice(0, 3).join(" • ") || summaryData.description || "Explore the topic and its connected ideas.")}</span></div>
+                                    <div class="understanding-highlight"><strong>${escapeHTML(text.prerequisites || "Prerequisites")}</strong><span>${escapeHTML(localTopic?.prerequisites?.slice(0, 2).join(" • ") || "No curated prerequisites yet.")}</span></div>
+                                    <div class="understanding-highlight"><strong>${escapeHTML(text.related || "Related")}</strong><span>${escapeHTML(localTopic?.related?.slice(0, 3).join(" • ") || relatedPages.slice(0, 3).map(page => page.title).join(" • ") || "Explore nearby ideas.")}</span></div>
+                                </div>
                             </div>
-                            <div class="understanding-highlight">
-                                <strong>${escapeHTML(text.prerequisites || "Prerequisites")}</strong>
-                                <span>${escapeHTML(localTopic?.prerequisites?.slice(0, 2).join(" • ") || "No curated prerequisites yet.")}</span>
-                            </div>
-                            <div class="understanding-highlight">
-                                <strong>${escapeHTML(text.related || "Related")}</strong>
-                                <span>${escapeHTML(localTopic?.related?.slice(0, 3).join(" • ") || relatedPages.slice(0, 3).map(page => page.title).join(" • ") || "Explore nearby ideas.")}</span>
-                            </div>
-                        </div>
+                            ${automaticSection}
+                            ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
+                            <div class="learning-stage-next"><p>Foundation built? Move from understanding the topic to understanding how its ideas fit together.</p><button type="button" onclick="setLearningStage('connect')">Connect ideas →</button></div>
+                        </section>
 
+                        <section class="learning-stage-page" data-learning-stage-page="connect" aria-labelledby="learningStageConnectTitle" hidden>
+                            <div class="learning-stage-page-header"><h3 id="learningStageConnectTitle">🗺️ Connect the ideas</h3><p>Relationships turn isolated facts into a mental model. Explore authored connections and then open the full Knowledge Map.</p></div>
+                            ${buildDeepKnowledgeSection(localKey, summaryData.title)}
+                            ${relatedSection}
+                            <div class="learning-stage-map-card"><h4>Explore the full Knowledge Map</h4><p>Step outside the topic page and navigate its wider network without crowding this learning stage.</p><button type="button" onclick="openKnowledgeMap()">Open Knowledge Map →</button></div>
+                            <div class="learning-stage-next"><p>Think you can explain the topic and its connections? Test that understanding instead of relying on exposure.</p><button type="button" onclick="setLearningStage('verify')">Verify understanding →</button></div>
+                        </section>
+
+                        <section class="learning-stage-page" data-learning-stage-page="verify" aria-labelledby="learningStageVerifyTitle" hidden>
+                            <div class="learning-stage-page-header"><h3 id="learningStageVerifyTitle">🧠 Verify your understanding</h3><p>Recall, explain, and connect. A result here is evidence of learning activity—not a claim of mastery.</p></div>
+                            ${buildKnowledgeCheck(localTopic, level, relatedPages, summaryData)}
+                            <div class="learning-stage-next"><p>Use multiple perspectives to continue beyond the built-in explanation.</p><button type="button" onclick="setLearningStage('sources')">Explore sources →</button></div>
+                        </section>
+
+                        <section class="learning-stage-page" data-learning-stage-page="sources" aria-labelledby="learningStageSourcesTitle" hidden>
+                            <div class="learning-stage-page-header"><h3 id="learningStageSourcesTitle">📚 Go deeper with sources</h3><p>Compare reference material, educational resources, research, and books rather than depending on a single explanation.</p></div>
+                            ${localSection}
+                            ${booksSection}
+                            <div class="source"><a href="${summaryData.content_urls.desktop.page}" target="_blank" rel="noopener noreferrer">${text.source}</a></div>
+                        </section>
                     </div>
-
-
-
-                    ${localSection}
-
-
-                    ${buildDeepKnowledgeSection(localKey, summaryData.title)}
-
-
-                    ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
-
-                    ${buildKnowledgeCheck(localTopic, level, relatedPages, summaryData)}
-
-                    ${automaticSection}
-
-
-                    ${booksSection}
-
-
-                    ${relatedSection}
-
-
-
-                    <div class="source">
-
-                        <a
-                            href="${summaryData.content_urls.desktop.page}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            ${text.source}
-                        </a>
-
-                    </div>
-
                 `;
 
                 loadLiveResearchSources(topic);
+
+                setLearningStage("understand", false);
+                if (window.location.hash.startsWith("#stage=")) history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 
                 const mapHTML = buildKnowledgeMap(
                     localTopic,
@@ -10053,10 +10062,44 @@ const topics = {
             renderMyLearning();
             setLearningSpaceVisibility(false);
             initStarfield();
+            syncLearningStageFromHash();
         }
 
 
 
+
+        const LEARNING_STAGES = ["understand", "connect", "verify", "sources"];
+
+        function setLearningStage(stage, updateHash = true) {
+            if (!LEARNING_STAGES.includes(stage)) stage = "understand";
+            const shell = document.querySelector("#learningStageShell");
+            if (!shell) return;
+            shell.querySelectorAll("[data-learning-stage-page]").forEach(page => {
+                const active = page.getAttribute("data-learning-stage-page") === stage;
+                page.classList.toggle("active", active);
+                page.hidden = !active;
+            });
+            shell.querySelectorAll("[data-learning-stage]").forEach(button => {
+                const active = button.getAttribute("data-learning-stage") === stage;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-current", active ? "step" : "false");
+            });
+            const progress = document.querySelector("#learningStageProgress");
+            if (progress) progress.style.width = `${((LEARNING_STAGES.indexOf(stage) + 1) / LEARNING_STAGES.length) * 100}%`;
+            if (updateHash) {
+                const nextHash = `#stage=${stage}`;
+                if (window.location.hash !== nextHash) history.pushState({ learningStage: stage }, "", `${window.location.pathname}${window.location.search}${nextHash}`);
+            }
+            shell.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function syncLearningStageFromHash() {
+            const match = window.location.hash.match(/^#stage=(understand|connect|verify|sources)$/);
+            setLearningStage(match ? match[1] : "understand", false);
+        }
+
+        window.addEventListener("hashchange", syncLearningStageFromHash);
+        window.addEventListener("popstate", syncLearningStageFromHash);
 
         let presentationSlideIndex = 0;
 
