@@ -392,6 +392,57 @@
         }
 
 
+        .quick-explore {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px auto 0;
+            padding: 0 4px;
+        }
+
+        .quick-explore-label {
+            color: #a9bdcc;
+            font-size: 13px;
+            margin-right: 2px;
+        }
+
+        .quick-explore button {
+            border: 1px solid rgba(115, 212, 206, 0.22);
+            background: rgba(8, 27, 42, 0.78);
+            color: #dff7ff;
+            border-radius: 999px;
+            padding: 8px 13px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform .18s ease, background .18s ease, border-color .18s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .quick-explore button:hover {
+            transform: translateY(-1px);
+            background: rgba(19, 61, 78, 0.92);
+            border-color: rgba(115, 212, 206, 0.48);
+        }
+
+        .quick-explore button:focus-visible {
+            outline: 2px solid #73d4ce;
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 620px) {
+            .quick-explore {
+                justify-content: flex-start;
+            }
+            .quick-explore-label {
+                width: 100%;
+                margin-bottom: 1px;
+            }
+        }
+
+
         #suggestions {
             position: absolute;
 
@@ -3799,7 +3850,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .compass-current{padding:9px;border-radius:11px;background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.1);color:#dff5ff;font-weight:750;font-size:.8rem;margin-bottom:9px}
 .compass-list{display:grid;gap:5px}.compass-list button{width:100%;padding:7px 8px;border:0;border-radius:8px;background:transparent;color:#91aabd;text-align:left;cursor:pointer;font:inherit;font-size:.74rem}.compass-list button:hover{background:rgba(125,211,252,.07);color:#e7f8ff}.compass-list button.current{color:#dff7ff;background:rgba(125,211,252,.09)}
 .stage-bridge .bridge-item{padding:8px 0;border-top:1px solid rgba(255,255,255,.06)}.stage-bridge .bridge-item:first-of-type{border-top:0}.bridge-item strong{display:block;color:#cfe9f5;font-size:.74rem}.bridge-item span{display:block;margin-top:3px;color:#7f98ab;font-size:.72rem;line-height:1.45}
-.learning-gap-panel{margin:16px 0;padding:16px;border-radius:16px;border:1px solid rgba(214,181,107,.18);background:linear-gradient(145deg,rgba(45,38,24,.35),rgba(12,29,44,.55))}.learning-gap-panel h4{margin:0;color:#f0e4c6}.learning-gap-panel p{margin:5px 0 10px;color:#9fb2c2;font-size:.82rem;line-height:1.5}.gap-items{display:flex;flex-wrap:wrap;gap:7px}.gap-item{border:1px solid rgba(214,181,107,.2);background:rgba(214,181,107,.07);color:#e7d9b9;border-radius:999px;padding:7px 10px;font-size:.75rem;cursor:pointer}.gap-item:hover{background:rgba(214,181,107,.13)}
 .learning-gateway{margin:18px 0;padding:17px;border-radius:17px;border:1px solid rgba(125,211,252,.18);background:linear-gradient(145deg,rgba(18,50,68,.72),rgba(10,27,43,.78))}.learning-gateway h4{margin:0;color:#edfaff}.learning-gateway p{margin:5px 0 12px;color:#9eb6c8;line-height:1.5;font-size:.84rem}.gateway-options{display:flex;flex-wrap:wrap;gap:8px}.gateway-option{border:1px solid rgba(125,211,252,.16);background:rgba(255,255,255,.045);color:#cfeaf4;border-radius:10px;padding:9px 11px;cursor:pointer;font:inherit;font-size:.8rem}.gateway-option.correct{border-color:rgba(112,190,207,.45);background:rgba(112,190,207,.12)}.gateway-option.wrong{border-color:rgba(190,112,112,.35);background:rgba(190,112,112,.08)}.gateway-result{margin-top:9px;color:#9fb9c8;font-size:.78rem;min-height:1.2em}
 @media(max-width:1050px){.stage-workspace{grid-template-columns:1fr}.stage-compass,.stage-bridge{position:static}.stage-compass,.stage-bridge{display:block}.stage-compass .compass-list{grid-template-columns:repeat(2,minmax(0,1fr));display:grid}.stage-bridge{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stage-bridge h4,.stage-bridge>p{grid-column:1/-1}.stage-bridge .bridge-item{border-top:0;padding:6px}.learning-depth-note{display:none}}
 @media(max-width:760px){.learning-depth-bar{align-items:flex-start;flex-direction:column}.stage-compass,.stage-bridge{padding:12px}.stage-compass .compass-list{grid-template-columns:1fr 1fr}.stage-bridge{grid-template-columns:1fr}.stage-bridge h4,.stage-bridge>p{grid-column:auto}.learning-gateway{padding:14px}}
@@ -3855,50 +3905,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .stage-compass,
 .stage-bridge,
 .learning-gateway,
-.learning-gap-panel{
-    position:relative;
-    overflow:hidden;
-    isolation:isolate;
-}
-.panorama-card::before,
-.resource::before,
-.learning-evidence-item::before,
-.learning-gateway::before,
-.learning-gap-panel::before{
-    content:"";
-    position:absolute;
-    inset:-45%;
-    background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(115,212,206,.12),transparent 30%);
-    opacity:0;
-    transition:opacity .25s ease;
-    pointer-events:none;
-    z-index:-1;
-}
-.panorama-card:hover::before,
-.resource:hover::before,
-.learning-evidence-item:hover::before,
-.learning-gateway:hover::before,
-.learning-gap-panel:hover::before{opacity:1}
-.panorama-card,
-.resource,
-.learning-evidence-item{
-    transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-}
-.panorama-card:hover,
-.resource:hover,
-.learning-evidence-item:hover{
-    transform:translateY(-2px);
-    border-color:var(--ep-line-strong);
-    box-shadow:0 12px 30px rgba(0,0,0,.13);
-}
-
-/* Keep long labels and generated source names inside their cards. */
-.panorama-card p,
-.resource a,
-.learning-evidence-item span,
-.bridge-item span,
-.compass-list button,
-.learning-gap-panel p,
+ p,
 .learning-gateway p{
     overflow-wrap:anywhere;
     word-break:break-word;
@@ -3995,7 +4002,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     .tagline{font-size:clamp(17px,5vw,22px);line-height:1.5}
 }
 @media(max-width:520px){
-    .panorama-card,.resource,.learning-evidence-item,.learning-gateway,.learning-gap-panel{padding:14px}
+    .panorama-card,.resource,.learning-evidence-item,.learning-gateway,{padding:14px}
     .result-title h2{font-size:clamp(26px,9vw,38px)}
     .resource-actions{align-items:stretch;flex-direction:column}
     .resource-actions a,.resource-actions button{width:100%}
@@ -4260,6 +4267,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                 </button>
 
 
+            </div>
+
+
+            <div class="quick-explore" aria-label="Quick topic exploration">
+                <span class="quick-explore-label">Try a topic:</span>
+                <button type="button" onclick="searchTopicText('Astronomy')">Try Astronomy</button>
+                <button type="button" onclick="searchTopicText('Physics')">Try Physics</button>
+                <button type="button" onclick="searchTopicText('Philosophy')">Try Philosophy</button>
+                <button type="button" onclick="searchTopicText('Technology')">Try Technology</button>
             </div>
 
 
@@ -9944,7 +9960,7 @@ const topics = {
                             </div>
                             ${automaticSection}
                             ${buildLearningGateway(localTopic, localKey, summaryData.title)}
-                            ${buildLearningGapFinder(localTopic, localKey, summaryData.title)}
+                            
                             ${buildKnowledgeJourney(localTopic, localKey, level, text, relatedPages, summaryData)}
                             <div class="learning-stage-next"><p>Foundation built? Move from understanding the topic to understanding how its ideas fit together.</p><button type="button" onclick="setLearningStage('connect')">Connect ideas →</button></div>
                                 </div>
@@ -10313,17 +10329,6 @@ const topics = {
             return `<aside class="stage-bridge" aria-label="Learning bridge"><h4>🌉 Bridge</h4><p>What helps you move from here.</p>${data.map(([a,b])=>`<div class="bridge-item"><strong>${escapeHTML(a)}</strong><span>${escapeHTML(b)}</span></div>`).join('')}</aside>`;
         }
 
-        function buildLearningGapFinder(localTopic, localKey, currentTitle) {
-            const localized = localKey ? (getLocalizedTopic(localKey) || localTopic || {}) : (localTopic || {});
-            const prerequisites = Array.isArray(localized.prerequisites) ? localized.prerequisites : [];
-            const gaps = prerequisites.filter(item => {
-                const state = atlasFind(item, selectedLanguage);
-                return !state || !['learning','verified','mastered'].includes(state.status);
-            }).slice(0, 4);
-            if (!gaps.length) return `<div class="learning-gap-panel"><h4>✓ No obvious prerequisite gaps</h4><p>The current Atlas state does not show an unvisited prerequisite from the authored list.</p></div>`;
-            return `<div class="learning-gap-panel"><h4>Possible knowledge gaps</h4><p>These are listed prerequisites you have not recorded as learning yet. They are suggestions, not proof that you lack the knowledge.</p><div class="gap-items">${gaps.map(item=>`<button type="button" class="gap-item" onclick='searchTopicText(${JSON.stringify(item)})'>${escapeHTML(item)} →</button>`).join('')}</div></div>`;
-        }
-
         function buildLearningGateway(localTopic, localKey, currentTitle) {
             const localized = localKey ? (getLocalizedTopic(localKey) || localTopic || {}) : (localTopic || {});
             const concepts = Array.isArray(localized.concepts) ? localized.concepts : [];
@@ -10457,7 +10462,7 @@ const topics = {
 <script>
 /* Lightweight pointer spotlight for Bento-style surfaces. */
 (function(){
-    const selectors='.panorama-card,.resource,.learning-evidence-item,.learning-gateway,.learning-gap-panel';
+    const selectors='.panorama-card,.resource,.learning-evidence-item,.learning-gateway,';
     document.addEventListener('pointermove',function(e){
         const el=e.target.closest(selectors);
         if(!el) return;
