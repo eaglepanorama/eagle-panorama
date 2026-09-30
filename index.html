@@ -22,85 +22,50 @@
 
         body {
             margin: 0;
-
             font-family: Arial, sans-serif;
-
             color: #ffffff;
-
             min-height: 100vh;
-
             background:
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(76, 122, 74, 0.34),
-                    transparent 32%
-                ),
-                radial-gradient(
-                    circle at 85% 18%,
-                    rgba(132, 88, 48, 0.30),
-                    transparent 30%
-                ),
-                linear-gradient(
-                    135deg,
-                    #10261c,
-                    #2a2419,
-                    #111a14,
-                    #342416
-                );
-
-            background-size: 180% 180%;
-
-            animation: backgroundFlow 18s ease-in-out infinite alternate;
-
+                radial-gradient(circle at 12% 10%, rgba(69, 199, 232, 0.12), transparent 30%),
+                radial-gradient(circle at 88% 22%, rgba(125, 211, 252, 0.08), transparent 28%),
+                radial-gradient(circle at 50% 100%, rgba(214, 181, 107, 0.055), transparent 34%),
+                linear-gradient(135deg, #071522 0%, #0a1d2d 42%, #0b2635 72%, #071824 100%);
+            background-size: 140% 140%;
+            animation: backgroundFlow 24s ease-in-out infinite alternate;
             overflow-x: hidden;
         }
 
-
         body::before {
             content: "";
-
             position: fixed;
-
-            width: 420px;
-
-            height: 420px;
-
+            width: 520px;
+            height: 520px;
             border-radius: 50%;
-
-            top: 8%;
-
-            left: -110px;
-
-            background: rgba(88, 136, 82, 0.16);
-
-            filter: blur(55px);
-
+            top: -160px;
+            left: -150px;
+            background: rgba(69, 199, 232, 0.07);
+            filter: blur(75px);
             pointer-events: none;
-
-            animation: driftGreen 16s ease-in-out infinite alternate;
-
+            animation: driftGreen 20s ease-in-out infinite alternate;
             z-index: -1;
         }
 
-
         body::after {
             content: "";
-
             position: fixed;
-
-            width: 420px;
-
-            height: 420px;
-
+            width: 520px;
+            height: 520px;
             border-radius: 50%;
+            right: -170px;
+            bottom: -150px;
+            background: rgba(125, 211, 252, 0.055);
+            filter: blur(80px);
+            pointer-events: none;
+            animation: driftBrown 24s ease-in-out infinite alternate;
+            z-index: -1;
+        }
 
-            right: -120px;
-
-            bottom: 10%;
-
-            background: rgba(156, 100, 53, 0.14);
-
-            filter: blur(60px);
+0px);
 
             pointer-events: none;
 
@@ -10503,6 +10468,37 @@ const topics = {
 })();
 </script>
 
+
+<style id="pattern-waves-style">
+  #patternWavesBackground { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -2; opacity: .42; mix-blend-mode: screen; }
+  body > * { position: relative; z-index: 0; }
+  @media (prefers-reduced-motion: reduce) { #patternWavesBackground { opacity: .24; } }
+</style>
+
+<script id="pattern-waves-script">
+(function(){
+  const canvas=document.createElement("canvas"); canvas.id="patternWavesBackground";
+  document.body.prepend(canvas); const ctx=canvas.getContext("2d",{alpha:true}); if(!ctx)return;
+  const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w=0,h=0,dpr=1,t=0,raf=0,visible=true; const pointer={x:-9999,y:-9999,active:false};
+  function resize(){dpr=Math.min(devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;canvas.width=Math.max(1,w*dpr);canvas.height=Math.max(1,h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function move(e){pointer.x=e.clientX;pointer.y=e.clientY;pointer.active=true;}
+  function leave(){pointer.active=false;}
+  function draw(now){raf=0;if(!visible)return; const dt=Math.min(40,now-(draw.last||now));draw.last=now;if(!reduced)t+=dt*.00035;
+    ctx.clearRect(0,0,w,h); const spacing=Math.max(20,Math.min(34,w/42)); const angle=-0.16; const ca=Math.cos(angle),sa=Math.sin(angle);
+    ctx.save();ctx.translate(w/2,h/2);ctx.rotate(angle);ctx.translate(-w/2,-h/2);
+    const extent=Math.hypot(w,h)+spacing*4;
+    for(let row=-extent;row<extent;row+=spacing){ let alpha=.045+.035*(0.5+0.5*Math.sin(row*.025+t*2)); ctx.beginPath();
+      for(let x=-extent;x<=extent;x+=10){ let xx=x, yy=row; const wave=Math.sin(x*.009+t*3+row*.004)*15 + Math.sin(x*.021-t*1.5)*6;
+        if(pointer.active){const px=pointer.x-w/2,py=pointer.y-h/2; const rx=px*ca+py*sa, ry=-px*sa+py*ca; const dx=x-rx,dy=row-ry; const d=Math.hypot(dx,dy); const wake=Math.exp(-(d*d)/(2*170*170)); yy+=Math.sin(d*.055-t*7)*wake*18;}
+        yy+=wave; const sx=xx+w/2,sy=yy+h/2; if(x===-extent)ctx.moveTo(sx,sy);else ctx.lineTo(sx,sy); }
+      ctx.strokeStyle=`rgba(86,205,232,${alpha})`;ctx.lineWidth=1;ctx.stroke(); }
+    ctx.restore(); if(!reduced||pointer.active)raf=requestAnimationFrame(draw); }
+  function start(){if(!raf&&visible)raf=requestAnimationFrame(draw);}
+  addEventListener("resize",()=>{resize();start()},{passive:true}); addEventListener("pointermove",move,{passive:true}); addEventListener("pointerleave",leave,{passive:true});
+  document.addEventListener("visibilitychange",()=>{visible=!document.hidden;if(visible)start()}); resize();start();
+})();
+</script>
 </body>
 
 
