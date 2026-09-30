@@ -3840,6 +3840,207 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media(max-width:760px){.learning-depth-bar{align-items:flex-start;flex-direction:column}.stage-compass,.stage-bridge{padding:12px}.stage-compass .compass-list{grid-template-columns:1fr 1fr}.stage-bridge{grid-template-columns:1fr}.stage-bridge h4,.stage-bridge>p{grid-column:auto}.learning-gateway{padding:14px}}
 @media(max-width:430px){.stage-compass .compass-list{grid-template-columns:1fr}.learning-depth-bar{font-size:.7rem}.learning-depth-bar .depth-path{gap:4px}}
 
+
+
+/* =========================================================
+   VISUAL REFINEMENT — contained cards, responsive media,
+   restrained bento interactions, wave atmosphere, and
+   cinematic heading treatment without adding a React runtime.
+   ========================================================= */
+:root{
+    --ep-line: rgba(125,211,252,.14);
+    --ep-line-strong: rgba(125,211,252,.26);
+    --ep-glass: rgba(7,20,34,.68);
+    --ep-glass-2: rgba(12,31,48,.78);
+    --ep-text-soft: #9db3c2;
+    --ep-ice: #eaf8ff;
+    --ep-teal: #73d4ce;
+}
+
+/* Containment: generated learning blocks must never push their parent wider. */
+#result,
+#result *,
+.stage-workspace,
+.stage-workspace *,
+.learning-evidence-panel,
+.learning-evidence-panel *{
+    min-width:0;
+    max-width:100%;
+}
+
+#result img,
+#result video,
+#result iframe,
+#result svg,
+.stage-workspace img,
+.stage-workspace video,
+.stage-workspace iframe,
+.stage-workspace svg{
+    max-width:100%;
+}
+
+/* Bento-inspired cards: depth and pointer feedback, but no excessive tilt. */
+.panorama-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:stretch;
+}
+.panorama-card,
+.resource,
+.learning-evidence-item,
+.stage-compass,
+.stage-bridge,
+.learning-gateway,
+.learning-gap-panel{
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+}
+.panorama-card::before,
+.resource::before,
+.learning-evidence-item::before,
+.learning-gateway::before,
+.learning-gap-panel::before{
+    content:"";
+    position:absolute;
+    inset:-45%;
+    background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(115,212,206,.12),transparent 30%);
+    opacity:0;
+    transition:opacity .25s ease;
+    pointer-events:none;
+    z-index:-1;
+}
+.panorama-card:hover::before,
+.resource:hover::before,
+.learning-evidence-item:hover::before,
+.learning-gateway:hover::before,
+.learning-gap-panel:hover::before{opacity:1}
+.panorama-card,
+.resource,
+.learning-evidence-item{
+    transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.panorama-card:hover,
+.resource:hover,
+.learning-evidence-item:hover{
+    transform:translateY(-2px);
+    border-color:var(--ep-line-strong);
+    box-shadow:0 12px 30px rgba(0,0,0,.13);
+}
+
+/* Keep long labels and generated source names inside their cards. */
+.panorama-card p,
+.resource a,
+.learning-evidence-item span,
+.bridge-item span,
+.compass-list button,
+.learning-gap-panel p,
+.learning-gateway p{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+/* Interactive controls get a clear target without changing their semantics. */
+.compass-list button,
+.gap-item,
+.gateway-option,
+.learning-stage-tab,
+.learning-stage-next button,
+.save-item-button,
+.feedback-buttons button,
+.atlas-study-tools button{
+    max-width:100%;
+}
+.compass-list button:focus-visible,
+.gap-item:focus-visible,
+.gateway-option:focus-visible,
+.save-item-button:focus-visible,
+.feedback-buttons button:focus-visible,
+.atlas-study-tools button:focus-visible{
+    outline:2px solid rgba(115,212,206,.75);
+    outline-offset:2px;
+}
+
+/* Subtle LineWaves-inspired atmosphere for large empty surfaces. */
+.hero::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-110px;
+    width:min(1200px,110vw);
+    height:260px;
+    transform:translateX(-50%);
+    pointer-events:none;
+    opacity:.16;
+    background:
+        repeating-radial-gradient(ellipse at 50% 110%,transparent 0 22px,rgba(115,212,206,.18) 23px 24px,transparent 25px 42px);
+    mask-image:linear-gradient(to bottom,transparent,black 30%,transparent 90%);
+    -webkit-mask-image:linear-gradient(to bottom,transparent,black 30%,transparent 90%);
+}
+
+/* MaskedHeading-inspired treatment for the main tagline: media-like moving light
+   inside the type, implemented with CSS so the existing vanilla app stays intact. */
+.tagline{
+    background:linear-gradient(110deg,#c7d7e2 15%,#ffffff 35%,#73d4ce 52%,#c7d7e2 72%,#ffffff 90%);
+    background-size:220% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:epHeadingLight 9s ease-in-out infinite alternate;
+    text-shadow:none;
+}
+@keyframes epHeadingLight{
+    from{background-position:0% 50%}
+    to{background-position:100% 50%}
+}
+
+/* LatticeLoader-inspired search state. */
+.loading-tiktok{
+    position:relative;
+    overflow:hidden;
+    min-height:210px;
+    border:1px solid rgba(125,211,252,.12);
+    border-radius:18px;
+    background:linear-gradient(145deg,rgba(9,26,43,.72),rgba(7,18,31,.52));
+}
+.loading-tiktok::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(115,212,206,.16);
+    transform:rotate(45deg);
+    animation:epLoaderGrid 5s linear infinite;
+    pointer-events:none;
+}
+.loading-dots{position:relative;z-index:1}
+.loading-dots span{box-shadow:0 0 16px rgba(115,212,206,.28)}
+@keyframes epLoaderGrid{to{transform:rotate(405deg)}}
+
+/* Result/source containers: prevent horizontal escape at intermediate widths. */
+.result-header{min-width:0;flex-wrap:wrap}
+.result-title{min-width:0;overflow:hidden}
+.result-title h2{overflow-wrap:anywhere}
+.resource-actions{min-width:0;gap:10px;flex-wrap:wrap}
+.learning-resource-links,.source-card-grid,.research-grid,.source-lane-grid{min-width:0}
+
+@media(max-width:760px){
+    .panorama-grid{grid-template-columns:1fr}
+    .result-header{align-items:flex-start}
+    .result-image{width:min(180px,100%);height:auto;max-height:150px}
+    .tagline{font-size:clamp(17px,5vw,22px);line-height:1.5}
+}
+@media(max-width:520px){
+    .panorama-card,.resource,.learning-evidence-item,.learning-gateway,.learning-gap-panel{padding:14px}
+    .result-title h2{font-size:clamp(26px,9vw,38px)}
+    .resource-actions{align-items:stretch;flex-direction:column}
+    .resource-actions a,.resource-actions button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+    .tagline{animation:none}
+    .loading-tiktok::before{animation:none}
+    .panorama-card,.resource,.learning-evidence-item{transition:none}
+}
+
 </style>
 </head>
 
@@ -10287,8 +10488,22 @@ const topics = {
     </script>
 
 
+
+<script>
+/* Lightweight pointer spotlight for Bento-style surfaces. */
+(function(){
+    const selectors='.panorama-card,.resource,.learning-evidence-item,.learning-gateway,.learning-gap-panel';
+    document.addEventListener('pointermove',function(e){
+        const el=e.target.closest(selectors);
+        if(!el) return;
+        const r=el.getBoundingClientRect();
+        el.style.setProperty('--mx',((e.clientX-r.left)/Math.max(1,r.width)*100)+'%');
+        el.style.setProperty('--my',((e.clientY-r.top)/Math.max(1,r.height)*100)+'%');
+    },{passive:true});
+})();
+</script>
+
 </body>
 
 
 </html>
-
