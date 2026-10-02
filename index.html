@@ -4203,7 +4203,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             class="welcome"
             id="welcomeText"
         >
-            WELCOME TO THE KNOWLEDGE LANDSCAPE
+            WHAT DO YOU WANT TO UNDERSTAND?
         </div>
 
 
@@ -4220,8 +4220,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             class="tagline"
             id="taglineText"
         >
-            Take a step back. See the bigger picture.
-            Discover ideas, connect subjects, and learn something new.
+            Choose a concept and let Eagles Panorama guide you from the idea itself to its foundations, connections, understanding, and next step.
         </div>
 
 
@@ -4234,7 +4233,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                 <input
                     id="searchInput"
                     type="text"
-                    placeholder="What do you want to learn?"
+                    placeholder="Search a concept, such as Black Holes or Gravity"
                     oninput="getSuggestions()"
                     onkeydown="handleEnter(event)"
                     autocomplete="off"
@@ -4260,22 +4259,31 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
                 <button
                     type="button"
-                    onclick="exploreTopic()"
+                    onclick="exploreTopic(true)"
                     id="exploreButton"
                 >
-                    Explore
+                    Explore the Knowledge Map
                 </button>
 
 
             </div>
 
 
-            <div class="quick-explore" aria-label="Quick topic exploration">
-                <span class="quick-explore-label">Try a topic:</span>
-                <button type="button" onclick="searchTopicText('Astronomy')">Try Astronomy</button>
-                <button type="button" onclick="searchTopicText('Physics')">Try Physics</button>
-                <button type="button" onclick="searchTopicText('Philosophy')">Try Philosophy</button>
-                <button type="button" onclick="searchTopicText('Technology')">Try Technology</button>
+            <div class="quick-explore" aria-label="Example concepts to explore">
+                <span class="quick-explore-label">Start with:</span>
+                <button type="button" onclick="searchTopicText('Black Holes')">Black Holes</button>
+                <button type="button" onclick="searchTopicText('Life')">Life</button>
+                <button type="button" onclick="searchTopicText('Gravity')">Gravity</button>
+                <button type="button" onclick="searchTopicText('Consciousness')">Consciousness</button>
+                <button type="button" onclick="searchTopicText('Music')">Music</button>
+            </div>
+
+            <div class="home-learning-journey" aria-label="Eagles Panorama learning journey">
+                <span class="journey-step active">1 <b>Explore</b></span><i>→</i>
+                <span class="journey-step">2 <b>Understand</b></span><i>→</i>
+                <span class="journey-step">3 <b>Connect</b></span><i>→</i>
+                <span class="journey-step">4 <b>Verify</b></span><i>→</i>
+                <span class="journey-step">5 <b>Go deeper</b></span>
             </div>
 
 
@@ -6429,7 +6437,7 @@ const topics = {
 
             en: {
                 welcome:
-                    "WELCOME TO THE KNOWLEDGE LANDSCAPE",
+                    "WHAT DO YOU WANT TO UNDERSTAND?",
 
                 tagline:
                     "Take a step back. See the bigger picture. Discover ideas, connect subjects, and learn something new.",
@@ -7384,6 +7392,17 @@ const topics = {
 
             const mapPage = document.querySelector("#knowledgeMapPage");
             if (mapPage) mapPage.classList.toggle("app-page-hidden", !mapOpen);
+        }
+
+
+        function returnToExploreHome() {
+            setLearningSpaceVisibility(false);
+            const input = document.querySelector("#searchInput");
+            if (input) {
+                input.focus();
+                input.select();
+            }
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
 
@@ -9206,7 +9225,7 @@ const topics = {
             }
         }
 
-        async function exploreTopic() {
+        async function exploreTopic(openMapAfter = false) {
 
 
             const topic =
@@ -9933,17 +9952,18 @@ const topics = {
 
 
                     <div class="learning-stage-shell" id="learningStageShell">
-                        <nav class="learning-stage-nav" aria-label="Learning stages">
-                            <button type="button" class="learning-stage-tab active" data-learning-stage="understand" onclick="setLearningStage('understand')"><span class="stage-number">1</span><span><strong>Understand</strong><small>Build the foundation</small></span></button>
-                            <button type="button" class="learning-stage-tab" data-learning-stage="connect" onclick="setLearningStage('connect')"><span class="stage-number">2</span><span><strong>Connect</strong><small>See the landscape</small></span></button>
-                            <button type="button" class="learning-stage-tab" data-learning-stage="verify" onclick="setLearningStage('verify')"><span class="stage-number">3</span><span><strong>Verify</strong><small>Test your understanding</small></span></button>
-                            <button type="button" class="learning-stage-tab" data-learning-stage="sources" onclick="setLearningStage('sources')"><span class="stage-number">4</span><span><strong>Sources</strong><small>Go deeper</small></span></button>
+                        <nav class="learning-stage-nav" aria-label="Learning journey">
+                            <button type="button" class="learning-stage-tab learning-stage-home" onclick="returnToExploreHome()"><span class="stage-number">1</span><span><strong>Explore</strong><small>Choose a concept</small></span></button>
+                            <button type="button" class="learning-stage-tab active" data-learning-stage="understand" onclick="setLearningStage('understand')"><span class="stage-number">2</span><span><strong>Understand</strong><small>Build the foundation</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="connect" onclick="setLearningStage('connect')"><span class="stage-number">3</span><span><strong>Connect</strong><small>See the landscape</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="verify" onclick="setLearningStage('verify')"><span class="stage-number">4</span><span><strong>Verify</strong><small>Test your understanding</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="sources" onclick="setLearningStage('sources')"><span class="stage-number">5</span><span><strong>Go deeper</strong><small>Follow the next path</small></span></button>
                         </nav>
                         <div class="learning-stage-progress" aria-hidden="true"><i id="learningStageProgress"></i></div>
-                        <div class="learning-depth-bar" aria-label="Knowledge depth"><div class="depth-path"><span>🌐 Horizon</span><b>→</b><span class="depth-current">🔎 Landmark</span><b>→</b><span>🔬 Detail</span><b>→</b><span>✓ Evidence</span></div><span class="learning-depth-note">Explore the landscape, then prove what you can use.</span></div>
+                        <div class="learning-journey-context" aria-label="Learning journey"><span class="current">Understand</span><b>→</b><span>Connect</span><b>→</b><span>Verify</span><b>→</b><span>Go deeper</span></div>
 
                         <section class="learning-stage-page active" data-learning-stage-page="understand" aria-labelledby="learningStageUnderstandTitle">
-                            <div class="learning-stage-page-header"><h3 id="learningStageUnderstandTitle">🧠 Understand the subject</h3><p>Start with the core idea, prerequisites, and a sensible path before branching into the wider landscape.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageUnderstandTitle">🧠 Understand this concept</h3><p>Start with what it is, why it matters, and what you should know first.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -9969,7 +9989,7 @@ const topics = {
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="connect" aria-labelledby="learningStageConnectTitle" hidden>
-                            <div class="learning-stage-page-header"><h3 id="learningStageConnectTitle">🗺️ Connect the ideas</h3><p>Relationships turn isolated facts into a mental model. Explore authored connections and then open the full Knowledge Map.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageConnectTitle">🗺️ Connect the ideas</h3><p>See how this concept relates to prerequisites, broader ideas, deeper topics, and applications.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -9983,7 +10003,7 @@ const topics = {
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="verify" aria-labelledby="learningStageVerifyTitle" hidden>
-                            <div class="learning-stage-page-header"><h3 id="learningStageVerifyTitle">🧠 Verify your understanding</h3><p>Recall, explain, and connect. A result here is evidence of learning activity—not a claim of mastery.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageVerifyTitle">🧠 Can you explain it?</h3><p>Use reasoning, application, and relationships to check whether the idea actually makes sense to you.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -9995,7 +10015,7 @@ const topics = {
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="sources" aria-labelledby="learningStageSourcesTitle" hidden>
-                            <div class="learning-stage-page-header"><h3 id="learningStageSourcesTitle">📚 Go deeper with sources</h3><p>Compare reference material, educational resources, research, and books rather than depending on a single explanation.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageSourcesTitle">📚 Go deeper</h3><p>Choose a meaningful next concept or use reliable sources to continue learning beyond this topic.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -10040,6 +10060,10 @@ const topics = {
                                 </div>
                             </div>
                         </div>`;
+                }
+
+                if (openMapAfter && knowledgeMapState) {
+                    openKnowledgeMap();
                 }
 
 
@@ -10508,3 +10532,40 @@ const topics = {
 
 
 </html>
+
+/* Core experience: make the product journey visible without adding visual noise. */
+.hero .welcome {
+  font-size:clamp(1.5rem,3.2vw,2.65rem);
+  letter-spacing:.015em;
+  font-weight:800;
+}
+.hero .tagline {
+  max-width:760px;
+  margin-inline:auto;
+}
+#exploreButton {
+  min-width:220px;
+  font-weight:800;
+}
+.home-learning-journey, .learning-journey-context {
+  display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
+  color:#7893a7; font-size:.78rem;
+}
+.home-learning-journey { margin:18px auto 0; max-width:820px; }
+.home-learning-journey .journey-step {
+  display:inline-flex; align-items:center; gap:5px; padding:7px 10px;
+  border:1px solid rgba(125,211,252,.12); border-radius:999px;
+  background:rgba(7,18,31,.42);
+}
+.home-learning-journey .journey-step.active, .learning-journey-context .current {
+  color:#e9f8ff; border-color:rgba(69,199,232,.35); background:rgba(22,143,138,.16);
+}
+.home-learning-journey i, .learning-journey-context b { color:#46677e; font-style:normal; }
+.learning-journey-context { justify-content:flex-start; margin:0 0 14px; padding:9px 12px; border:1px solid rgba(125,211,252,.12); border-radius:12px; background:rgba(7,18,31,.45); }
+.learning-stage-home { opacity:.86; }
+.learning-stage-home:hover { opacity:1; }
+@media(max-width:760px){
+  .home-learning-journey { justify-content:flex-start; }
+  .home-learning-journey i { display:none; }
+  .learning-journey-context { justify-content:flex-start; }
+}
