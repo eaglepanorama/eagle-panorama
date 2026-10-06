@@ -4013,6 +4013,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     .panorama-card,.resource,.learning-evidence-item{transition:none}
 }
 
+
+/* ===== Eagles Panorama architecture layer ===== */
+.architecture-room{margin:28px 0 34px;padding:24px;border:1px solid rgba(125,211,252,.22);border-radius:24px;background:linear-gradient(145deg,rgba(8,28,43,.92),rgba(7,22,35,.84));box-shadow:0 18px 60px rgba(0,0,0,.18)}
+.architecture-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap}.architecture-kicker{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:#7dd3fc;font-weight:800}.architecture-head h2{margin:6px 0 8px;font-size:clamp(1.35rem,2.8vw,2.1rem)}.architecture-head p{margin:0;color:#a9c0d1;max-width:760px;line-height:1.65}.architecture-why{margin-top:16px;padding:13px 15px;border-left:3px solid #56cde8;background:rgba(86,205,232,.07);border-radius:12px;color:#dcecf5}
+.architecture-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(250px,.6fr);gap:18px;margin-top:20px}.architecture-map{min-height:260px;padding:18px;border-radius:18px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08)}
+.architecture-mountain{display:flex;flex-direction:column;gap:9px;max-width:700px;margin:auto}.arch-level{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 14px;border:1px solid rgba(125,211,252,.16);border-radius:14px;background:rgba(12,40,55,.7)}.arch-level.locked{opacity:.62}.arch-level.unlocked{border-color:rgba(86,205,232,.42)}.arch-level.summit{background:linear-gradient(135deg,rgba(86,205,232,.12),rgba(214,181,107,.08))}.arch-num{font-weight:900;color:#7dd3fc}.arch-level strong{display:block}.arch-level small{display:block;color:#93aebf;margin-top:3px;line-height:1.4}.arch-gate{font-size:.78rem;padding:8px 10px;border-radius:10px;border:1px solid rgba(125,211,252,.28);background:rgba(125,211,252,.07);color:#e8f7ff;cursor:pointer}.arch-gate:hover{background:rgba(125,211,252,.13)}
+.archipelago{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}.arch-island{min-height:105px;padding:14px;border-radius:18px;background:rgba(18,48,62,.78);border:1px solid rgba(125,211,252,.18);position:relative}.arch-island:nth-child(2n){transform:translateY(12px)}.arch-island:nth-child(3n){transform:translateY(-8px)}.arch-island strong{display:block;margin-bottom:7px}.arch-island small{color:#9db5c5;line-height:1.45}.arch-connector{grid-column:1/-1;text-align:center;color:#79b9ce;font-size:.8rem}
+.arch-hybrid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;align-items:center}.hybrid-ridge{padding:14px;border-radius:16px;background:linear-gradient(180deg,rgba(86,205,232,.13),rgba(86,205,232,.025));border:1px solid rgba(86,205,232,.22)}.hybrid-ridge .arch-level{margin-bottom:8px}.hybrid-water{padding:16px;border-radius:18px;background:radial-gradient(circle at 30% 25%,rgba(125,211,252,.12),transparent 38%),rgba(10,42,57,.65);border:1px solid rgba(125,211,252,.16)}
+.architecture-side{display:flex;flex-direction:column;gap:12px}.architecture-side-card{padding:15px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}.architecture-side-card strong{display:block;margin-bottom:7px}.architecture-side-card p{margin:0;color:#9fb7c7;line-height:1.55;font-size:.9rem}.architecture-primary{width:100%;margin-top:10px;padding:12px 15px;border:0;border-radius:12px;background:#56cde8;color:#06202c;font-weight:900;cursor:pointer}.architecture-primary:hover{filter:brightness(1.06)}
+.architecture-gate{margin-top:18px;padding:18px;border-radius:18px;border:1px solid rgba(214,181,107,.28);background:rgba(214,181,107,.055)}.architecture-gate h3{margin:0 0 7px}.architecture-gate p{color:#b7c8d3;line-height:1.6}.architecture-gate textarea{width:100%;min-height:125px;box-sizing:border-box;margin:10px 0;padding:12px;border-radius:12px;border:1px solid rgba(125,211,252,.2);background:#071824;color:#eef8fc;resize:vertical;font:inherit}.architecture-gate-actions{display:flex;gap:9px;flex-wrap:wrap}.architecture-secondary{padding:10px 13px;border-radius:10px;border:1px solid rgba(125,211,252,.24);background:rgba(125,211,252,.06);color:#dff5ff;cursor:pointer}.architecture-feedback{margin-top:12px;padding:12px;border-radius:12px;background:rgba(86,205,232,.06);line-height:1.55}.architecture-feedback.good{border:1px solid rgba(86,205,232,.3)}.architecture-feedback.needs{border:1px solid rgba(214,181,107,.3)}
+.architecture-note{margin-top:13px;color:#8ea8b8;font-size:.82rem}.architecture-badge{display:inline-flex;padding:6px 9px;border-radius:999px;background:rgba(125,211,252,.08);color:#a9def0;border:1px solid rgba(125,211,252,.16);font-size:.72rem;font-weight:800}
+@media(max-width:760px){.architecture-layout,.arch-hybrid{grid-template-columns:1fr}.archipelago{grid-template-columns:1fr}.arch-island:nth-child(2n),.arch-island:nth-child(3n){transform:none}.arch-level{grid-template-columns:34px minmax(0,1fr)}.arch-gate{grid-column:2;justify-self:start}.architecture-room{padding:17px}.architecture-head h2{font-size:1.45rem}}
+@media(prefers-reduced-motion:reduce){.arch-island:nth-child(2n),.arch-island:nth-child(3n){transform:none}}
+
 </style>
 </head>
 
@@ -4203,7 +4217,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             class="welcome"
             id="welcomeText"
         >
-            WELCOME TO THE KNOWLEDGE LANDSCAPE
+            WHAT DO YOU WANT TO UNDERSTAND?
         </div>
 
 
@@ -4220,8 +4234,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             class="tagline"
             id="taglineText"
         >
-            Take a step back. See the bigger picture.
-            Discover ideas, connect subjects, and learn something new.
+            Choose a concept and let Eagles Panorama guide you from the idea itself to its foundations, connections, understanding, and next step.
         </div>
 
 
@@ -4234,7 +4247,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                 <input
                     id="searchInput"
                     type="text"
-                    placeholder="What do you want to learn?"
+                    placeholder="Search a concept, such as Black Holes or Gravity"
                     oninput="getSuggestions()"
                     onkeydown="handleEnter(event)"
                     autocomplete="off"
@@ -4260,22 +4273,31 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
                 <button
                     type="button"
-                    onclick="exploreTopic()"
+                    onclick="exploreTopic(true)"
                     id="exploreButton"
                 >
-                    Explore
+                    Explore the Knowledge Map
                 </button>
 
 
             </div>
 
 
-            <div class="quick-explore" aria-label="Quick topic exploration">
-                <span class="quick-explore-label">Try a topic:</span>
-                <button type="button" onclick="searchTopicText('Astronomy')">Try Astronomy</button>
-                <button type="button" onclick="searchTopicText('Physics')">Try Physics</button>
-                <button type="button" onclick="searchTopicText('Philosophy')">Try Philosophy</button>
-                <button type="button" onclick="searchTopicText('Technology')">Try Technology</button>
+            <div class="quick-explore" aria-label="Example concepts to explore">
+                <span class="quick-explore-label">Start with:</span>
+                <button type="button" onclick="searchTopicText('Black Holes')">Black Holes</button>
+                <button type="button" onclick="searchTopicText('Life')">Life</button>
+                <button type="button" onclick="searchTopicText('Gravity')">Gravity</button>
+                <button type="button" onclick="searchTopicText('Consciousness')">Consciousness</button>
+                <button type="button" onclick="searchTopicText('Music')">Music</button>
+            </div>
+
+            <div class="home-learning-journey" aria-label="Eagles Panorama learning journey">
+                <span class="journey-step active">1 <b>Explore</b></span><i>→</i>
+                <span class="journey-step">2 <b>Understand</b></span><i>→</i>
+                <span class="journey-step">3 <b>Connect</b></span><i>→</i>
+                <span class="journey-step">4 <b>Verify</b></span><i>→</i>
+                <span class="journey-step">5 <b>Go deeper</b></span>
             </div>
 
 
@@ -4669,6 +4691,82 @@ const topics = {
             }
         ]
 
+    },
+
+
+    blackHoles: {
+        aliases: {
+            en: ["black holes", "black hole"],
+            fr: ["trous noirs", "trou noir"],
+            ar: ["الثقوب السوداء", "الثقب الأسود"]
+        },
+        translations: {
+            en: {
+                title: "Black Holes",
+                category: "Astronomy",
+                overview: "A black hole is a region of spacetime where gravity is so strong that, once something crosses the event horizon, it cannot escape back out. Black holes are not cosmic vacuum cleaners: objects can orbit them when their motion and gravity keep them on an orbital path.",
+                whyItMatters: "Black holes connect several major ideas in modern physics: gravity, spacetime, stellar evolution, and the limits of what we can observe. Learning them is a way to see how different parts of astronomy and physics fit together.",
+                prerequisites: [
+                    "Basic gravity",
+                    "Basic orbital motion",
+                    "A basic idea of stars and stellar evolution"
+                ],
+                learningPath: {
+                    beginner: [
+                        "Gravity",
+                        "Orbits",
+                        "Stars",
+                        "Stellar Evolution",
+                        "Black Holes",
+                        "Relativity"
+                    ],
+                    intermediate: [
+                        "Gravity",
+                        "Orbital Motion",
+                        "Stellar Evolution",
+                        "General Relativity",
+                        "Black Holes",
+                        "Event Horizons"
+                    ],
+                    advanced: [
+                        "General Relativity",
+                        "Spacetime Geometry",
+                        "Gravitational Collapse",
+                        "Black Holes",
+                        "Event Horizons",
+                        "Black Hole Thermodynamics"
+                    ]
+                },
+                concepts: [
+                    "Gravity",
+                    "Orbital motion",
+                    "Event horizon",
+                    "Stellar evolution",
+                    "Spacetime"
+                ],
+                related: [
+                    "Gravity",
+                    "Stars",
+                    "Stellar Evolution",
+                    "Relativity",
+                    "Cosmology"
+                ],
+                applicationQuestion: {
+                    question: "Why can an object orbit a black hole without immediately falling into it?",
+                    options: [
+                        "Its sideways orbital motion means gravity continuously curves its path instead of simply making it fall straight inward.",
+                        "Gravity stops acting outside the event horizon.",
+                        "Black holes repel objects that move fast enough."
+                    ],
+                    correctIndex: 0,
+                    explanation: "An orbit is a continuous fall shaped by motion: the object's velocity carries it forward while gravity curves its trajectory toward the black hole. The event horizon does not act like a boundary that stops gravity outside it."
+                }
+            }
+        },
+        resources: [
+            { name: "NASA — Black Holes", url: "https://science.nasa.gov/universe/black-holes/" },
+            { name: "ESA — Black Holes", url: "https://www.esa.int/Science_Exploration/Space_Science/Black_holes" }
+        ]
     },
 
 
@@ -6429,7 +6527,7 @@ const topics = {
 
             en: {
                 welcome:
-                    "WELCOME TO THE KNOWLEDGE LANDSCAPE",
+                    "WHAT DO YOU WANT TO UNDERSTAND?",
 
                 tagline:
                     "Take a step back. See the bigger picture. Discover ideas, connect subjects, and learn something new.",
@@ -7387,6 +7485,17 @@ const topics = {
         }
 
 
+        function returnToExploreHome() {
+            setLearningSpaceVisibility(false);
+            const input = document.querySelector("#searchInput");
+            if (input) {
+                input.focus();
+                input.select();
+            }
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+
         function openKnowledgeMap() {
             const mapPage = document.querySelector("#knowledgeMapPage");
             const content = document.querySelector("#knowledgeMapPageContent");
@@ -8048,8 +8157,11 @@ const topics = {
             const conceptOptions = [concepts[0], ...distractorConcepts].slice(0, 3);
             const nextOptions = [nextStep, ...path.filter(item => item !== nextStep && item !== currentTitle).slice(0, 2)].slice(0, 3);
             const prereqOptions = [prerequisites[0], ...prerequisiteDistractors].slice(0, 3);
-            const applicationAnswer = concepts[1] || concepts[0];
-            const applicationOptions = [applicationAnswer, concepts[0], prerequisites[0]].filter((v,i,a) => v && a.indexOf(v) === i).slice(0, 3);
+            const customApplication = localTopic.applicationQuestion || null;
+            const applicationAnswer = customApplication ? customApplication.options[customApplication.correctIndex] : (concepts[1] || concepts[0]);
+            const applicationOptions = customApplication
+                ? customApplication.options.slice(0, 3)
+                : [applicationAnswer, concepts[0], prerequisites[0]].filter((v,i,a) => v && a.indexOf(v) === i).slice(0, 3);
             const connectionAnswer = related.find(item => normalizeMapText(item) !== normalizeMapText(currentTitle)) || (localTopic.related || [])[0] || nextStep;
             const connectionOptions = [connectionAnswer, ...related.filter(item => normalizeMapText(item) !== normalizeMapText(connectionAnswer)), ...path].filter((v,i,a) => v && a.indexOf(v) === i).slice(0, 3);
 
@@ -8070,7 +8182,7 @@ const topics = {
             const coreExplanation = `${concepts[0]} is one of the core ideas currently defined for ${currentTitle}. It gives you a key piece of the topic before you move deeper into the subject.`;
             const nextExplanation = `${nextStep} is the next step in the selected ${level} learning path for ${localTopic.title}. The path uses it to build on what you are learning here.`;
             const prereqExplanation = `${prerequisites[0]} is listed as a prerequisite for ${currentTitle}. It is background knowledge that helps make this topic easier to understand.`;
-            const applicationExplanation = `${applicationAnswer} is a concept that helps you reason about ${currentTitle}; applying the topic means using its concepts rather than only recognizing a definition.`;
+            const applicationExplanation = customApplication ? customApplication.explanation : `${applicationAnswer} is a concept that helps you reason about ${currentTitle}; applying the topic means using its concepts rather than only recognizing a definition.`;
             const connectionExplanation = `${connectionAnswer} is connected to ${currentTitle} through the relationships currently defined in Eagles Panorama. The important step is being able to explain why the two belong in the same landscape.`;
 
             return `
@@ -8083,7 +8195,7 @@ const topics = {
                     ${makeQuestion(1, `${ui.core} ${currentTitle}?`, conceptOptions, concepts[0], coreExplanation)}
                     ${makeQuestion(2, ui.next, nextOptions, nextStep, nextExplanation)}
                     ${makeQuestion(3, ui.prereq, prereqOptions, prerequisites[0], prereqExplanation)}
-                    ${makeQuestion(4, `Which idea would you use when applying what you learned about ${currentTitle}?`, applicationOptions, applicationAnswer, applicationExplanation)}
+                    ${makeQuestion(4, customApplication ? customApplication.question : `Which idea would you use when applying what you learned about ${currentTitle}?`, applicationOptions, applicationAnswer, applicationExplanation)}
                     ${makeQuestion(5, `Which subject is meaningfully connected to ${currentTitle}?`, connectionOptions, connectionAnswer, connectionExplanation)}
                     <div class="knowledge-check-footer">
                         <p class="knowledge-check-result" data-check-result>${escapeHTML(ui.result)}</p>
@@ -8362,6 +8474,30 @@ const topics = {
                 ],
                 relations:[
                     ["Mathematics","Physics","method","Mathematics provides quantitative tools for physical models."],["Physics","Stars","causal","Physical laws explain stellar structure and behavior."],["Stars","Stellar Evolution","causal","A star's internal processes change as its fuel and structure evolve."],["Stellar Evolution","Nucleosynthesis","causal","Different stages of stellar evolution enable different element-forming processes."],["Nucleosynthesis","Planetary Science","application","Elements produced in cosmic processes become ingredients of planetary matter."],["Stars","Galaxies","connected","Stars are major visible components of galaxies and trace their structure."],["Galaxies","Cosmology","connected","Galaxy populations provide evidence about large-scale cosmic history."],["Physics","Cosmology","foundation","Cosmological models rely on physical laws and measurements."],["Planetary Science","Life","application","Planetary environments provide the setting for questions about habitability and life."]
+                ]
+            },
+            blackHoles: {
+                title:"Black Holes",
+                thesis:"Black holes are a meeting point between gravity, orbital motion, stellar evolution, and spacetime.",
+                nodes:[
+                    {title:"Gravity",role:"Foundation",why:"Explains why objects accelerate toward one another and provides the central force shaping black-hole environments.",keywords:["gravity","force","mass","acceleration"]},
+                    {title:"Orbital Motion",role:"Foundation",why:"Explains how forward motion and gravity can produce an orbit instead of a direct fall.",keywords:["orbit","orbital","velocity","motion"]},
+                    {title:"Stars",role:"Origin",why:"Massive stars can end their lives through collapse, producing some stellar-mass black holes.",keywords:["stars","massive stars","stellar"]},
+                    {title:"Stellar Evolution",role:"Process",why:"Shows how a star changes over time and how some massive stars can reach gravitational collapse.",keywords:["stellar evolution","collapse","supernova","star"]},
+                    {title:"Relativity",role:"Theory",why:"General relativity describes gravity as spacetime geometry and predicts black-hole solutions.",keywords:["relativity","general relativity","spacetime"]},
+                    {title:"Event Horizon",role:"Boundary",why:"Marks the region beyond which outward escape is impossible for a classical black hole.",keywords:["event horizon","escape","black hole"]},
+                    {title:"Accretion Disks",role:"Observable",why:"Hot matter orbiting and falling toward a black hole can produce radiation that helps reveal otherwise dark objects.",keywords:["accretion","disk","radiation","x rays"]},
+                    {title:"Cosmology",role:"Large scale",why:"Supermassive black holes interact with the history and evolution of galaxies and the wider universe.",keywords:["cosmology","galaxies","supermassive"]}
+                ],
+                relations:[
+                    ["Gravity","Orbital Motion","foundation","Orbital motion results from an object's motion combined with gravitational attraction."],
+                    ["Stars","Stellar Evolution","causal","Stellar evolution determines how massive stars change and what remnants they can leave behind."],
+                    ["Stellar Evolution","Black Holes","causal","The collapse of some massive stellar cores can produce stellar-mass black holes."],
+                    ["Relativity","Event Horizon","foundation","General relativity provides the framework in which event horizons arise around black holes."],
+                    ["Orbital Motion","Accretion Disks","application","Matter can orbit a black hole while losing energy and gradually spiraling inward."],
+                    ["Accretion Disks","Black Holes","observable","Radiation from hot accreting matter gives astronomers indirect evidence for black holes."],
+                    ["Black Holes","Cosmology","connected","Supermassive black holes are closely associated with the evolution of galaxies."],
+                    ["Gravity","Relativity","contrast","Newtonian gravity is a useful approximation, while general relativity gives the deeper description of strong gravity and spacetime."]
                 ]
             },
             physics: {
@@ -9206,7 +9342,227 @@ const topics = {
             }
         }
 
-        async function exploreTopic() {
+
+
+        /* ================================================================
+           EAGLES PANORAMA — KNOWLEDGE SHAPE / MAP ROOM
+           First implementation of the agreed learning architecture.
+           This is intentionally authored and extensible; it does not
+           pretend to have a global automated ontology engine yet.
+        ================================================================= */
+        const architectureProfiles = {
+            gravity: {
+                shape: "mountain",
+                title: "Gravity",
+                why: "Gravity becomes more powerful as your model changes: from everyday attraction to spacetime, then to unresolved frontier questions.",
+                levels: [
+                    ["Everyday Rule","Gravity makes things fall and keeps worlds together."],
+                    ["Newtonian Mass Attraction","Model force, mass and inverse-square behavior."],
+                    ["Einsteinian Spacetime Curvature","Model gravity as geometry rather than a simple force."],
+                    ["Equivalence Principle","Connect gravity and acceleration through a local experiment."],
+                    ["Quantum Gravity Crisis","Recognize where classical gravity and quantum theory stop fitting cleanly."],
+                    ["Emergent / Frontier Ideas","Explore proposals that treat gravity as emerging from deeper structure.",true]
+                ],
+                gates: [
+                    "A satellite is moving sideways while Earth's gravity pulls inward. Explain why it can keep orbiting instead of simply falling straight down.",
+                    "Two masses are moved farther apart. Predict what happens to their gravitational force and explain why.",
+                    "Explain why general relativity describes gravity through spacetime geometry rather than only an invisible pulling force.",
+                    "Explain the core idea of the equivalence between a gravitational field and acceleration in a small local experiment.",
+                    "Why is combining general relativity with quantum mechanics still an unresolved problem?",
+                    "Give one reason an emergent-gravity proposal should be treated as a research idea rather than established physics."
+                ],
+                signals: [["orbit","sideways","velocity","fall"],["inverse","square","distance","force"],["spacetime","geometry","curvature"],["acceleration","equivalent","local"],["quantum","relativity","unresolved","incompatible"],["emergent","proposal","evidence","speculative"]]
+            },
+            light: {
+                shape: "mountain",
+                title: "Light",
+                why: "The learner climbs from an everyday beam to electromagnetic waves, quantum behavior, relativity, fields, and frontier ideas about information and spacetime.",
+                levels: [
+                    ["Straight-Line Beam","Treat light as something that travels from source to observer."],
+                    ["Electromagnetic Wave","Model light as oscillating electric and magnetic fields."],
+                    ["Wave–Particle Duality","Use both wave and quantum descriptions where experiments require them."],
+                    ["Relativistic Light","Connect light to invariant speed and spacetime."],
+                    ["Quantum Field Vibrations","Understand photons as excitations of a quantum electromagnetic field."],
+                    ["Holographic / Frontier Ideas","Explore speculative links between information, fields and spacetime.",true]
+                ],
+                gates: [
+                    "Why does a narrow beam still spread or change direction when it encounters an obstacle or boundary?",
+                    "What does it mean physically to say that light is an electromagnetic wave?",
+                    "Give an example where treating light only as a classical wave fails and a quantum description is needed.",
+                    "Why does special relativity make the speed of light fundamentally different from ordinary object speeds?",
+                    "What is a photon in quantum field theory, and what does it mean to call it a field excitation?",
+                    "Why should holographic approaches to spacetime be treated as frontier ideas rather than settled explanations?"
+                ],
+                signals: [["beam","propagate","direction","light"],["electric","magnetic","field","wave"],["quantum","photon","particle","experiment"],["invariant","speed","relativity","spacetime"],["field","excitation","photon","quantum"],["holographic","information","frontier","speculative"]]
+            },
+            evolution: {
+                shape: "mountain",
+                title: "Evolution",
+                why: "The climb moves from changing gene frequencies, through reproductive isolation and common descent, toward interacting evolutionary systems.",
+                levels: [
+                    ["Gene Pool Model","Track allele frequencies and the forces that change populations."],
+                    ["Isolation Boundary Model","Explain how reproductive isolation can split populations into independent paths."],
+                    ["Deep Time & Branching Tree","Use common descent and phylogenetic trees to reconstruct relationships."],
+                    ["Co-Evolutionary Dynamics","Model species as interacting evolutionary pressures rather than isolated lineages.",true]
+                ],
+                gates: [
+                    "Eight short-tailed iguanas found an island by chance and later dominate the population. Why is this not automatically natural selection?",
+                    "Two populations stop interbreeding because their breeding seasons no longer overlap. What kind of isolation is this, and what happens if the timing changes?",
+                    "Given shared derived traits, explain how a phylogenetic tree can represent common ancestry rather than simply ranking organisms from simple to complex.",
+                    "A new predator enters an ecosystem. Predict how its presence could trigger evolutionary changes in several interacting species over generations."
+                ],
+                signals: [["founder","drift","random","selection"],["reproductive","isolation","temporal","breeding"],["common","ancestry","derived","tree"],["predator","cascade","species","coevolution"]]
+            },
+            python: {
+                shape: "hybrid",
+                title: "Python",
+                why: "Python has a dependency-heavy programming foundation, then opens into many specialization islands once core logic is secure.",
+                levels: [
+                    ["Variables & Data","Represent values and manipulate state."],
+                    ["Control Flow","Use conditions and loops to express decisions and repetition."],
+                    ["Functions & Abstraction","Break problems into reusable behavior."]
+                ],
+                islands: [
+                    ["Data Science","Numerical analysis, notebooks and data workflows."],
+                    ["Web Development","Servers, APIs and application architecture."],
+                    ["Automation","Scripts that connect tools and reduce repetitive work."],
+                    ["Machine Learning","Use Python as a foundation for models and experiments."],
+                    ["Systems & Tools","Testing, packaging, command-line and developer tooling."],
+                    ["Specialized Ecosystems","Choose a domain and build deeper expertise."]
+                ],
+                gates: [
+                    "A program unexpectedly changes a value used in several places. Diagnose the state-management problem and explain how you would isolate it.",
+                    "A loop behaves correctly on small input but fails at a boundary case. Predict the failure and identify the control-flow assumption behind it.",
+                    "A growing program has duplicated logic in many places. Explain how functions or abstraction could reduce the structural problem.",
+                    "A data-processing script works locally but becomes slow on a large dataset. Identify what you would measure before choosing a redesign."
+                ],
+                signals: [["variable","state","value","scope"],["loop","condition","boundary","iteration"],["function","reuse","abstraction","duplicate"],["scale","measure","performance","data"]]
+            },
+            wwii: {
+                shape: "archipelago",
+                title: "World War II",
+                why: "The subject is a network of simultaneous causes, theaters, ideologies, economies, technologies and political decisions rather than one prerequisite ladder.",
+                islands: [
+                    ["Economic Crisis","Depression, resources, trade and industrial capacity."],
+                    ["Ideological Shifts","Fascism, militarism, nationalism and competing political visions."],
+                    ["Geopolitical Alliances","Treaties, strategic interests and changing coalitions."],
+                    ["Eastern Front","A major theater whose outcomes reshaped the wider war."],
+                    ["Pacific Theater","Imperial expansion, naval warfare and resource strategy."],
+                    ["Home Front & Industry","Mobilization, logistics, labor and civilian life."],
+                    ["Technology","Radar, codebreaking, aviation, armor and nuclear research."],
+                    ["Holocaust & Mass Violence","State persecution, genocide and the destruction of communities."],
+                    ["Postwar Order","The political and institutional consequences that followed victory."]
+                ],
+                nexus: "A major geopolitical decision changes one theater's outcome. Trace at least three downstream consequences across alliances, resources and another theater without turning the scenario into a single-cause explanation.",
+                signals: ["cause","consequence","alliance","resource","theater","cascade","multiple","evidence"]
+            },
+            renaissance: {
+                shape: "archipelago",
+                title: "The Renaissance",
+                why: "Art, technology, commerce, politics, humanism and religion developed in overlapping places and fed back into one another.",
+                islands: [
+                    ["Humanism","Changing approaches to classical texts, education and human agency."],
+                    ["Florence & Patronage","Political power, wealth and artistic commissions."],
+                    ["Printing","A technological shift in how ideas could circulate."],
+                    ["Artistic Innovation","Perspective, anatomy, materials and workshop practice."],
+                    ["Science & Observation","New habits of measurement, inquiry and representation."],
+                    ["Religion & Reform","Religious institutions, criticism and changing intellectual currents."]
+                ],
+                nexus: "Choose one innovation and trace how it could alter at least two other islands while acknowledging competing causes.",
+                signals: ["innovation","cause","printing","patronage","humanism","religion","art","circulation"]
+            }
+        };
+
+        const architectureProgress = {};
+
+        function architectureKey(topic) {
+            const value = String(topic || "").toLowerCase().trim();
+            if (/(^|\b)gravity(\b|$)/.test(value)) return "gravity";
+            if (/^(light|electromagnetism|electromagnetic radiation)$/.test(value)) return "light";
+            if (/^(evolution|biological evolution)$/.test(value)) return "evolution";
+            if (/^(python|python programming)$/.test(value)) return "python";
+            if (/world war ii|world war 2|wwii|second world war/.test(value)) return "wwii";
+            if (/renaissance/.test(value)) return "renaissance";
+            return null;
+        }
+
+        function getArchitectureProfile(topic, localTopic) {
+            const key = architectureKey(topic) || architectureKey(localTopic?.title);
+            if (key) return { key, profile: architectureProfiles[key] };
+            if (localTopic?.learningPath) {
+                return { key: "curated", profile: { shape:"mountain", title:localTopic.title, why:"This topic has a curated learning path, so Eagles Panorama can begin with a guided foundation while deeper architecture is refined.", levels:(localTopic.learningPath.beginner || []).slice(0,4).map((x,i)=>[String(x), i === 3]), gates:[], signals:[] } };
+            }
+            return { key: "open", profile: { shape:"open", title:localTopic?.title || topic, why:"This topic does not yet have enough authored structure for Eagles Panorama to claim a validated mountain or archipelago. Open exploration is safer than inventing dependencies.", levels:[], islands:[], gates:[], signals:[] } };
+        }
+
+        function buildArchitectureRoom(topic, localTopic) {
+            const {key, profile} = getArchitectureProfile(topic, localTopic);
+            const progress = architectureProgress[key] ?? -1;
+            const safeTitle = escapeHTML(profile.title);
+            let visual = "";
+            if (profile.shape === "mountain") {
+                visual = `<div class="architecture-mountain">${profile.levels.map((level,i)=>{
+                    const unlocked = i <= progress + 1;
+                    return `<article class="arch-level ${unlocked ? 'unlocked' : 'locked'} ${level[2] ? 'summit' : ''}"><span class="arch-num">${i+1}</span><div><strong>${escapeHTML(level[0])}</strong><small>${escapeHTML(level[1])}</small></div>${profile.gates?.[i] ? `<button type="button" class="arch-gate" onclick="openArchitectureGate('${key}',${i})">Challenge gate</button>` : `<span class="architecture-badge">Summit</span>`}</article>`;
+                }).join('')}</div>`;
+            } else if (profile.shape === "archipelago") {
+                visual = `<div class="archipelago">${profile.islands.map((island,i)=>`<article class="arch-island"><strong>${escapeHTML(island[0])}</strong><small>${escapeHTML(island[1])}</small><button type="button" class="arch-gate" style="margin-top:10px" onclick="markArchitectureIsland('${key}',${i})">Explore island</button></article>`).join('')}<div class="arch-connector">↕ Connections become the real progression</div></div>`;
+            } else if (profile.shape === "hybrid") {
+                visual = `<div class="arch-hybrid"><div class="hybrid-ridge">${profile.levels.map((level,i)=>`<article class="arch-level ${i <= progress + 1 ? 'unlocked':'locked'}"><span class="arch-num">${i+1}</span><div><strong>${escapeHTML(level[0])}</strong><small>${escapeHTML(level[1])}</small></div>${profile.gates?.[i] ? `<button type="button" class="arch-gate" onclick="openArchitectureGate('${key}',${i})">Challenge</button>`:''}</article>`).join('')}</div><div class="hybrid-water"><div class="architecture-kicker">Specialization archipelago</div><div class="archipelago" style="margin-top:12px">${profile.islands.map((island,i)=>`<article class="arch-island"><strong>${escapeHTML(island[0])}</strong><small>${escapeHTML(island[1])}</small><button type="button" class="arch-gate" style="margin-top:10px" onclick="markArchitectureIsland('${key}',${i})">Explore</button></article>`).join('')}</div></div></div>`;
+            } else {
+                visual = `<div class="architecture-side-card"><strong>Open exploration</strong><p>Explore the topic through the current overview, related concepts and sources. No artificial progression is imposed until the topic has enough trustworthy structure.</p></div>`;
+            }
+            return `<section class="architecture-room" id="architectureRoom" data-architecture-key="${key}">
+                <div class="architecture-head"><div><span class="architecture-kicker">Map Room</span><h2>${safeTitle}</h2><p>See the shape of the knowledge before you begin. The structure is visible, but the learner decides where to go.</p><div class="architecture-why"><strong>Why this shape?</strong> ${escapeHTML(profile.why)}</div></div><span class="architecture-badge">${profile.shape === 'mountain' ? 'Conceptual climb' : profile.shape === 'archipelago' ? 'Connected network' : profile.shape === 'hybrid' ? 'Foundation → specializations' : 'Open exploration'}</span></div>
+                <div class="architecture-layout"><div class="architecture-map">${visual}</div><aside class="architecture-side"><div class="architecture-side-card"><strong>How advancement works</strong><p>Gates ask you to use the model: diagnose, predict, reconstruct, manipulate, or explain. Passing a higher gate can unlock the foundations beneath it.</p><button type="button" class="architecture-primary" onclick="beginArchitectureLearning()">Begin the immediate next step →</button></div><div class="architecture-side-card"><strong>Already know this?</strong><p>Challenge any visible gate instead of taking a long placement test. Failure should reveal a useful learning gap, not punish you.</p></div></aside></div>
+                <div id="architectureGatePanel"></div>
+                <p class="architecture-note">Prototype principle: the map is authored where we have enough structure; topics without reliable structure remain open rather than pretending certainty.</p>
+            </section>`;
+        }
+
+        function beginArchitectureLearning() {
+            const target = document.querySelector('#learningStageShell');
+            if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+
+        function openArchitectureGate(key,index) {
+            const profile = architectureProfiles[key];
+            const panel = document.querySelector('#architectureGatePanel');
+            if (!profile || !panel || !profile.gates?.[index]) return;
+            panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Advancement Gate — ${escapeHTML(profile.levels[index][0])}</h3><p>${escapeHTML(profile.gates[index])}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+            panel.scrollIntoView({behavior:'smooth',block:'center'});
+        }
+
+        function evaluateArchitectureGate(key,index) {
+            const profile = architectureProfiles[key];
+            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim().toLowerCase();
+            const feedback = document.querySelector('#architectureGateFeedback');
+            if (!profile || !feedback) return;
+            if (answer.length < 35) { feedback.className='architecture-feedback needs'; feedback.innerHTML='<strong>Not enough evidence yet.</strong><br>Give the reasoning, not just the conclusion. Explain what mechanism produces the outcome.'; return; }
+            const signals = profile.signals?.[index] || [];
+            const hits = signals.filter(signal => answer.includes(signal.toLowerCase())).length;
+            const threshold = Math.max(2, Math.ceil(signals.length * .45));
+            if (hits >= threshold) {
+                architectureProgress[key] = Math.max(architectureProgress[key] ?? -1,index);
+                feedback.className='architecture-feedback good';
+                feedback.innerHTML=`<strong>Gate passed for this prototype.</strong><br>Your explanation contains evidence of the key mechanism. Levels through <strong>${escapeHTML(profile.levels[index][0])}</strong> are now treated as demonstrated. <span class="architecture-note">This local prototype uses signal matching; future versions can replace it with stronger authored or AI-assisted evaluation.</span>`;
+                const room=document.querySelector('#architectureRoom'); if(room){ const holder=room.parentElement; const old=room.outerHTML; room.outerHTML=buildArchitectureRoom(profile.title, {title:profile.title}); }
+            } else {
+                const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
+                feedback.className='architecture-feedback needs';
+                feedback.innerHTML=`<strong>Keep climbing.</strong><br>The answer may be heading in the right direction, but it doesn't yet show enough of the mechanism. Revisit the concept and retry. <br><span class="architecture-note">Useful ideas to examine: ${missing.map(escapeHTML).join(' · ') || 'cause · mechanism · consequence'}</span>`;
+            }
+        }
+
+        function markArchitectureIsland(key,index) {
+            const panel=document.querySelector('#architectureGatePanel');
+            const profile=architectureProfiles[key];
+            if(!panel||!profile?.islands?.[index]) return;
+            panel.innerHTML=`<div class="architecture-gate"><h3>🌐 Explore: ${escapeHTML(profile.islands[index][0])}</h3><p>${escapeHTML(profile.islands[index][1])}</p><p>Connect this island to at least one other island before treating the exploration as meaningful.</p><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Return to the map</button></div>`;
+            panel.scrollIntoView({behavior:'smooth',block:'center'});
+        }
+
+        async function exploreTopic(openMapAfter = false) {
 
 
             const topic =
@@ -9932,18 +10288,22 @@ const topics = {
 
 
 
+                    ${buildArchitectureRoom(topic, localTopic)}
+
+
                     <div class="learning-stage-shell" id="learningStageShell">
-                        <nav class="learning-stage-nav" aria-label="Learning stages">
-                            <button type="button" class="learning-stage-tab active" data-learning-stage="understand" onclick="setLearningStage('understand')"><span class="stage-number">1</span><span><strong>Understand</strong><small>Build the foundation</small></span></button>
-                            <button type="button" class="learning-stage-tab" data-learning-stage="connect" onclick="setLearningStage('connect')"><span class="stage-number">2</span><span><strong>Connect</strong><small>See the landscape</small></span></button>
-                            <button type="button" class="learning-stage-tab" data-learning-stage="verify" onclick="setLearningStage('verify')"><span class="stage-number">3</span><span><strong>Verify</strong><small>Test your understanding</small></span></button>
-                            <button type="button" class="learning-stage-tab" data-learning-stage="sources" onclick="setLearningStage('sources')"><span class="stage-number">4</span><span><strong>Sources</strong><small>Go deeper</small></span></button>
+                        <nav class="learning-stage-nav" aria-label="Learning journey">
+                            <button type="button" class="learning-stage-tab learning-stage-home" onclick="returnToExploreHome()"><span class="stage-number">1</span><span><strong>Explore</strong><small>Choose a concept</small></span></button>
+                            <button type="button" class="learning-stage-tab active" data-learning-stage="understand" onclick="setLearningStage('understand')"><span class="stage-number">2</span><span><strong>Understand</strong><small>Build the foundation</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="connect" onclick="setLearningStage('connect')"><span class="stage-number">3</span><span><strong>Connect</strong><small>See the landscape</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="verify" onclick="setLearningStage('verify')"><span class="stage-number">4</span><span><strong>Verify</strong><small>Test your understanding</small></span></button>
+                            <button type="button" class="learning-stage-tab" data-learning-stage="sources" onclick="setLearningStage('sources')"><span class="stage-number">5</span><span><strong>Go deeper</strong><small>Follow the next path</small></span></button>
                         </nav>
                         <div class="learning-stage-progress" aria-hidden="true"><i id="learningStageProgress"></i></div>
-                        <div class="learning-depth-bar" aria-label="Knowledge depth"><div class="depth-path"><span>🌐 Horizon</span><b>→</b><span class="depth-current">🔎 Landmark</span><b>→</b><span>🔬 Detail</span><b>→</b><span>✓ Evidence</span></div><span class="learning-depth-note">Explore the landscape, then prove what you can use.</span></div>
+                        <div class="learning-journey-context" aria-label="Learning journey"><span class="current">Understand</span><b>→</b><span>Connect</span><b>→</b><span>Verify</span><b>→</b><span>Go deeper</span></div>
 
                         <section class="learning-stage-page active" data-learning-stage-page="understand" aria-labelledby="learningStageUnderstandTitle">
-                            <div class="learning-stage-page-header"><h3 id="learningStageUnderstandTitle">🧠 Understand the subject</h3><p>Start with the core idea, prerequisites, and a sensible path before branching into the wider landscape.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageUnderstandTitle">🧠 Understand this concept</h3><p>Start with what it is, why it matters, and what you should know first.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -9952,6 +10312,7 @@ const topics = {
                                 <div class="understanding-overview-segments">
                                     ${buildOverviewSegments(localTopic?.overview || expandedWikipediaIntro || summaryData.extract || "No summary was available.")}
                                 </div>
+                                ${localTopic?.whyItMatters ? `<div class="understanding-highlight why-it-matters"><strong>Why it matters</strong><span>${escapeHTML(localTopic.whyItMatters)}</span></div>` : ""}
                                 <div class="understanding-highlights">
                                     <div class="understanding-highlight"><strong>${escapeHTML(text.concepts || "Core ideas")}</strong><span>${escapeHTML(localTopic?.concepts?.slice(0, 3).join(" • ") || summaryData.description || "Explore the topic and its connected ideas.")}</span></div>
                                     <div class="understanding-highlight"><strong>${escapeHTML(text.prerequisites || "Prerequisites")}</strong><span>${escapeHTML(localTopic?.prerequisites?.slice(0, 2).join(" • ") || "No curated prerequisites yet.")}</span></div>
@@ -9969,7 +10330,7 @@ const topics = {
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="connect" aria-labelledby="learningStageConnectTitle" hidden>
-                            <div class="learning-stage-page-header"><h3 id="learningStageConnectTitle">🗺️ Connect the ideas</h3><p>Relationships turn isolated facts into a mental model. Explore authored connections and then open the full Knowledge Map.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageConnectTitle">🗺️ Connect the ideas</h3><p>See how this concept relates to prerequisites, broader ideas, deeper topics, and applications.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -9983,7 +10344,7 @@ const topics = {
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="verify" aria-labelledby="learningStageVerifyTitle" hidden>
-                            <div class="learning-stage-page-header"><h3 id="learningStageVerifyTitle">🧠 Verify your understanding</h3><p>Recall, explain, and connect. A result here is evidence of learning activity—not a claim of mastery.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageVerifyTitle">🧠 Can you explain it?</h3><p>Use reasoning, application, and relationships to check whether the idea actually makes sense to you.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -9995,7 +10356,7 @@ const topics = {
                         </section>
 
                         <section class="learning-stage-page" data-learning-stage-page="sources" aria-labelledby="learningStageSourcesTitle" hidden>
-                            <div class="learning-stage-page-header"><h3 id="learningStageSourcesTitle">📚 Go deeper with sources</h3><p>Compare reference material, educational resources, research, and books rather than depending on a single explanation.</p></div>
+                            <div class="learning-stage-page-header"><h3 id="learningStageSourcesTitle">📚 Go deeper</h3><p>Choose a meaningful next concept or use reliable sources to continue learning beyond this topic.</p></div>
                             <div class="stage-workspace">
                                 ${buildLearningCompass(localTopic, localKey, summaryData.title, level, relatedPages)}
                                 <div class="stage-main">
@@ -10040,6 +10401,10 @@ const topics = {
                                 </div>
                             </div>
                         </div>`;
+                }
+
+                if (openMapAfter && knowledgeMapState) {
+                    openKnowledgeMap();
                 }
 
 
@@ -10509,3 +10874,39 @@ const topics = {
 
 </html>
 
+/* Core experience: make the product journey visible without adding visual noise. */
+.hero .welcome {
+  font-size:clamp(1.5rem,3.2vw,2.65rem);
+  letter-spacing:.015em;
+  font-weight:800;
+}
+.hero .tagline {
+  max-width:760px;
+  margin-inline:auto;
+}
+#exploreButton {
+  min-width:220px;
+  font-weight:800;
+}
+.home-learning-journey, .learning-journey-context {
+  display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
+  color:#7893a7; font-size:.78rem;
+}
+.home-learning-journey { margin:18px auto 0; max-width:820px; }
+.home-learning-journey .journey-step {
+  display:inline-flex; align-items:center; gap:5px; padding:7px 10px;
+  border:1px solid rgba(125,211,252,.12); border-radius:999px;
+  background:rgba(7,18,31,.42);
+}
+.home-learning-journey .journey-step.active, .learning-journey-context .current {
+  color:#e9f8ff; border-color:rgba(69,199,232,.35); background:rgba(22,143,138,.16);
+}
+.home-learning-journey i, .learning-journey-context b { color:#46677e; font-style:normal; }
+.learning-journey-context { justify-content:flex-start; margin:0 0 14px; padding:9px 12px; border:1px solid rgba(125,211,252,.12); border-radius:12px; background:rgba(7,18,31,.45); }
+.learning-stage-home { opacity:.86; }
+.learning-stage-home:hover { opacity:1; }
+@media(max-width:760px){
+  .home-learning-journey { justify-content:flex-start; }
+  .home-learning-journey i { display:none; }
+  .learning-journey-context { justify-content:flex-start; }
+}
