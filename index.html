@@ -4027,7 +4027,122 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media(max-width:760px){.architecture-layout,.arch-hybrid{grid-template-columns:1fr}.archipelago{grid-template-columns:1fr}.arch-island:nth-child(2n),.arch-island:nth-child(3n){transform:none}.arch-level{grid-template-columns:34px minmax(0,1fr)}.arch-gate{grid-column:2;justify-self:start}.architecture-room{padding:17px}.architecture-head h2{font-size:1.45rem}}
 @media(prefers-reduced-motion:reduce){.arch-island:nth-child(2n),.arch-island:nth-child(3n){transform:none}}
 
+/* Core experience: make the product journey visible without adding visual noise. */
+.hero .welcome {
+  font-size:clamp(1.5rem,3.2vw,2.65rem);
+  letter-spacing:.015em;
+  font-weight:800;
+}
+.hero .tagline {
+  max-width:760px;
+  margin-inline:auto;
+}
+#exploreButton {
+  min-width:220px;
+  font-weight:800;
+}
+.home-learning-journey, .learning-journey-context {
+  display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
+  color:#7893a7; font-size:.78rem;
+}
+.home-learning-journey { margin:18px auto 0; max-width:820px; }
+.home-learning-journey .journey-step {
+  display:inline-flex; align-items:center; gap:5px; padding:7px 10px;
+  border:1px solid rgba(125,211,252,.12); border-radius:999px;
+  background:rgba(7,18,31,.42);
+}
+.home-learning-journey .journey-step.active, .learning-journey-context .current {
+  color:#e9f8ff; border-color:rgba(69,199,232,.35); background:rgba(22,143,138,.16);
+}
+.home-learning-journey i, .learning-journey-context b { color:#46677e; font-style:normal; }
+.learning-journey-context { justify-content:flex-start; margin:0 0 14px; padding:9px 12px; border:1px solid rgba(125,211,252,.12); border-radius:12px; background:rgba(7,18,31,.45); }
+.learning-stage-home { opacity:.86; }
+.learning-stage-home:hover { opacity:1; }
+@media(max-width:760px){
+  .home-learning-journey { justify-content:flex-start; }
+  .home-learning-journey i { display:none; }
+  .learning-journey-context { justify-content:flex-start; }
+}
+
 </style>
+
+<style id="visual-correction-style">
+/* ===== 2026 visual correction: one dark-blue language for the exploration layer ===== */
+.hero, .hero * { color-scheme: dark; }
+.hero { color:#eefaff; }
+.hero .welcome { color:#dff5ff !important; background:rgba(7,18,31,.58) !important; border-color:rgba(125,211,252,.22) !important; }
+.hero .tagline { color:#c7e6ef !important; text-shadow:0 1px 7px rgba(0,0,0,.55); }
+.home-learning-journey { color:#a9c2d1 !important; }
+.home-learning-journey .journey-step { color:#a9c2d1 !important; }
+.home-learning-journey .journey-step b { color:#e9f8ff !important; }
+.home-learning-journey i, .learning-journey-context b { color:#66869a !important; }
+.quick-explore-label { color:#a9c2d1 !important; }
+.quick-explore button { color:#e8f8ff !important; background:rgba(8,24,38,.72) !important; border-color:rgba(125,211,252,.18) !important; }
+
+.about-container, .about-card { color:#eaf7fb !important; }
+.about-container h2, .about-card h3 { color:#f4fdff !important; text-shadow:0 1px 7px rgba(0,0,0,.5); }
+.about-intro, .about-card p { color:#c4d9e4 !important; }
+
+/* Map Room: dark navy, readable hierarchy, less explanatory clutter. */
+.architecture-room { color:#eaf8ff; background:linear-gradient(145deg,rgba(8,28,43,.96),rgba(7,22,35,.94)); }
+.architecture-head h2 { color:#f5fcff !important; text-shadow:0 1px 8px rgba(0,0,0,.55); }
+.architecture-head p { color:#b9cfdd !important; }
+.architecture-why { color:#dcecf5; background:rgba(86,205,232,.065); }
+.architecture-why strong { color:#e8fbff; }
+.architecture-why span { color:#c6dce7; }
+.architecture-map { background:rgba(5,20,32,.38); border-color:rgba(125,211,252,.12); }
+.architecture-subhead { margin:0 0 9px; color:#8fdff2; font-size:.72rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }
+.arch-level { background:rgba(12,40,55,.78); }
+.arch-level strong { color:#eaf8ff !important; }
+.arch-level small { color:#9db8c8 !important; }
+.arch-level.locked { opacity:.74; }
+.arch-level.unlocked { border-color:rgba(86,205,232,.38); }
+.arch-num { color:#7dd3fc !important; }
+.arch-island { background:rgba(13,39,55,.82); border-color:rgba(125,211,252,.15); color:#eaf8ff; }
+.arch-island strong { color:#eaf8ff !important; }
+.arch-island small { color:#9db8c8 !important; }
+.arch-connector { color:#7fb6c9 !important; }
+.architecture-side-card { background:rgba(9,27,42,.76); border-color:rgba(125,211,252,.11); }
+.architecture-side-card strong { color:#f0fbff !important; }
+.architecture-side-card p { color:#a9c2d1 !important; }
+.architecture-primary { background:#56cde8; color:#06202c !important; }
+.architecture-known-card { opacity:.9; }
+.architecture-note { color:#88a7b9 !important; }
+.architecture-open { padding:18px; border:1px dashed rgba(125,211,252,.18); border-radius:16px; background:rgba(7,22,35,.5); }
+.architecture-open strong { color:#effaff; }
+.architecture-open p { margin:7px 0 0; color:#9eb8c7; line-height:1.55; }
+
+/* Knowledge Map: replace the milky panel with the same deep-blue family as Map Room. */
+.knowledge-map-section { color:#eaf8ff; border-color:rgba(125,211,252,.16) !important; background:linear-gradient(145deg,rgba(8,28,43,.97),rgba(7,22,35,.95)) !important; }
+.knowledge-map-header h3 { color:#f5fcff !important; }
+.knowledge-map-header p { color:#b9cfdd !important; opacity:1 !important; }
+.knowledge-map-viewport { background:radial-gradient(circle at 50% 50%,rgba(54,121,158,.13),transparent 34%),linear-gradient(145deg,#0b2234,#081a2a) !important; border-color:rgba(125,211,252,.16) !important; }
+.knowledge-map-edge { stroke:rgba(125,211,252,.48); }
+.knowledge-map-edge.secondary { stroke:rgba(125,211,252,.20); }
+.knowledge-map-accessible-list { background:rgba(7,22,35,.58) !important; border-color:rgba(125,211,252,.12) !important; }
+.knowledge-map-accessible-list strong { color:#dff5ff !important; }
+.knowledge-map-topic-list button { background:rgba(14,43,59,.72) !important; color:#dff5ff !important; border-color:rgba(125,211,252,.16) !important; }
+.knowledge-map-topic-list button:hover, .knowledge-map-topic-list button:focus-visible { background:rgba(24,66,86,.88) !important; }
+.knowledge-map-legend, .knowledge-graph-legend { color:#9eb7c7 !important; }
+.relationship-explainer { background:rgba(86,205,232,.055) !important; border-color:rgba(86,205,232,.14) !important; }
+.relationship-explainer strong { color:#bfeef7 !important; }
+.relationship-explainer p { color:#c4d8e3 !important; }
+
+/* Keep the graph nodes readable while removing the old pale-map feel. */
+.knowledge-map-node.foundation circle { fill:rgba(122,156,92,.82); stroke:#9fc875; }
+.knowledge-map-node.path circle { fill:rgba(67,107,153,.84); stroke:#83b9e8; }
+.knowledge-map-node.connected circle { fill:rgba(112,89,145,.84); stroke:#b59bdd; }
+.knowledge-map-node.broader circle { fill:rgba(151,103,63,.84); stroke:#d0a06b; }
+.knowledge-map-node.center circle { fill:rgba(78,130,105,.96); stroke:#a9d7ba; }
+.knowledge-map-node text { fill:#f2fbff !important; text-shadow:0 1px 3px rgba(0,0,0,.8); }
+.knowledge-map-node .map-node-type { fill:#d0e5ef !important; }
+
+@media(max-width:760px){
+  .architecture-layout { grid-template-columns:1fr; }
+  .architecture-side { order:2; }
+}
+</style>
+
 </head>
 
 
@@ -4276,7 +4391,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                     onclick="exploreTopic(true)"
                     id="exploreButton"
                 >
-                    Explore the Knowledge Map
+                    Start learning →
                 </button>
 
 
@@ -4284,7 +4399,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 
             <div class="quick-explore" aria-label="Example concepts to explore">
-                <span class="quick-explore-label">Start with:</span>
+                <span class="quick-explore-label">Try a topic:</span>
                 <button type="button" onclick="searchTopicText('Black Holes')">Black Holes</button>
                 <button type="button" onclick="searchTopicText('Life')">Life</button>
                 <button type="button" onclick="searchTopicText('Gravity')">Gravity</button>
@@ -9499,24 +9614,63 @@ const topics = {
             const {key, profile} = getArchitectureProfile(topic, localTopic);
             const progress = architectureProgress[key] ?? -1;
             const safeTitle = escapeHTML(profile.title);
-            let visual = "";
-            if (profile.shape === "mountain") {
-                visual = `<div class="architecture-mountain">${profile.levels.map((level,i)=>{
+            const shapeLabel = profile.shape === 'mountain'
+                ? 'Conceptual climb'
+                : profile.shape === 'archipelago'
+                    ? 'Connected landscape'
+                    : profile.shape === 'hybrid'
+                        ? 'Foundation → specializations'
+                        : 'Open exploration';
+
+            let visual = '';
+            if (profile.shape === 'mountain') {
+                visual = `<div class="architecture-mountain" aria-label="Conceptual climb">${profile.levels.map((level,i)=>{
                     const unlocked = i <= progress + 1;
-                    return `<article class="arch-level ${unlocked ? 'unlocked' : 'locked'} ${level[2] ? 'summit' : ''}"><span class="arch-num">${i+1}</span><div><strong>${escapeHTML(level[0])}</strong><small>${escapeHTML(level[1])}</small></div>${profile.gates?.[i] ? `<button type="button" class="arch-gate" onclick="openArchitectureGate('${key}',${i})">Challenge gate</button>` : `<span class="architecture-badge">Summit</span>`}</article>`;
+                    const gate = profile.gates?.[i];
+                    return `<article class="arch-level ${unlocked ? 'unlocked' : 'locked'} ${level[2] ? 'summit' : ''}">
+                        <span class="arch-num">${i+1}</span>
+                        <div class="arch-level-copy"><strong>${escapeHTML(level[0])}</strong><small>${escapeHTML(level[1])}</small></div>
+                        ${gate ? `<button type="button" class="arch-gate" onclick="openArchitectureGate('${key}',${i})">Challenge</button>` : `<span class="architecture-badge">Frontier</span>`}
+                    </article>`;
                 }).join('')}</div>`;
-            } else if (profile.shape === "archipelago") {
-                visual = `<div class="archipelago">${profile.islands.map((island,i)=>`<article class="arch-island"><strong>${escapeHTML(island[0])}</strong><small>${escapeHTML(island[1])}</small><button type="button" class="arch-gate" style="margin-top:10px" onclick="markArchitectureIsland('${key}',${i})">Explore island</button></article>`).join('')}<div class="arch-connector">↕ Connections become the real progression</div></div>`;
-            } else if (profile.shape === "hybrid") {
-                visual = `<div class="arch-hybrid"><div class="hybrid-ridge">${profile.levels.map((level,i)=>`<article class="arch-level ${i <= progress + 1 ? 'unlocked':'locked'}"><span class="arch-num">${i+1}</span><div><strong>${escapeHTML(level[0])}</strong><small>${escapeHTML(level[1])}</small></div>${profile.gates?.[i] ? `<button type="button" class="arch-gate" onclick="openArchitectureGate('${key}',${i})">Challenge</button>`:''}</article>`).join('')}</div><div class="hybrid-water"><div class="architecture-kicker">Specialization archipelago</div><div class="archipelago" style="margin-top:12px">${profile.islands.map((island,i)=>`<article class="arch-island"><strong>${escapeHTML(island[0])}</strong><small>${escapeHTML(island[1])}</small><button type="button" class="arch-gate" style="margin-top:10px" onclick="markArchitectureIsland('${key}',${i})">Explore</button></article>`).join('')}</div></div></div>`;
+            } else if (profile.shape === 'archipelago') {
+                visual = `<div class="archipelago" aria-label="Connected knowledge islands">${profile.islands.map((island,i)=>`
+                    <article class="arch-island"><strong>${escapeHTML(island[0])}</strong><small>${escapeHTML(island[1])}</small><button type="button" class="arch-gate" onclick="markArchitectureIsland('${key}',${i})">Explore</button></article>
+                `).join('')}</div>`;
+            } else if (profile.shape === 'hybrid') {
+                visual = `<div class="arch-hybrid">
+                    <div class="hybrid-ridge"><div class="architecture-subhead">Core foundation</div>${profile.levels.map((level,i)=>`<article class="arch-level ${i <= progress + 1 ? 'unlocked':'locked'}"><span class="arch-num">${i+1}</span><div class="arch-level-copy"><strong>${escapeHTML(level[0])}</strong><small>${escapeHTML(level[1])}</small></div>${profile.gates?.[i] ? `<button type="button" class="arch-gate" onclick="openArchitectureGate('${key}',${i})">Challenge</button>`:''}</article>`).join('')}</div>
+                    <div class="hybrid-water"><div class="architecture-subhead">Choose a specialization</div><div class="archipelago">${profile.islands.map((island,i)=>`<article class="arch-island"><strong>${escapeHTML(island[0])}</strong><small>${escapeHTML(island[1])}</small><button type="button" class="arch-gate" onclick="markArchitectureIsland('${key}',${i})">Explore</button></article>`).join('')}</div></div>
+                </div>`;
             } else {
-                visual = `<div class="architecture-side-card"><strong>Open exploration</strong><p>Explore the topic through the current overview, related concepts and sources. No artificial progression is imposed until the topic has enough trustworthy structure.</p></div>`;
+                visual = `<div class="architecture-open"><strong>Open exploration</strong><p>This topic can still be searched and explored normally. A fixed climb is only shown when Eagles Panorama has enough authored structure to justify one.</p></div>`;
             }
+
             return `<section class="architecture-room" id="architectureRoom" data-architecture-key="${key}">
-                <div class="architecture-head"><div><span class="architecture-kicker">Map Room</span><h2>${safeTitle}</h2><p>See the shape of the knowledge before you begin. The structure is visible, but the learner decides where to go.</p><div class="architecture-why"><strong>Why this shape?</strong> ${escapeHTML(profile.why)}</div></div><span class="architecture-badge">${profile.shape === 'mountain' ? 'Conceptual climb' : profile.shape === 'archipelago' ? 'Connected network' : profile.shape === 'hybrid' ? 'Foundation → specializations' : 'Open exploration'}</span></div>
-                <div class="architecture-layout"><div class="architecture-map">${visual}</div><aside class="architecture-side"><div class="architecture-side-card"><strong>How advancement works</strong><p>Gates ask you to use the model: diagnose, predict, reconstruct, manipulate, or explain. Passing a higher gate can unlock the foundations beneath it.</p><button type="button" class="architecture-primary" onclick="beginArchitectureLearning()">Begin the immediate next step →</button></div><div class="architecture-side-card"><strong>Already know this?</strong><p>Challenge any visible gate instead of taking a long placement test. Failure should reveal a useful learning gap, not punish you.</p></div></aside></div>
+                <div class="architecture-head">
+                    <div>
+                        <span class="architecture-kicker">MAP ROOM</span>
+                        <h2>${safeTitle}</h2>
+                        <p>See the shape of the knowledge first. Then choose your entry point.</p>
+                    </div>
+                    <span class="architecture-badge">${shapeLabel}</span>
+                </div>
+                <div class="architecture-why"><strong>Why this shape?</strong><span>${escapeHTML(profile.why)}</span></div>
+                <div class="architecture-layout">
+                    <div class="architecture-map">${visual}</div>
+                    <aside class="architecture-side">
+                        <div class="architecture-side-card architecture-entry-card">
+                            <strong>Your next move</strong>
+                            <p>Start at the next reachable concept. The gate is a footing check, not a test of whether you belong here.</p>
+                            <button type="button" class="architecture-primary" onclick="beginArchitectureLearning()">Begin next step →</button>
+                        </div>
+                        <div class="architecture-side-card architecture-known-card">
+                            <strong>Already know it?</strong>
+                            <p>Challenge any visible gate. A strong result can let you skip foundations.</p>
+                        </div>
+                    </aside>
+                </div>
                 <div id="architectureGatePanel"></div>
-                <p class="architecture-note">Prototype principle: the map is authored where we have enough structure; topics without reliable structure remain open rather than pretending certainty.</p>
             </section>`;
         }
 
@@ -9560,6 +9714,51 @@ const topics = {
             if(!panel||!profile?.islands?.[index]) return;
             panel.innerHTML=`<div class="architecture-gate"><h3>🌐 Explore: ${escapeHTML(profile.islands[index][0])}</h3><p>${escapeHTML(profile.islands[index][1])}</p><p>Connect this island to at least one other island before treating the exploration as meaningful.</p><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Return to the map</button></div>`;
             panel.scrollIntoView({behavior:'smooth',block:'center'});
+        }
+
+        async function searchWikipediaPages(query, limit = 6) {
+            const encoded = encodeURIComponent(query);
+            try {
+                const rest = await fetch(`${wikipediaBaseURL()}/w/rest.php/v1/search/page?q=${encoded}&limit=${limit}`);
+                if (rest.ok) {
+                    const data = await rest.json();
+                    if (Array.isArray(data.pages) && data.pages.length) return data.pages;
+                }
+            } catch (error) {
+                console.warn("Wikipedia REST search unavailable; using fallback search.", error);
+            }
+
+            // Public Action API fallback: keeps ordinary topic search working when
+            // the newer REST endpoint is unavailable in a language/region.
+            const fallback = `${wikipediaBaseURL()}/w/api.php?action=query&list=search&srsearch=${encoded}&srlimit=${limit}&format=json&origin=*`;
+            const response = await fetch(fallback);
+            if (!response.ok) throw new Error("Wikipedia search failed.");
+            const data = await response.json();
+            return Array.isArray(data?.query?.search)
+                ? data.query.search.map(item => ({ title: item.title }))
+                : [];
+        }
+
+        async function getWikipediaSummary(title) {
+            const encoded = encodeURIComponent(title);
+            try {
+                const response = await fetch(`${wikipediaBaseURL()}/api/rest_v1/page/summary/${encoded}`);
+                if (response.ok) return await response.json();
+            } catch (error) {
+                console.warn("Wikipedia summary REST endpoint unavailable; using fallback.", error);
+            }
+
+            const response = await fetch(`${wikipediaBaseURL()}/w/api.php?action=query&prop=extracts|info&exintro=1&explaintext=1&inprop=url&titles=${encoded}&format=json&origin=*`);
+            if (!response.ok) throw new Error("Wikipedia summary failed.");
+            const data = await response.json();
+            const page = Object.values(data?.query?.pages || {})[0];
+            if (!page || page.missing) throw new Error("Wikipedia summary failed.");
+            return {
+                title: page.title,
+                extract: page.extract || "",
+                description: "",
+                content_urls: { desktop: { page: page.fullurl || `${wikipediaBaseURL()}/wiki/${encoded}` } }
+            };
         }
 
         async function exploreTopic(openMapAfter = false) {
@@ -9636,39 +9835,9 @@ const topics = {
                     1. SEARCH WIKIPEDIA
                 */
 
-                const searchUrl =
-                    wikipediaBaseURL()
-                    +
-                    "/w/rest.php/v1/search/page?q="
-                    +
-                    encodeURIComponent(topic)
-                    +
-                    "&limit=6";
+                const searchPages = await searchWikipediaPages(topic, 6);
 
-
-                const searchResponse =
-                    await fetch(
-                        searchUrl
-                    );
-
-
-                if (!searchResponse.ok) {
-
-                    throw new Error(
-                        "Wikipedia search failed."
-                    );
-
-                }
-
-
-                const searchData =
-                    await searchResponse.json();
-
-
-                if (
-                    !searchData.pages ||
-                    searchData.pages.length === 0
-                ) {
+                if (!searchPages.length) {
 
 
                     result.innerHTML = `
@@ -9686,7 +9855,7 @@ const topics = {
 
 
                 const bestMatch =
-                    searchData.pages[0];
+                    searchPages[0];
 
 
                 const pageTitle =
@@ -9698,33 +9867,7 @@ const topics = {
                     2. GET SUMMARY
                 */
 
-                const summaryUrl =
-                    wikipediaBaseURL()
-                    +
-                    "/api/rest_v1/page/summary/"
-                    +
-                    encodeURIComponent(
-                        pageTitle
-                    );
-
-
-                const summaryResponse =
-                    await fetch(
-                        summaryUrl
-                    );
-
-
-                if (!summaryResponse.ok) {
-
-                    throw new Error(
-                        "Wikipedia summary failed."
-                    );
-
-                }
-
-
-                const summaryData =
-                    await summaryResponse.json();
+                const summaryData = await getWikipediaSummary(pageTitle);
 
 
                 const expandedWikipediaIntro =
@@ -9755,7 +9898,7 @@ const topics = {
 
 
                 const relatedPages =
-                    searchData.pages.slice(1);
+                    searchPages.slice(1);
 
 
                 let localSection = buildSourceExplorer(
@@ -10827,7 +10970,7 @@ const topics = {
 <script>
 /* Lightweight pointer spotlight for Bento-style surfaces. */
 (function(){
-    const selectors='.panorama-card,.resource,.learning-evidence-item,.learning-gateway,';
+    const selectors='.panorama-card,.resource,.learning-evidence-item,.learning-gateway';
     document.addEventListener('pointermove',function(e){
         const el=e.target.closest(selectors);
         if(!el) return;
@@ -10873,40 +11016,3 @@ const topics = {
 
 
 </html>
-
-/* Core experience: make the product journey visible without adding visual noise. */
-.hero .welcome {
-  font-size:clamp(1.5rem,3.2vw,2.65rem);
-  letter-spacing:.015em;
-  font-weight:800;
-}
-.hero .tagline {
-  max-width:760px;
-  margin-inline:auto;
-}
-#exploreButton {
-  min-width:220px;
-  font-weight:800;
-}
-.home-learning-journey, .learning-journey-context {
-  display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
-  color:#7893a7; font-size:.78rem;
-}
-.home-learning-journey { margin:18px auto 0; max-width:820px; }
-.home-learning-journey .journey-step {
-  display:inline-flex; align-items:center; gap:5px; padding:7px 10px;
-  border:1px solid rgba(125,211,252,.12); border-radius:999px;
-  background:rgba(7,18,31,.42);
-}
-.home-learning-journey .journey-step.active, .learning-journey-context .current {
-  color:#e9f8ff; border-color:rgba(69,199,232,.35); background:rgba(22,143,138,.16);
-}
-.home-learning-journey i, .learning-journey-context b { color:#46677e; font-style:normal; }
-.learning-journey-context { justify-content:flex-start; margin:0 0 14px; padding:9px 12px; border:1px solid rgba(125,211,252,.12); border-radius:12px; background:rgba(7,18,31,.45); }
-.learning-stage-home { opacity:.86; }
-.learning-stage-home:hover { opacity:1; }
-@media(max-width:760px){
-  .home-learning-journey { justify-content:flex-start; }
-  .home-learning-journey i { display:none; }
-  .learning-journey-context { justify-content:flex-start; }
-}
