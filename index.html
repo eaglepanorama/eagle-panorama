@@ -4143,6 +4143,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 </style>
 
+
+<style id="ep-revision-profile-styles">
+.ep-profile-card{margin:0 0 1.2rem;padding:1.2rem;border:1px solid rgba(93,184,207,.3);border-radius:18px;background:linear-gradient(140deg,rgba(10,32,52,.96),rgba(12,49,67,.92));color:#edf8ff;display:grid;gap:1rem}.ep-profile-card h3{margin:.35rem 0;color:#f2f8ff}.ep-profile-card p{margin:.3rem 0;color:#b9d0df}.ep-profile-kicker{font-size:.72rem;letter-spacing:.12em;color:#77d4e8;font-weight:800}.ep-profile-card label{display:grid;gap:.4rem;color:#d6e8f1;font-size:.88rem}.ep-profile-card input{width:100%;max-width:360px;box-sizing:border-box;padding:.7rem .8rem;border-radius:9px;border:1px solid #45677b;background:#071a2a;color:#fff;font:inherit}.ep-profile-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}.ep-profile-stats>div{padding:.8rem;border:1px solid rgba(150,207,226,.2);border-radius:12px;background:rgba(3,19,33,.45);display:flex;flex-direction:column;gap:.3rem;min-width:0}.ep-profile-stats strong{font-size:1.15rem;overflow-wrap:anywhere;color:#8fe2f1}.ep-profile-stats span{font-size:.78rem;color:#c5dbe6}.ep-profile-note{font-size:.8rem}.ep-challenge-note{padding:.7rem .85rem;border-left:3px solid #55bfd2;background:rgba(70,165,190,.1);border-radius:0 8px 8px 0;color:#c8eaf2}.architecture-feedback .arch-gate{display:block;margin-top:.8rem}.architecture-gate textarea{width:100%;box-sizing:border-box}.architecture-gate button{max-width:100%}@media(max-width:520px){.ep-profile-stats{grid-template-columns:1fr}.ep-profile-stats>div{flex-direction:row;align-items:center;justify-content:space-between}}
+</style>
+
 </head>
 
 
@@ -6581,7 +6586,7 @@ const topics = {
                 </div>
             ` : "";
 
-            content.innerHTML = atlasHTML + suggestionsHTML + recentHTML + topicsHTML + resourcesHTML + booksHTML + `
+            content.innerHTML = epProfileCard() + atlasHTML + suggestionsHTML + recentHTML + topicsHTML + resourcesHTML + booksHTML + `
                 <div class="dashboard-footer">
                     <button class="clear-data-button" onclick="clearLearningData()">
                         ${escapeHTML(text.clearData)}
@@ -9466,6 +9471,57 @@ const topics = {
            This is intentionally authored and extensible; it does not
            pretend to have a global automated ontology engine yet.
         ================================================================= */
+        /* Local learner profile: deliberately device-only, no account/security claims. */
+        const EP_PROFILE_KEY = "eaglesLearnerProfileV1";
+        function epReadProfile() {
+            try { return JSON.parse(localStorage.getItem(EP_PROFILE_KEY) || "{}") || {}; }
+            catch (_) { return {}; }
+        }
+        let epLearnerProfile = epReadProfile();
+        function epSaveProfile() {
+            try { localStorage.setItem(EP_PROFILE_KEY, JSON.stringify(epLearnerProfile)); } catch (_) {}
+        }
+        function epRank(passed) {
+            if (passed >= 20) return {en:"Summit Cartographer", fr:"Cartographe des sommets", ar:"رسّام قمم المعرفة"};
+            if (passed >= 10) return {en:"Systems Explorer", fr:"Explorateur des systèmes", ar:"مستكشف الأنظمة"};
+            if (passed >= 5) return {en:"Pathfinder", fr:"Éclaireur", ar:"رائد المسار"};
+            if (passed >= 1) return {en:"First Ascent", fr:"Première ascension", ar:"بداية الصعود"};
+            return {en:"Base Camp", fr:"Camp de base", ar:"معسكر البداية"};
+        }
+        function epText(en, fr, ar) {
+            const lang = selectedLanguage === "ar" ? "ar" : selectedLanguage === "fr" ? "fr" : "en";
+            return ({en, fr, ar})[lang] || en;
+        }
+        function epRecordCheckpoint(key, index, passed, kind) {
+            const id = `${key}:${kind}:${index}`;
+            epLearnerProfile.checkpoints ||= {};
+            const old = epLearnerProfile.checkpoints[id] || {attempts:0, passed:false};
+            old.attempts += 1; old.lastAttempt = Date.now(); old.passed = old.passed || passed;
+            old.topic = architectureProfiles[key]?.title || key; old.kind = kind; old.index = index;
+            epLearnerProfile.checkpoints[id] = old;
+            epLearnerProfile.lastTopic = old.topic;
+            epSaveProfile();
+        }
+        function epProfileCard() {
+            const checks = Object.values(epLearnerProfile.checkpoints || {});
+            const passed = checks.filter(x => x.passed).length;
+            const attempts = checks.reduce((n,x)=>n+(x.attempts||0),0);
+            const rank = epRank(passed)[selectedLanguage] || epRank(passed).en;
+            const name = epLearnerProfile.name || "Learner";
+            return `<section class="ep-profile-card"><div><span class="ep-profile-kicker">${epText("LOCAL LEARNING PROFILE","PROFIL LOCAL D’APPRENTISSAGE","ملف التعلّم المحلي")}</span><h3>${epText("Your learning record","Votre parcours d’apprentissage","سجلّ تعلّمك")}</h3><p>${epText("Saved only in this browser on this device.","Enregistré uniquement dans ce navigateur sur cet appareil.","يُحفظ في هذا المتصفح وعلى هذا الجهاز فقط.")}</p></div><label>${epText("Learner name","Nom du profil","اسم المتعلّم")}<input id="epProfileName" maxlength="40" value="${escapeHTML(name)}" placeholder="${epText("Choose a profile name","Choisissez un nom","اختر اسماً للملف")}" onchange="epSaveName(this.value)"></label><div class="ep-profile-stats"><div><strong>${passed}</strong><span>${epText("Checkpoints passed","Étapes réussies","نقاط اجتياز")}</span></div><div><strong>${attempts}</strong><span>${epText("Attempts","Tentatives","المحاولات")}</span></div><div><strong>${escapeHTML(rank)}</strong><span>${epText("Current rank","Rang actuel","الرتبة الحالية")}</span></div></div><p class="ep-profile-note">${epText("Ranks reflect recorded checkpoint evidence, not a claim of complete mastery.","Les rangs reflètent les preuves enregistrées, pas une maîtrise totale.","تعكس الرتب أدلة نقاط التحقق المسجّلة، ولا تعني إتقاناً كاملاً.")}</p></section>`;
+        }
+        function epSaveName(value) { epLearnerProfile.name = String(value || "").trim().slice(0,40) || "Learner"; epSaveProfile(); }
+        function epLocalizedFeedback(type, missing, nextQuestion) {
+            const items = (missing || []).map(escapeHTML).join(" · ");
+            const language = selectedLanguage === "ar" ? "ar" : selectedLanguage === "fr" ? "fr" : "en";
+            const copy = {
+                en: {short:"Your answer is too brief to diagnose. Explain the mechanism, evidence, and consequence.", pass:"Checkpoint passed by this prototype's transparent signal check. This is evidence, not proof of mastery.", fail:"The explanation does not yet show the key mechanism. Likely gap: ", review:"Review the concept above, then try a new version of the question.", next:"Try a new question"},
+                fr: {short:"Votre réponse est trop courte pour diagnostiquer la difficulté. Expliquez le mécanisme, les preuves et les conséquences.", pass:"Étape validée par la vérification transparente du prototype. C’est un indice, pas une preuve de maîtrise.", fail:"L’explication ne montre pas encore le mécanisme essentiel. Lacune possible : ", review:"Révisez le concept ci-dessus, puis essayez une nouvelle version de la question.", next:"Essayer une nouvelle question"},
+                ar: {short:"الإجابة قصيرة جداً لتحديد موضع الصعوبة. اشرح الآلية والدليل والنتيجة.", pass:"اجتازت الإجابة فحص النموذج الأولي الشفاف. هذا دليل مبدئي وليس إثباتاً للإتقان.", fail:"لم توضّح الإجابة الآلية الأساسية بعد. فجوة محتملة: ", review:"راجع المفهوم أعلاه، ثم جرّب صيغة جديدة من السؤال.", next:"جرّب سؤالاً جديداً"}
+            };
+            return copy[language];
+        }
+
         const architectureProfiles = {
             gravity: {
                 shape: "mountain",
@@ -9704,7 +9760,9 @@ const topics = {
             const profile = architectureProfiles[key];
             const panel = document.querySelector('#architectureGatePanel');
             if (!profile || !panel || !profile.gates?.[index]) return;
-            panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Advancement Gate — ${escapeHTML(profile.levels[index][0])}</h3><p>${escapeHTML(profile.gates[index])}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+            const selectedLevel = document.querySelector('#learningLevel')?.value || 'beginner';
+            const challengeNote = selectedLevel === 'beginner' ? 'Show your reasoning step by step; you may use the concept description.' : selectedLevel === 'intermediate' ? 'Intermediate challenge: explain the mechanism, rule out one alternative, and predict a consequence.' : 'Advanced direct challenge: identify the controlling variables, predict a changed scenario, and state one limitation of the model.';
+            panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Advancement Gate — ${escapeHTML(profile.levels[index][0])}</h3><p>${escapeHTML(profile.gates[index])}</p><p class="ep-challenge-note">${escapeHTML(challengeNote)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
             panel.scrollIntoView({behavior:'smooth',block:'center'});
         }
 
@@ -9713,20 +9771,43 @@ const topics = {
             const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim().toLowerCase();
             const feedback = document.querySelector('#architectureGateFeedback');
             if (!profile || !feedback) return;
-            if (answer.length < 35) { feedback.className='architecture-feedback needs'; feedback.innerHTML='<strong>Not enough evidence yet.</strong><br>Give the reasoning, not just the conclusion. Explain what mechanism produces the outcome.'; return; }
             const signals = profile.signals?.[index] || [];
+            const copy = epLocalizedFeedback();
+            if (answer.length < 35) {
+                epRecordCheckpoint(key,index,false,'mountain');
+                feedback.className='architecture-feedback needs';
+                feedback.innerHTML=`<strong>${escapeHTML(copy.short)}</strong><br>${escapeHTML(copy.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'mountain')">${escapeHTML(copy.next)}</button>`; return;
+            }
             const hits = signals.filter(signal => answer.includes(signal.toLowerCase())).length;
             const threshold = Math.max(2, Math.ceil(signals.length * .45));
-            if (hits >= threshold) {
+            const passed = hits >= threshold;
+            epRecordCheckpoint(key,index,passed,'mountain');
+            if (passed) {
                 architectureProgress[key] = Math.max(architectureProgress[key] ?? -1,index);
+                const rank = epRank(Object.values(epLearnerProfile.checkpoints || {}).filter(x=>x.passed).length);
+                const rankText = rank[selectedLanguage] || rank.en;
                 feedback.className='architecture-feedback good';
-                feedback.innerHTML=`<strong>Gate passed for this prototype.</strong><br>Your explanation contains evidence of the key mechanism. Levels through <strong>${escapeHTML(profile.levels[index][0])}</strong> are now treated as demonstrated. <span class="architecture-note">This local prototype uses signal matching; future versions can replace it with stronger authored or AI-assisted evaluation.</span>`;
-                const room=document.querySelector('#architectureRoom'); if(room){ const holder=room.parentElement; const old=room.outerHTML; room.outerHTML=buildArchitectureRoom(profile.title, {title:profile.title}); }
+                feedback.innerHTML=`<strong>${escapeHTML(copy.pass)}</strong><br>${epText('Evidence recorded for','Preuve enregistrée pour','تم تسجيل دليل على')} <strong>${escapeHTML(profile.levels[index][0])}</strong>. ${epText('Current rank','Rang actuel','الرتبة الحالية')}: <strong>${escapeHTML(rankText)}</strong>. <span class="architecture-note">${epText('Evaluation uses authored keyword signals, not semantic understanding.','L’évaluation utilise des mots-clés prédéfinis, pas une compréhension sémantique.','يعتمد التقييم على كلمات مفتاحية محددة مسبقاً، وليس فهماً دلالياً.')}</span>`;
+                const room=document.querySelector('#architectureRoom'); if(room){ const node=room.querySelectorAll('.arch-level')[index]; if(node) node.classList.add('unlocked'); }
             } else {
                 const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
                 feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>Keep climbing.</strong><br>The answer may be heading in the right direction, but it doesn't yet show enough of the mechanism. Revisit the concept and retry. <br><span class="architecture-note">Useful ideas to examine: ${missing.map(escapeHTML).join(' · ') || 'cause · mechanism · consequence'}</span>`;
+                feedback.innerHTML=`<strong>${escapeHTML(copy.fail)}${missing.map(escapeHTML).join(' · ') || 'cause · mechanism · consequence'}</strong><br>${escapeHTML(copy.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'mountain')">${escapeHTML(copy.next)}</button>`;
             }
+        }
+        function epRetryGate(key,index,kind) {
+            const profile = architectureProfiles[key]; if (!profile) return;
+            const panel = document.querySelector('#architectureGatePanel'); if (!panel) return;
+            const original = kind === 'island' ? (profile.gates[index] || '') : kind === 'nexus' ? (profile.nexus || '') : (profile.gates[index] || '');
+            const variants = [
+                'Now change one important condition in this scenario. What changes in the outcome, and why? Use the same underlying concept, but do not repeat the original answer.',
+                'A result contradicts your prediction. Which assumption would you test first, what evidence would distinguish the explanations, and what would you predict next?'
+            ];
+            const attempt = ((epLearnerProfile.retryCounts || {})[`${key}:${kind}:${index}`] || 0);
+            epLearnerProfile.retryCounts ||= {}; epLearnerProfile.retryCounts[`${key}:${kind}:${index}`] = attempt + 1; epSaveProfile();
+            const question = `${original}\n\n${variants[attempt % variants.length]}`;
+            panel.innerHTML = `<div class="architecture-gate"><h3>${epText('Revision checkpoint','Étape de révision','نقطة مراجعة')} — ${escapeHTML(profile.title)}</h3><p>${escapeHTML(question)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="${escapeHTML(epText('Explain the mechanism, evidence, and predicted outcome…','Expliquez le mécanisme, les preuves et le résultat prévu…','اشرح الآلية والدليل والنتيجة المتوقعة…'))}"></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" onclick="${kind==='island' ? `evaluateArchitectureIslandGate('${key}',${index})` : kind==='nexus' ? `evaluateArchitectureNexus('${key}')` : `evaluateArchitectureGate('${key}',${index})`} ">${escapeHTML(epText('Check new answer','Évaluer la nouvelle réponse','تحقق من الإجابة الجديدة'))}</button></div><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+            panel.scrollIntoView({behavior:'smooth',block:'center'});
         }
 
         function openArchitectureIslandGate(key,index) {
@@ -9749,16 +9830,17 @@ const topics = {
             const feedback = document.querySelector('#architectureGateFeedback');
             if (!profile || !feedback) return;
             const signals = profile.islandSignals?.[index] || [];
-            if (answer.length < 35) { feedback.className='architecture-feedback needs'; feedback.innerHTML='<strong>Not enough evidence yet.</strong><br>Give the reasoning, not only the conclusion.'; return; }
+            if (answer.length < 35) { epRecordCheckpoint(key,index,false,'island'); const c=epLocalizedFeedback(); feedback.className='architecture-feedback needs'; feedback.innerHTML=`<strong>${escapeHTML(c.short)}</strong><br>${escapeHTML(c.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'island')">${escapeHTML(c.next)}</button>`; return; }
             const hits = signals.filter(signal => answer.includes(signal.toLowerCase())).length;
             const threshold = Math.max(2, Math.ceil(signals.length * .45));
-            if (hits >= threshold) {
+            const passed = hits >= threshold; epRecordCheckpoint(key,index,passed,'island');
+            if (passed) {
                 feedback.className='architecture-feedback good';
-                feedback.innerHTML='<strong>Checkpoint passed for this prototype.</strong><br>You showed enough of the island\'s core mechanism to continue exploring the network. <span class="architecture-note">This prototype uses transparent signal matching, not a claim of full mastery.</span>';
+                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().pass)}</strong><br><span class="architecture-note">${escapeHTML(epText('Signal matching is only a rough prototype check.','La correspondance de mots-clés reste une vérification approximative.','مطابقة الكلمات المفتاحية فحص تقريبي فقط.'))}</span>`;
             } else {
                 const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
                 feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>Keep exploring this island.</strong><br>Your answer does not yet show enough of the mechanism. Revisit the island and retry.<br><span class="architecture-note">Useful ideas to examine: ${missing.map(escapeHTML).join(' · ') || 'cause · mechanism · consequence'}</span>`;
+                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().fail)}${missing.map(escapeHTML).join(' · ') || 'cause · mechanism · consequence'}</strong><br>${escapeHTML(epLocalizedFeedback().review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'island')">${escapeHTML(epLocalizedFeedback().next)}</button>`;
             }
         }
 
@@ -9776,16 +9858,17 @@ const topics = {
             const feedback = document.querySelector('#architectureGateFeedback');
             if (!profile || !feedback) return;
             const signals = profile.nexusSignals || [];
-            if (answer.length < 50) { feedback.className='architecture-feedback needs'; feedback.innerHTML='<strong>Not enough synthesis yet.</strong><br>Trace the mechanism across multiple parts of the network.'; return; }
+            if (answer.length < 50) { epRecordCheckpoint(key,0,false,'nexus'); const c=epLocalizedFeedback(); feedback.className='architecture-feedback needs'; feedback.innerHTML=`<strong>${escapeHTML(c.short)}</strong><br>${escapeHTML(c.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',0,'nexus')">${escapeHTML(c.next)}</button>`; return; }
             const hits = signals.filter(signal => answer.includes(signal.toLowerCase())).length;
             const threshold = Math.max(2, Math.ceil(signals.length * .45));
-            if (hits >= threshold) {
+            const passed = hits >= threshold; epRecordCheckpoint(key,0,passed,'nexus');
+            if (passed) {
                 feedback.className='architecture-feedback good';
-                feedback.innerHTML='<strong>Nexus checkpoint passed for this prototype.</strong><br>Your response traces multiple parts of the system rather than reducing it to one cause. <span class="architecture-note">This is evidence of systemic reasoning, not a claim of complete mastery.</span>';
+                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().pass)}</strong><br>${escapeHTML(epText('Your answer linked multiple parts of the system.','Votre réponse relie plusieurs parties du système.','ربطت إجابتك بين أجزاء متعددة من النظام.'))}`;
             } else {
                 const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
                 feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>The network needs more tracing.</strong><br>Show how the shock moves through several connected variables.<br><span class="architecture-note">Useful ideas to examine: ${missing.map(escapeHTML).join(' · ') || 'cause · feedback · consequence'}</span>`;
+                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().fail)}${missing.map(escapeHTML).join(' · ') || 'cause · feedback · consequence'}</strong><br>${escapeHTML(epLocalizedFeedback().review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',0,'nexus')">${escapeHTML(epLocalizedFeedback().next)}</button>`;
             }
         }
 
