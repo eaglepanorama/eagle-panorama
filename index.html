@@ -5,63 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eagle Panorama</title>
   <meta name="description" content="A knowledge atlas: see how ideas connect, what to learn first, and how deep a subject goes." />
-  <meta name="theme-color" content="#0c1014" />
+  <meta name="theme-color" content="#07111c" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0c1014;
-      --surface: #151a20;
-      --surface-2: #1c232c;
-      --fg: #e8ece4;
-      --muted: #9aa39a;
-      --subtle: #6f786f;
-      --border: color-mix(in oklab, #e8ece4 14%, transparent);
-      --accent: #8eb4c9;
-      --primary: #e8ece4;
-      --primary-fg: #12160f;
+      --bg: #07111c;
+      --surface: rgba(10, 28, 44, 0.78);
+      --surface-2: rgba(16, 42, 62, 0.88);
+      --fg: #eef6fb;
+      --muted: #b7c9d6;
+      --subtle: #8eabbc;
+      --border: rgba(125, 211, 252, 0.18);
+      --accent: #7dd3e8;
+      --primary: #2aa8b8;
+      --primary-fg: #04141c;
+      --gold: #d6b56b;
       --font-display: "Fraunces", "Iowan Old Style", Palatino, serif;
       --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--fg); font-family: var(--font-sans); line-height: 1.5; }
-    body { background: radial-gradient(1200px 600px at 50% -10%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%), var(--bg); }
+    html, body { margin: 0; min-height: 100%; background: #050d16; color: var(--fg); font-family: var(--font-sans); line-height: 1.5; }
+    body {
+      background:
+        radial-gradient(circle at 12% 8%, rgba(69, 199, 232, 0.16), transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(125, 211, 252, 0.10), transparent 26%),
+        radial-gradient(circle at 50% 100%, rgba(214, 181, 107, 0.07), transparent 34%),
+        linear-gradient(160deg, #071422 0%, #0a1d2e 46%, #071824 100%);
+    }
+    #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    header, main, #codebox { position: relative; z-index: 1; }
     h1, h2, .display { font-family: var(--font-display); letter-spacing: -0.03em; line-height: 1.15; font-weight: 600; }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; font-family: inherit; }
-    header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--border); background: color-mix(in oklab, var(--bg) 86%, transparent); backdrop-filter: blur(10px); }
-    .bar { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--border); background: rgba(7, 18, 30, 0.72); backdrop-filter: blur(16px); }
+    .bar { max-width: 1180px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .brand { display: flex; align-items: center; gap: 10px; min-height: 44px; }
-    .mark { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; display: grid; place-items: center; color: var(--accent); }
-    nav { display: flex; gap: 4px; }
-    nav a { height: 44px; padding: 0 12px; border-radius: 8px; color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; }
-    nav a.active, nav a:hover { background: var(--surface-2); color: var(--fg); }
-    main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 80px; }
-    .hero { text-align: center; padding: 48px 0 24px; }
+    .mark { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 10px; display: grid; place-items: center; color: var(--accent); background: rgba(45, 168, 184, 0.12); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+    nav { display: flex; gap: 4px; flex-wrap: wrap; }
+    nav a { height: 40px; padding: 0 12px; border-radius: 999px; color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; }
+    nav a.active, nav a:hover { background: rgba(125, 211, 252, 0.12); color: var(--fg); }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 80px; }
+    .hero { text-align: center; padding: 56px 0 28px; position: relative; }
+    .hero::before { content: ""; position: absolute; width: 420px; height: 220px; left: 50%; top: 10px; transform: translateX(-50%); background: radial-gradient(circle, rgba(69,199,232,.18), transparent 68%); pointer-events: none; }
+    .welcome { display: inline-block; margin: 0 0 14px; padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(125,211,252,.28); background: rgba(8,27,42,.55); color: #d7f4ff; letter-spacing: .16em; text-transform: uppercase; font-size: 12px; }
     .kicker { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin: 0; }
-    h1 { font-size: clamp(2rem, 6vw, 3.6rem); margin: 12px 0; }
+    h1 { font-size: clamp(2.1rem, 6vw, 3.8rem); margin: 12px 0; text-shadow: 0 10px 40px rgba(0,0,0,.35); }
     .lede { color: var(--muted); max-width: 40rem; margin: 0 auto 28px; font-size: 1.125rem; }
     .lede.left { margin-left: 0; text-align: left; }
-    .search { display: flex; flex-wrap: wrap; gap: 10px; max-width: 42rem; margin: 0 auto; text-align: left; }
-    input[type="text"] { height: 48px; flex: 1; min-width: 12rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: var(--fg); padding: 0 14px; font-size: 16px; outline: none; }
-    input:focus { box-shadow: 0 0 0 2px var(--accent); }
-    .btn { height: 48px; padding: 0 20px; border: 0; border-radius: 8px; background: var(--primary); color: var(--primary-fg); font-weight: 600; font-size: 14px; }
-    .btn.secondary { background: var(--surface-2); color: var(--fg); border: 1px solid var(--border); }
+    .search { display: flex; flex-wrap: wrap; gap: 10px; max-width: 42rem; margin: 0 auto; text-align: left; padding: 8px; border-radius: 18px; border: 1px solid var(--border); background: rgba(8, 24, 40, 0.55); box-shadow: 0 18px 50px rgba(0,0,0,.22); }
+    input[type="text"] { height: 48px; flex: 1; min-width: 12rem; border-radius: 12px; border: 1px solid transparent; background: rgba(244, 250, 252, 0.96); color: #142b3b; padding: 0 14px; font-size: 16px; outline: none; }
+    input:focus { box-shadow: 0 0 0 3px rgba(42, 168, 184, 0.35); }
+    .btn { height: 48px; padding: 0 20px; border: 0; border-radius: 12px; background: linear-gradient(135deg, #1f8f9c, #3ec4cf); color: #04141c; font-weight: 700; font-size: 14px; box-shadow: 0 8px 20px rgba(42,168,184,.22); }
+    .btn:hover { filter: brightness(1.06); }
+    .btn.secondary { background: rgba(16, 42, 62, 0.9); color: var(--fg); border: 1px solid var(--border); box-shadow: none; }
     .btn.sm { height: 40px; padding: 0 12px; font-size: 13px; text-transform: capitalize; }
     .btn:disabled { opacity: 0.45; cursor: default; }
     .chips, .row { display: flex; flex-wrap: wrap; gap: 8px; }
     .chips { justify-content: center; margin-top: 20px; }
     .row { margin-top: 12px; }
-    .chip { min-height: 40px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: var(--fg); font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
-    .chip:hover, .chip.on { border-color: var(--accent); }
+    .chip { min-height: 40px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: rgba(8, 27, 42, 0.72); color: var(--fg); font-size: 13px; display: inline-flex; align-items: center; gap: 6px; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .chip:hover, .chip.on { border-color: rgba(125, 211, 252, 0.55); background: rgba(22, 78, 96, 0.72); transform: translateY(-1px); }
     .chip.depth { flex-direction: column; align-items: flex-start; height: auto; background: transparent; }
     .steps { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 28px; }
     .steps span { height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; }
     .grid, .concepts { display: grid; gap: 12px; }
     .grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 20px; }
-    .card { border: 1px solid var(--border); background: var(--surface); border-radius: 16px; padding: 20px; display: block; }
-    .card:hover { border-color: var(--accent); }
+    .card { border: 1px solid var(--border); background: linear-gradient(160deg, rgba(14, 36, 54, 0.92), rgba(8, 24, 38, 0.88)); border-radius: 18px; padding: 20px; display: block; box-shadow: 0 16px 40px rgba(0,0,0,.16); transition: transform .18s ease, border-color .18s ease; }
+    .card:hover { border-color: rgba(125, 211, 252, 0.45); transform: translateY(-2px); }
     .card.inset { margin-top: 12px; }
     .display { font-size: 1.15rem; }
     .muted { color: var(--muted); }
@@ -71,8 +83,8 @@
     .suggest { border: 1px solid var(--border); background: var(--surface); border-radius: 12px; margin: 10px auto 0; overflow: hidden; max-width: 42rem; text-align: left; }
     .suggest button { display: flex; width: 100%; justify-content: space-between; gap: 12px; background: transparent; border: 0; color: var(--fg); padding: 12px 16px; min-height: 44px; font-size: 14px; }
     .suggest button:hover { background: var(--surface-2); }
-    .board-wrap { border: 1px solid var(--border); background: var(--surface); border-radius: 16px; padding: 10px; margin-top: 20px; }
-    .board { height: min(72vh, 720px); overflow: hidden; border-radius: 10px; background: #eef1e8; cursor: grab; touch-action: none; }
+    .board-wrap { border: 1px solid rgba(214, 181, 107, 0.28); background: rgba(8, 22, 34, 0.72); border-radius: 20px; padding: 10px; margin-top: 20px; box-shadow: 0 20px 50px rgba(0,0,0,.28); }
+    .board { height: min(72vh, 720px); overflow: hidden; border-radius: 14px; background: #eef3ea; cursor: grab; touch-action: none; }
     .legend { color: var(--muted); font-size: 12px; margin: 8px 4px 2px; }
     .section { margin-top: 36px; }
     .depth-copy { margin-top: 16px; }
@@ -80,6 +92,18 @@
     .choice.sel { border-color: var(--accent); background: var(--surface-2); }
     .check-row { margin-top: 16px; }
     .link { color: var(--accent); }
+    header select { height: 40px; max-width: 9.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: var(--fg); padding: 0 8px; }
+    .controls { display: flex; gap: 8px; align-items: center; }
+    .stages { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 8px; }
+    .thumb { width: 180px; height: 120px; object-fit: cover; border-radius: 12px; }
+    .topic-head { display: flex; gap: 18px; align-items: flex-start; }
+    .arch { display: grid; gap: 10px; margin-top: 12px; }
+    .arch-step { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; }
+    .books { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .book { display: flex; gap: 12px; }
+    .cover { width: 64px; height: 92px; object-fit: cover; border-radius: 6px; background: var(--surface-2); }
+    textarea.gate { width: 100%; min-height: 90px; margin-top: 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: var(--fg); padding: 10px; font: inherit; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 16px 0; }
     #codebox { display: none; position: fixed; inset: 0; z-index: 40; background: rgba(0,0,0,.72); padding: 16px; }
     #codebox.open { display: flex; flex-direction: column; gap: 10px; }
     #codebox textarea { flex: 1; width: 100%; min-height: 50vh; border-radius: 8px; border: 1px solid var(--border); background: #10140f; color: var(--fg); padding: 12px; font: 12px/1.45 ui-monospace, monospace; }
@@ -89,10 +113,17 @@
       .search { flex-direction: column; }
       .btn { width: 100%; }
       .btn.sm { width: auto; }
+      .topic-head, .arch-step { flex-direction: column; display: flex; align-items: flex-start; }
+      header select { max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #sky { display: none; }
+      .chip, .card, .btn { transition: none; }
     }
   </style>
 </head>
 <body>
+  <canvas id="sky" aria-hidden="true"></canvas>
   <header>
     <div class="bar">
       <a class="brand" href="#/">
@@ -104,10 +135,37 @@
           <span class="subtle plain">See the landscape of knowledge</span>
         </span>
       </a>
+      <div class="controls">
+        <select id="level" aria-label="Learning level">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+        <select id="lang" aria-label="Wikipedia language">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="ar">العربية</option>
+          <option value="de">Deutsch</option>
+          <option value="pt">Português</option>
+          <option value="ru">Русский</option>
+          <option value="zh">中文</option>
+          <option value="ja">日本語</option>
+          <option value="hi">हिन्दी</option>
+          <option value="it">Italiano</option>
+          <option value="nl">Nederlands</option>
+          <option value="pl">Polski</option>
+          <option value="tr">Türkçe</option>
+          <option value="ko">한국어</option>
+          <option value="fa">فارسی</option>
+          <option value="id">Indonesia</option>
+        </select>
+      </div>
       <nav>
         <a href="#/" data-nav="home">Explore</a>
         <a href="#/map" data-nav="map">Map</a>
         <a href="#/atlas" data-nav="atlas">My Atlas</a>
+        <a href="#/about" data-nav="about">About</a>
         <a href="#/present" data-nav="present">Present</a>
         <a id="copy-code" href="#copy">Copy code</a>
       </nav>
@@ -166,7 +224,74 @@
   let depthKey = "intro";
   let choice = null;
   let submitted = false;
+  let wikiLang = localStorage.getItem("ep-lang") || "en";
+  let level = localStorage.getItem("ep-level") || "beginner";
+  let stage = "understand";
+  let mapLens = "all";
+  let openGate = 0;
   const wikiCache = {};
+  const bookCache = {};
+  const researchCache = {};
+  const relCache = {};
+  const ARCH = {
+    gravity: {
+      shape: "Climb",
+      why: "Gravity is a vertical climb. Each model is the footing for the next boundary.",
+      steps: [
+        ["Local motion", "Treat nearby gravity as steady downward acceleration, and separate it from drag.", ["gravity", "drag", "fall"]],
+        ["Inverse-square attraction", "Mass and distance explain orbits, not just things dropped nearby.", ["mass", "orbit", "distance"]],
+        ["Spacetime geometry", "Gravity can be modeled as curved spacetime, checked by how light bends.", ["light", "mass", "curve"]],
+        ["Open frontier", "Relativity and quantum theory still do not meet at black holes.", ["quantum", "black", "unresolved"]],
+      ],
+    },
+    "quantum-mechanics": {
+      shape: "Climb",
+      why: "Quantum mechanics is a rigid climb: probability first, then boundaries, then correlated systems.",
+      steps: [
+        ["Probability amplitudes", "A state can be a superposition. Measurement gives probabilities, not a hidden classical path.", ["superposition", "probability", "measure"]],
+        ["Boundaries", "Wells and barriers decide which energies and tunneling chances are allowed.", ["barrier", "energy", "tunnel"]],
+        ["Entanglement", "Joint states can correlate outcomes that no local classical story matches.", ["entangle", "correlat", "measure"]],
+        ["Open systems", "Real devices also fight decoherence and noise.", ["noise", "decoherence", "qubit"]],
+      ],
+    },
+    evolution: {
+      shape: "Climb",
+      why: "Evolution climbs from changes inside one gene pool toward branching history and interacting species.",
+      steps: [
+        ["Gene pools", "Selection, drift, mutation, and migration change frequencies inside a population.", ["selection", "drift", "mutation"]],
+        ["Isolation", "Reproductive barriers split one pool into separate evolutionary paths.", ["isolation", "species", "barrier"]],
+        ["Branching history", "Shared traits and nested groups reconstruct who came from whom.", ["ancestor", "tree", "trait"]],
+        ["Living systems", "Species change each other. One shift can cascade.", ["species", "ecosystem", "cascade"]],
+      ],
+    },
+    astronomy: {
+      shape: "Islands",
+      why: "Astronomy is a landscape of islands. Spectra, stars, and distances can be explored apart, then joined.",
+      steps: [
+        ["Spectra", "Lines in light reveal composition, temperature, and motion.", ["spectrum", "light", "line"]],
+        ["Stars", "Fusion and gravity compete across a star's life.", ["fusion", "gravity", "star"]],
+        ["Distances", "Parallax, variable stars, and supernovae reach farther out.", ["distance", "parallax", "supernova"]],
+      ],
+    },
+    "computer-science": {
+      shape: "Foundation, then choices",
+      why: "Computing has a strict base — state, algorithms, information — then opens into many specializations.",
+      steps: [
+        ["State and steps", "A computation is a precise sequence of changes to stored information.", ["state", "step", "information"]],
+        ["Algorithms", "The same problem can have many procedures, with different cost.", ["algorithm", "cost", "step"]],
+        ["Limits", "Some questions are undecidable or intractable no matter the machine.", ["limit", "comput", "hard"]],
+      ],
+    },
+    "french-revolution": {
+      shape: "Islands",
+      why: "The Revolution is a web: ideas, money, crowds, and war pushed on each other at the same time.",
+      steps: [
+        ["Ideas", "Rights, sovereignty, and old privilege were argued in public.", ["right", "privilege", "people"]],
+        ["Crisis", "Debt, bread, and a blocked state made reform urgent.", ["debt", "bread", "tax"]],
+        ["Cascade", "War and faction fights turned a reform crisis into a new political order.", ["war", "faction", "power"]],
+      ],
+    },
+  };
 
   function slugify(value) {
     return String(value)
@@ -227,16 +352,60 @@
       .map((row) => row.t);
   }
 
+  function wikiHost() {
+    return "https://" + wikiLang + ".wikipedia.org";
+  }
+
+  function wikiKey(title) {
+    return wikiLang + ":" + title;
+  }
+
+  function depthForLevel() {
+    if (level === "advanced") return "advanced";
+    if (level === "intermediate") return "connections";
+    return "intro";
+  }
+
+  function emptyAtlas() {
+    return { entries: {}, recent: [], queries: [], sources: [], gates: {} };
+  }
+
   function loadAtlas() {
     try {
-      return JSON.parse(localStorage.getItem("eagle-panorama-html") || '{"entries":{},"recent":[]}');
+      const atlas = JSON.parse(localStorage.getItem("eagle-panorama-html") || "");
+      atlas.entries = atlas.entries || {};
+      atlas.recent = atlas.recent || [];
+      atlas.queries = atlas.queries || [];
+      atlas.sources = atlas.sources || [];
+      atlas.gates = atlas.gates || {};
+      return atlas;
     } catch {
-      return { entries: {}, recent: [] };
+      return emptyAtlas();
     }
   }
 
   function saveAtlas(atlas) {
     localStorage.setItem("eagle-panorama-html", JSON.stringify(atlas));
+  }
+
+  function passedCount(atlas) {
+    const checks = Object.values(atlas.entries).filter((entry) => entry.checkPassed).length;
+    const gates = Object.values(atlas.gates).filter(Boolean).length;
+    return checks + gates;
+  }
+
+  function rankName(count) {
+    if (count >= 8) return "Summit cartographer";
+    if (count >= 5) return "Systems explorer";
+    if (count >= 3) return "Pathfinder";
+    if (count >= 1) return "First ascent";
+    return "Base camp";
+  }
+
+  function rememberQuery(query) {
+    const atlas = loadAtlas();
+    atlas.queries = [query, ...atlas.queries.filter((item) => norm(item) !== norm(query))].slice(0, 8);
+    saveAtlas(atlas);
   }
 
   function visit(id, title) {
@@ -260,40 +429,43 @@
     const parts = path.split("/").filter(Boolean);
     if (parts[0] === "map") return { name: "map" };
     if (parts[0] === "atlas") return { name: "atlas" };
+    if (parts[0] === "about") return { name: "about" };
     if (parts[0] === "present") return { name: "present" };
     if (parts[0] === "topic" && parts[1]) return { name: "topic", slug: decodeURIComponent(parts[1]), wiki: query.get("wiki") };
     return { name: "home" };
   }
 
   async function wikiSummary(title) {
-    if (wikiCache[title]) return wikiCache[title];
+    const key = wikiKey(title);
+    if (wikiCache[key]) return wikiCache[key];
     try {
-      const res = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title), {
+      const res = await fetch(wikiHost() + "/api/rest_v1/page/summary/" + encodeURIComponent(title), {
         headers: { Accept: "application/json" },
       });
       if (!res.ok) {
-        wikiCache[title] = {
+        wikiCache[key] = {
           error: res.status === 404 ? "Wikipedia has no summary titled “" + title + "”." : "Wikipedia summary failed (" + res.status + ").",
         };
-        return wikiCache[title];
+        return wikiCache[key];
       }
       const data = await res.json();
-      wikiCache[title] = {
+      wikiCache[key] = {
         extract: data.extract,
         url: data.content_urls && data.content_urls.desktop && data.content_urls.desktop.page,
         description: data.description,
+        thumb: data.thumbnail && data.thumbnail.source,
       };
-      return wikiCache[title];
+      return wikiCache[key];
     } catch {
-      wikiCache[title] = { error: "Could not reach Wikipedia. Curated atlas topics still work offline." };
-      return wikiCache[title];
+      wikiCache[key] = { error: "Could not reach Wikipedia. Curated atlas topics still work offline." };
+      return wikiCache[key];
     }
   }
 
   async function wikiSearch(query) {
     try {
       const res = await fetch(
-        "https://en.wikipedia.org/w/api.php?action=query&list=search&utf8=1&format=json&origin=*&srlimit=6&srsearch=" +
+        wikiHost() + "/w/api.php?action=query&list=search&utf8=1&format=json&origin=*&srlimit=6&srsearch=" +
           encodeURIComponent(query),
       );
       if (!res.ok) return { error: "Wikipedia search returned " + res.status + "." };
@@ -316,6 +488,7 @@
       render();
       return;
     }
+    rememberQuery(value);
     const curated = matchTopic(value);
     if (curated) {
       location.hash = "#/topic/" + curated.id;
@@ -372,7 +545,7 @@
 
   function home() {
     return (
-      '<section class="hero"><p class="kicker">Knowledge atlas</p><h1>What do you want to understand?</h1>' +
+      '<section class="hero"><p class="welcome">Take a step back</p><p class="kicker">Knowledge atlas</p><h1>What do you want to understand?</h1>' +
       '<p class="lede">Do not stop at an isolated article. See what a subject rests on, what it connects to, and how far it goes — like looking at a landscape rather than a single tree.</p>' +
       searchBox(true) +
       '<div class="steps">' +
@@ -396,7 +569,19 @@
           );
         })
         .join("") +
-      "</div>"
+      "</div>" +
+      Object.keys(FIELDS)
+        .map((id) => {
+          const topics = TOPICS.filter((topic) => topic.field === id);
+          return (
+            '<section class="section"><h2>' +
+            esc(FIELDS[id].label) +
+            '</h2><div class="row">' +
+            topics.map((topic) => chip(topic.id)).join("") +
+            "</div></section>"
+          );
+        })
+        .join("")
     );
   }
 
@@ -405,13 +590,39 @@
     const height = 980;
     const edges = [];
     TOPICS.forEach((topic) => {
-      topic.prerequisites.forEach((id) => BY_ID[id] && edges.push([topic, BY_ID[id], "#3d5a45"]));
-      topic.related.forEach((id) => BY_ID[id] && edges.push([topic, BY_ID[id], "#6a7c8a"]));
-      topic.goingDeeper.forEach((id) => BY_ID[id] && edges.push([topic, BY_ID[id], "#5b4a32"]));
+      if (mapLens === "all" || mapLens === "foundation") {
+        topic.prerequisites.forEach((id) => BY_ID[id] && edges.push([topic, BY_ID[id], "#3d5a45"]));
+      }
+      if (mapLens === "all" || mapLens === "nearby") {
+        topic.related.forEach((id) => BY_ID[id] && edges.push([topic, BY_ID[id], "#6a7c8a"]));
+      }
+      if (mapLens === "all" || mapLens === "further") {
+        topic.goingDeeper.forEach((id) => BY_ID[id] && edges.push([topic, BY_ID[id], "#5b4a32"]));
+      }
     });
+    const lenses = [
+      ["all", "All links"],
+      ["foundation", "Zoom in"],
+      ["nearby", "Nearby"],
+      ["further", "Zoom out"],
+    ];
     return (
       '<p class="kicker">Knowledge map</p><h1>The atlas board</h1>' +
-      '<p class="lede left">A readable map of authored connections — not a decorative night sky. Drag to pan. Scroll to zoom. Click a label to open the topic.</p>' +
+      '<p class="lede left">A readable map of authored connections — not a decorative night sky. Drag to pan. Scroll to zoom. Click a label to open the topic. Zoom in shows foundations. Nearby shows neighbors. Zoom out shows the next climb.</p>' +
+      '<div class="stages">' +
+      lenses
+        .map(
+          (item) =>
+            '<button type="button" class="chip' +
+            (mapLens === item[0] ? " on" : "") +
+            '" data-lens="' +
+            item[0] +
+            '">' +
+            item[1] +
+            "</button>",
+        )
+        .join("") +
+      "</div>" +
       searchBox(false) +
       '<div class="board-wrap"><div class="board" id="board"><svg id="atlasvg" viewBox="0 0 ' +
       width +
@@ -458,24 +669,218 @@
     );
   }
 
+  function sourceLinks(title) {
+    const q = encodeURIComponent(title);
+    const wiki = wikiCache[wikiKey(title)];
+    const items = [
+      ["Wikipedia", (wiki && wiki.url) || wikiHost() + "/wiki/" + q, "A broad reference with citations and linked ideas."],
+      ["Open Library", "https://openlibrary.org/search?q=" + q, "Books and editions for a slower reading path."],
+      ["Khan Academy", "https://www.khanacademy.org/search?page_search_query=" + q, "Guided explanations when you want to study, not skim."],
+      ["OpenAlex", "https://openalex.org/works?search=" + q, "Research works related to this subject."],
+      ["Semantic Scholar", "https://www.semanticscholar.org/search?q=" + q, "Another way into papers and citations."],
+    ];
+    return (
+      '<div class="concepts">' +
+      items
+        .map(
+          (item) =>
+            '<div class="card"><strong>' +
+            esc(item[0]) +
+            '</strong><p class="muted">' +
+            esc(item[2]) +
+            '</p><p><a class="link" href="' +
+            esc(item[1]) +
+            '" target="_blank" rel="noreferrer">Open</a> <button type="button" class="btn sm secondary" data-save-source="' +
+            esc(item[0]) +
+            '" data-save-url="' +
+            esc(item[1]) +
+            '">Save</button></p></div>',
+        )
+        .join("") +
+      "</div>"
+    );
+  }
+
+  function ensureBooks(title) {
+    const key = wikiKey(title);
+    if (bookCache[key]) return bookCache[key];
+    bookCache[key] = { loading: true };
+    fetch("https://openlibrary.org/search.json?limit=4&q=" + encodeURIComponent(title))
+      .then((res) => res.json())
+      .then((data) => {
+        bookCache[key] = { books: (data.docs || []).slice(0, 4) };
+        render();
+      })
+      .catch(() => {
+        bookCache[key] = { error: "Open Library is unavailable right now." };
+        render();
+      });
+    return bookCache[key];
+  }
+
+  function ensureResearch(title) {
+    const key = wikiKey(title);
+    if (researchCache[key]) return researchCache[key];
+    researchCache[key] = { loading: true };
+    fetch("https://api.openalex.org/works?per-page=3&sort=relevance_score:desc&search=" + encodeURIComponent(title))
+      .then((res) => {
+        if (!res.ok) throw new Error("status");
+        return res.json();
+      })
+      .then((data) => {
+        researchCache[key] = { works: (data.results || []).filter((work) => work.title).slice(0, 3) };
+        render();
+      })
+      .catch(() => {
+        researchCache[key] = { error: "Live research search is unavailable. The source links above still work." };
+        render();
+      });
+    return researchCache[key];
+  }
+
+  function ensureRelated(title) {
+    const key = wikiKey(title);
+    if (relCache[key]) return relCache[key];
+    relCache[key] = { loading: true };
+    wikiSearch(title).then((result) => {
+      relCache[key] = { hits: (result.hits || []).slice(0, 5) };
+      render();
+    });
+    return relCache[key];
+  }
+
+  function booksHTML(title) {
+    const data = ensureBooks(title);
+    if (data.loading) return '<p class="muted">Looking for books…</p>';
+    if (data.error) return '<p class="muted">' + esc(data.error) + "</p>";
+    if (!data.books.length) return '<p class="muted">No public books matched this search.</p>';
+    return (
+      '<div class="books">' +
+      data.books
+        .map((book) => {
+          const bookTitle = book.title || "Untitled book";
+          const author = book.author_name && book.author_name[0] ? book.author_name[0] : "Unknown author";
+          const year = book.first_publish_year || "";
+          const cover = book.cover_i ? "https://covers.openlibrary.org/b/id/" + book.cover_i + "-M.jpg" : "";
+          const url = book.key ? "https://openlibrary.org" + book.key : "https://openlibrary.org/";
+          return (
+            '<article class="card book">' +
+            (cover ? '<img class="cover" alt="" src="' + esc(cover) + '">' : '<div class="cover"></div>') +
+            "<div><strong>" +
+            esc(bookTitle) +
+            '</strong><p class="muted">' +
+            esc(author) +
+            (year ? " · " + esc(String(year)) : "") +
+            '</p><p><a class="link" href="' +
+            esc(url) +
+            '" target="_blank" rel="noreferrer">Open book</a></p></div></article>'
+          );
+        })
+        .join("") +
+      "</div>"
+    );
+  }
+
+  function researchHTML(title) {
+    const data = ensureResearch(title);
+    if (data.loading) return '<p class="muted">Searching recent research…</p>';
+    if (data.error) return '<p class="muted">' + esc(data.error) + "</p>";
+    if (!data.works.length) return '<p class="muted">No live research results for this search.</p>';
+    return (
+      '<div class="concepts">' +
+      data.works
+        .map((work) => {
+          const url = work.doi || (work.primary_location && work.primary_location.landing_page_url) || "https://openalex.org/";
+          const year = work.publication_year || "Year unknown";
+          const venue = (work.primary_location && work.primary_location.source && work.primary_location.source.display_name) || "Research work";
+          return (
+            '<article class="card"><p class="subtle plain">' +
+            esc(String(year)) +
+            " · " +
+            esc(venue) +
+            "</p><strong>" +
+            esc(work.title) +
+            '</strong><p><a class="link" href="' +
+            esc(url) +
+            '" target="_blank" rel="noreferrer">Read research</a></p></article>'
+          );
+        })
+        .join("") +
+      "</div>"
+    );
+  }
+
+  function architectureHTML(topic) {
+    const profile = ARCH[topic.id];
+    if (!profile) return "";
+    const atlas = loadAtlas();
+    return (
+      '<section class="section"><h2>Map room · ' +
+      esc(profile.shape) +
+      '</h2><p class="muted">' +
+      esc(profile.why) +
+      '</p><div class="arch">' +
+      profile.steps
+        .map((step, index) => {
+          const passed = atlas.gates[topic.id + ":" + index];
+          return (
+            '<article class="card arch-step"><span class="subtle">' +
+            (index + 1) +
+            "</span><div><strong>" +
+            esc(step[0]) +
+            '</strong><p class="muted">' +
+            esc(step[1]) +
+            "</p></div><button type=\"button\" class=\"btn sm secondary\" data-open-gate=\"" +
+            index +
+            '">' +
+            (passed ? "Passed" : "Checkpoint") +
+            "</button></article>"
+          );
+        })
+        .join("") +
+      "</div>" +
+      (profile.steps[openGate]
+        ? '<div class="card" style="margin-top:12px"><p class="kicker">Checkpoint</p><h3>' +
+          esc(profile.steps[openGate][0]) +
+          '</h3><p>Explain the idea in your own words. This check looks for the mechanism, not a memorized sentence. It is evidence, not proof of mastery.</p><textarea class="gate" id="gate-answer" aria-label="Your reasoning"></textarea><p class="check-row"><button class="btn" id="gate-check" type="button">Check my reasoning</button></p><p class="muted" id="gate-feedback"></p></div>'
+        : "") +
+      "</section>"
+    );
+  }
+
   function topicView(current) {
     const topic = BY_ID[current.slug] || matchTopic(current.slug.replace(/-/g, " "));
     const title = (topic && topic.title) || current.wiki || current.slug;
     if (topic) visit(topic.id, topic.title);
     const wikiTitle = current.wiki || (topic && topic.wikiTitle) || title;
-    const wiki = wikiCache[wikiTitle];
+    const wiki = wikiCache[wikiKey(wikiTitle)];
     if (!wiki) wikiSummary(wikiTitle).then(() => render());
     const atlas = loadAtlas();
     const entry = topic ? atlas.entries[topic.id] : null;
-    const related = topic ? [...new Set([...topic.prerequisites, ...topic.related, ...topic.goingDeeper])] : [];
+    const levelNote =
+      level === "beginner"
+        ? "Beginner pass: start with what it is and what it rests on."
+        : level === "intermediate"
+          ? "Intermediate pass: connect the idea to its neighbors."
+          : "Advanced pass: press on limits, uses, and what is still open.";
+    const tabs = [
+      ["understand", "Understand"],
+      ["connect", "Connect"],
+      ["sources", "Sources"],
+      ["check", "Check"],
+    ];
     let body =
-      '<article class="topic"><p class="kicker">' +
+      '<article class="topic"><div class="topic-head">' +
+      (wiki && wiki.thumb ? '<img class="thumb" alt="" src="' + esc(wiki.thumb) + '">' : "") +
+      "<div><p class=\"kicker\">" +
       esc(topic ? FIELDS[topic.field].label : "Live source") +
       "</p><h1>" +
       esc(title) +
       '</h1><p class="lede left">' +
       esc((topic && topic.depths.intro) || (wiki && wiki.description) || "A live entry from Wikipedia, with connections when the atlas can find them.") +
-      "</p>";
+      '</p><p class="subtle plain">' +
+      esc(levelNote) +
+      "</p></div></div>";
     if (topic) {
       body +=
         '<div class="row">' +
@@ -494,87 +899,167 @@
         '<a class="chip" href="#/map">See on the map</a></div>';
     }
     body +=
-      '<section class="section"><h2>Overview</h2><p>' +
-      esc((topic && topic.overview) || (wiki && wiki.extract) || "") +
-      "</p>" +
-      (wiki && wiki.error ? '<p class="muted">' + esc(wiki.error) + "</p>" : "") +
-      (wiki && wiki.extract && topic
-        ? '<div class="card inset"><p class="subtle">Wikipedia extract</p><p class="muted">' +
-          esc(wiki.extract) +
-          "</p>" +
-          (wiki.url ? '<p><a class="link" href="' + esc(wiki.url) + '" target="_blank" rel="noreferrer">Open full article</a></p>' : "") +
-          "</div>"
-        : "") +
-      "</section>";
-    if (!topic) {
-      body +=
-        '<section class="section"><h2>Connected reading</h2><p class="muted">This subject is not yet a fully authored atlas entry. The summary above is a live public source, not a curated path.</p></section></article>';
-      return body;
-    }
-    body +=
-      '<section class="section"><h2>Why it matters</h2><p>' +
-      esc(topic.whyItMatters) +
-      '</p></section><section class="section"><h2>Prerequisites</h2><p class="muted">Understand these first — they make this topic readable.</p><div class="row">' +
-      (topic.prerequisites.length ? topic.prerequisites.map(chip).join("") : '<p class="muted">No required prior topics — a good entry point.</p>') +
-      '</div></section><section class="section"><h2>Core concepts</h2><div class="concepts">' +
-      topic.coreConcepts
-        .map((concept) => '<div class="card"><strong>' + esc(concept.name) + '</strong><p class="muted">' + esc(concept.summary) + "</p></div>")
-        .join("") +
-      '</div></section><section class="section"><h2>Depth</h2><div class="row">' +
-      DEPTHS.map(
-        (level) =>
-          '<button type="button" class="chip depth' +
-          (depthKey === level[0] ? " on" : "") +
-          '" data-depth="' +
-          level[0] +
-          '"><span class="subtle">' +
-          esc(level[1]) +
-          "</span>" +
-          esc(level[2]) +
-          "</button>",
-      ).join("") +
-      "</div><p class=\"depth-copy\">" +
-      esc(topic.depths[depthKey]) +
-      '</p></section><section class="section"><h2>Related topics</h2><div class="row">' +
-      related.map(chip).join("") +
-      '</div></section><section class="section"><h2>Going deeper</h2><div class="row">' +
-      topic.goingDeeper.map(chip).join("") +
-      '</div></section><section class="section"><h2>Applications</h2><ul class="muted">' +
-      topic.applications.map((item) => "<li>" + esc(item) + "</li>").join("") +
-      '</ul></section><section class="section card"><p class="kicker">Verify understanding</p><h2>Have you understood this, or only seen it?</h2><p class="muted">This is not an exam. It checks whether the idea can be used, not merely recognized.</p><p><strong>' +
-      esc(topic.check.prompt) +
-      "</strong></p>" +
-      topic.check.choices
+      '<div class="stages">' +
+      tabs
         .map(
-          (option, index) =>
-            '<button type="button" class="choice' +
-            (choice === index ? " sel" : "") +
-            '" data-choice="' +
-            index +
+          (tab) =>
+            '<button type="button" class="chip' +
+            (stage === tab[0] ? " on" : "") +
+            '" data-stage="' +
+            tab[0] +
             '">' +
-            esc(option) +
+            tab[1] +
             "</button>",
         )
         .join("") +
-      '<p class="check-row"><button class="btn" id="checkbtn" type="button">Check</button></p>' +
-      (submitted
-        ? '<p class="muted">' +
-          (choice === topic.check.answer ? "That matches the core idea. " : "Not quite — see the note below. ") +
-          esc(topic.check.explanation) +
-          "</p>"
-        : "") +
-      "</section></article>";
+      "</div>";
+
+    if (stage === "understand") {
+      body +=
+        '<section class="section"><h2>Overview</h2><p>' +
+        esc((topic && topic.overview) || (wiki && wiki.extract) || "") +
+        "</p>" +
+        (wiki && wiki.error ? '<p class="muted">' + esc(wiki.error) + "</p>" : "") +
+        (wiki && wiki.extract && topic
+          ? '<div class="card inset"><p class="subtle">Wikipedia · ' +
+            esc(wikiLang) +
+            '</p><p class="muted">' +
+            esc(wiki.extract) +
+            "</p>" +
+            (wiki.url ? '<p><a class="link" href="' + esc(wiki.url) + '" target="_blank" rel="noreferrer">Open full article</a></p>' : "") +
+            "</div>"
+          : "") +
+        "</section>";
+      if (topic) {
+        body +=
+          '<section class="section"><h2>Why it matters</h2><p>' +
+          esc(topic.whyItMatters) +
+          '</p></section><section class="section"><h2>Prerequisites</h2><p class="muted">Understand these first.</p><div class="row">' +
+          (topic.prerequisites.length ? topic.prerequisites.map(chip).join("") : '<p class="muted">A good entry point — no required prior topics.</p>') +
+          '</div></section><section class="section"><h2>Core concepts</h2><div class="concepts">' +
+          topic.coreConcepts
+            .map((concept) => '<div class="card"><strong>' + esc(concept.name) + '</strong><p class="muted">' + esc(concept.summary) + "</p></div>")
+            .join("") +
+          '</div></section><section class="section"><h2>Depth</h2><div class="row">' +
+          DEPTHS.map(
+            (item) =>
+              '<button type="button" class="chip depth' +
+              (depthKey === item[0] ? " on" : "") +
+              '" data-depth="' +
+              item[0] +
+              '"><span class="subtle">' +
+              esc(item[1]) +
+              "</span>" +
+              esc(item[2]) +
+              "</button>",
+          ).join("") +
+          '</div><p class="depth-copy">' +
+          esc(topic.depths[depthKey]) +
+          "</p></section>" +
+          architectureHTML(topic);
+      }
+    } else if (stage === "connect") {
+      const related = topic ? [...new Set([...topic.prerequisites, ...topic.related, ...topic.goingDeeper])] : [];
+      const live = ensureRelated(wikiTitle);
+      body +=
+        '<section class="section"><h2>How it sits in the landscape</h2><p class="muted">Foundations support it. Neighbors sit beside it. Going deeper is the next climb — not the same kind of link.</p><div class="row">' +
+        (related.length ? related.map(chip).join("") : "") +
+        "</div></section>";
+      if (topic) {
+        body +=
+          '<section class="section"><h2>Going deeper</h2><div class="row">' +
+          (topic.goingDeeper.length ? topic.goingDeeper.map(chip).join("") : '<p class="muted">No further authored climb yet.</p>') +
+          "</div></section>";
+      }
+      body += '<section class="section"><h2>Also on Wikipedia</h2>';
+      if (live.loading) body += '<p class="muted">Looking for nearby pages…</p>';
+      else if (live.hits && live.hits.length) {
+        body += live.hits
+          .map(
+            (hit) =>
+              '<p><button type="button" class="chip" data-go="' +
+              esc(hit.title) +
+              '">' +
+              esc(hit.title) +
+              "</button></p>",
+          )
+          .join("");
+      } else body += '<p class="muted">No extra public pages just now.</p>';
+      body += "</section>";
+    } else if (stage === "sources") {
+      body +=
+        '<section class="section"><h2>Better sources</h2><p class="muted">One explanation is not enough. Compare a reference, a learning path, books, and research.</p>' +
+        sourceLinks(wikiTitle) +
+        "</section>";
+      if (topic && topic.applications.length) {
+        body +=
+          '<section class="section"><h2>Applications</h2><ul class="muted">' +
+          topic.applications.map((item) => "<li>" + esc(item) + "</li>").join("") +
+          "</ul></section>";
+      }
+      body += '<section class="section"><h2>Books</h2>' + booksHTML(wikiTitle) + "</section>";
+      body += '<section class="section"><h2>Recent research</h2>' + researchHTML(wikiTitle) + "</section>";
+    } else if (topic) {
+      body +=
+        '<section class="section card"><p class="kicker">Verify understanding</p><h2>Have you understood this, or only seen it?</h2><p class="muted">This is not an exam. It checks whether the idea can be used, not merely recognized.</p><p><strong>' +
+        esc(topic.check.prompt) +
+        "</strong></p>" +
+        topic.check.choices
+          .map(
+            (option, index) =>
+              '<button type="button" class="choice' +
+              (choice === index ? " sel" : "") +
+              '" data-choice="' +
+              index +
+              '">' +
+              esc(option) +
+              "</button>",
+          )
+          .join("") +
+        '<p class="check-row"><button class="btn" id="checkbtn" type="button">Check</button></p>' +
+        (submitted
+          ? '<p class="muted">' +
+            (choice === topic.check.answer ? "That matches the core idea. " : "Not quite — see the note below. ") +
+            esc(topic.check.explanation) +
+            "</p>"
+          : "") +
+        "</section>";
+    } else {
+      body +=
+        '<section class="section"><h2>No authored check yet</h2><p class="muted">This page is a live public source. The atlas does not invent a quiz for it.</p></section>';
+    }
+    body += "</article>";
     return body;
   }
 
   function atlasView() {
     const atlas = loadAtlas();
     const list = Object.values(atlas.entries).sort((a, b) => (b.lastVisit || 0) - (a.lastVisit || 0));
+    const explored = list.length;
+    const learning = list.filter((entry) => entry.status === "learning").length;
+    const understood = list.filter((entry) => entry.status === "understood" || entry.checkPassed).length;
+    const rank = rankName(passedCount(atlas));
     return (
-      "<h1>My atlas</h1><p class=\"lede left\">A private record in this browser: what you have explored, what you are learning, and what you have actually checked.</p>" +
-      (list.length ? '<p><button class="btn sm secondary" id="clearatlas" type="button">Clear local atlas</button></p>' : "") +
+      "<h1>My atlas</h1><p class=\"lede left\">A private record in this browser only: explored topics, saved sources, checkpoints, and recent searches. Nothing is sent to an account.</p>" +
+      '<div class="stats"><div class="card"><strong class="display">' +
+      explored +
+      '</strong><p class="subtle plain">Explored</p></div><div class="card"><strong class="display">' +
+      learning +
+      '</strong><p class="subtle plain">Learning</p></div><div class="card"><strong class="display">' +
+      understood +
+      '</strong><p class="subtle plain">Checked</p></div><div class="card"><strong class="display">' +
+      esc(rank) +
+      '</strong><p class="subtle plain">Rank from recorded checks, not mastery</p></div></div>' +
+      (list.length || (atlas.queries && atlas.queries.length) || (atlas.sources && atlas.sources.length)
+        ? '<p><button class="btn sm secondary" id="clearatlas" type="button">Clear local atlas</button></p>'
+        : "") +
+      (atlas.queries && atlas.queries.length
+        ? '<section class="section"><h2>Recent searches</h2><div class="row">' +
+          atlas.queries.map((query) => '<button type="button" class="chip" data-go="' + esc(query) + '">' + esc(query) + "</button>").join("") +
+          "</div></section>"
+        : "") +
       (list.length
-        ? '<div class="concepts">' +
+        ? '<section class="section"><h2>Topics</h2><div class="concepts">' +
           list
             .map(
               (entry) =>
@@ -588,8 +1073,36 @@
                 "</p></a>",
             )
             .join("") +
-          "</div>"
-        : '<p class="muted">Nothing saved yet. <a class="link" href="#/">Explore a topic</a>.</p>')
+          "</div></section>"
+        : '<p class="muted">Nothing saved yet. <a class="link" href="#/">Explore a topic</a>.</p>') +
+      (atlas.sources && atlas.sources.length
+        ? '<section class="section"><h2>Saved sources</h2><div class="concepts">' +
+          atlas.sources
+            .map(
+              (source) =>
+                '<a class="card" href="' +
+                esc(source.url) +
+                '" target="_blank" rel="noreferrer"><strong>' +
+                esc(source.name) +
+                '</strong><p class="muted">' +
+                esc(source.topic || "") +
+                "</p></a>",
+            )
+            .join("") +
+          "</div></section>"
+        : "")
+    );
+  }
+
+  function aboutView() {
+    return (
+      '<p class="kicker">About</p><h1>See the landscape, not one tree.</h1>' +
+      '<p class="lede left">Eagle Panorama is a learning explorer. Search is the start of a journey: understand the idea, see what it rests on, connect it, check whether you can use it, then go deeper.</p>' +
+      '<div class="concepts"><div class="card"><strong>Authored atlas</strong><p class="muted">Curated topics carry prerequisites, core ideas, depth, applications, and a short conceptual check.</p></div>' +
+      '<div class="card"><strong>Live public sources</strong><p class="muted">Wikipedia follows the language you pick. Open Library, Khan Academy, OpenAlex, and Semantic Scholar are lanes beside the article, not a replacement for it.</p></div>' +
+      '<div class="card"><strong>Map room</strong><p class="muted">A few subjects have a shape: a climb, islands, or a foundation that later branches. Checkpoints ask for the mechanism. Keyword signals are evidence, not proof of mastery.</p></div>' +
+      '<div class="card"><strong>Your atlas</strong><p class="muted">Explored, learning, and understood stay in this browser. Ranks count recorded checks. They do not claim you have mastered a field.</p></div>' +
+      '<div class="card"><strong>What this is not</strong><p class="muted">Not a validated curriculum, not a night-sky decoration, and not another encyclopedia that ends when the summary ends.</p></div></div>'
     );
   }
 
@@ -666,6 +1179,7 @@
     if (current.name === "home") app.innerHTML = home();
     else if (current.name === "map") app.innerHTML = mapView();
     else if (current.name === "atlas") app.innerHTML = atlasView();
+    else if (current.name === "about") app.innerHTML = aboutView();
     else if (current.name === "present") app.innerHTML = presentView();
     else app.innerHTML = topicView(current);
 
@@ -696,6 +1210,65 @@
       button.addEventListener("click", () => {
         depthKey = button.getAttribute("data-depth");
         render();
+      });
+    });
+    document.querySelectorAll("[data-stage]").forEach((button) => {
+      button.addEventListener("click", () => {
+        stage = button.getAttribute("data-stage");
+        render();
+      });
+    });
+    document.querySelectorAll("[data-lens]").forEach((button) => {
+      button.addEventListener("click", () => {
+        mapLens = button.getAttribute("data-lens");
+        render();
+      });
+    });
+    document.querySelectorAll("[data-open-gate]").forEach((button) => {
+      button.addEventListener("click", () => {
+        openGate = Number(button.getAttribute("data-open-gate"));
+        render();
+      });
+    });
+    const gate = document.getElementById("gate-check");
+    if (gate) {
+      gate.addEventListener("click", () => {
+        const topic = BY_ID[route().slug];
+        const profile = topic && ARCH[topic.id];
+        const step = profile && profile.steps[openGate];
+        const answer = (document.getElementById("gate-answer").value || "").trim().toLowerCase();
+        const feedback = document.getElementById("gate-feedback");
+        if (!step || !feedback) return;
+        if (answer.length < 30) {
+          feedback.textContent = "Too short to judge. Name the mechanism, not just the topic.";
+          return;
+        }
+        const hits = step[2].filter((signal) => answer.includes(signal)).length;
+        const atlas = loadAtlas();
+        const passed = hits >= Math.min(2, step[2].length);
+        atlas.gates[topic.id + ":" + openGate] = passed;
+        if (passed && atlas.entries[topic.id]) atlas.entries[topic.id].status = "learning";
+        saveAtlas(atlas);
+        feedback.textContent = passed
+          ? "Checkpoint recorded. This matched the authored signals. That is evidence, not proof you have mastered it."
+          : "Not yet. Try naming: " + step[2].join(", ") + ".";
+      });
+    }
+    document.querySelectorAll("[data-save-source]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const topic = BY_ID[route().slug];
+        const atlas = loadAtlas();
+        const source = {
+          name: button.getAttribute("data-save-source"),
+          url: button.getAttribute("data-save-url"),
+          topic: topic ? topic.title : route().slug,
+        };
+        if (!atlas.sources.some((item) => item.url === source.url && item.topic === source.topic)) {
+          atlas.sources.unshift(source);
+          atlas.sources = atlas.sources.slice(0, 24);
+          saveAtlas(atlas);
+        }
+        button.textContent = "Saved";
       });
     });
     document.querySelectorAll("[data-choice]").forEach((button) => {
@@ -736,7 +1309,7 @@
     const clear = document.getElementById("clearatlas");
     if (clear) {
       clear.addEventListener("click", () => {
-        saveAtlas({ entries: {}, recent: [] });
+        saveAtlas(emptyAtlas());
         render();
       });
     }
@@ -750,7 +1323,9 @@
   window.addEventListener("hashchange", () => {
     choice = null;
     submitted = false;
-    depthKey = "intro";
+    stage = "understand";
+    openGate = 0;
+    depthKey = depthForLevel();
     render();
   });
   window.addEventListener("keydown", (event) => {
@@ -766,6 +1341,28 @@
       render();
     }
   });
+  const langSelect = document.getElementById("lang");
+  const levelSelect = document.getElementById("level");
+  if (langSelect) {
+    langSelect.value = wikiLang;
+    langSelect.addEventListener("change", () => {
+      wikiLang = langSelect.value;
+      localStorage.setItem("ep-lang", wikiLang);
+      document.documentElement.lang = wikiLang;
+      document.documentElement.dir = wikiLang === "ar" || wikiLang === "fa" ? "rtl" : "ltr";
+      render();
+    });
+  }
+  if (levelSelect) {
+    levelSelect.value = level;
+    levelSelect.addEventListener("change", () => {
+      level = levelSelect.value;
+      localStorage.setItem("ep-level", level);
+      depthKey = depthForLevel();
+      render();
+    });
+  }
+  depthKey = depthForLevel();
   render();
 })();
 
@@ -797,6 +1394,48 @@
     document.getElementById("code-close").addEventListener("click", function () {
       document.getElementById("codebox").classList.remove("open");
     });
+    (function () {
+      var canvas = document.getElementById("sky");
+      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var ctx = canvas.getContext("2d");
+      var stars = [];
+      function resize() {
+        var ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(window.innerWidth * ratio);
+        canvas.height = Math.floor(window.innerHeight * ratio);
+        canvas.style.width = window.innerWidth + "px";
+        canvas.style.height = window.innerHeight + "px";
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        stars = [];
+        var count = Math.max(70, Math.min(180, Math.floor(window.innerWidth * window.innerHeight * 0.00008)));
+        for (var i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            r: 0.4 + Math.random() * 1.2,
+            a: 0.2 + Math.random() * 0.55,
+            p: Math.random() * Math.PI * 2,
+            s: 0.0004 + Math.random() * 0.001
+          });
+        }
+      }
+      function draw(time) {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        for (var i = 0; i < stars.length; i++) {
+          var star = stars[i];
+          var pulse = (Math.sin(time * star.s + star.p) + 1) / 2;
+          ctx.beginPath();
+          ctx.fillStyle = "rgba(230,246,255," + Math.min(0.9, star.a + pulse * 0.35) + ")";
+          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      requestAnimationFrame(draw);
+    })();
   </script>
 </body>
 </html>
+
