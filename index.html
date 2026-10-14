@@ -4172,6 +4172,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 </style>
 
+<style id="ep-theme-switcher-styles">
+/* Theme switcher: keep all palettes dark enough to preserve existing text contrast. */
+body[data-ep-theme="eagle"] { background-color:#071522 !important; }
+body[data-ep-theme="forest"] { background-color:#0b211b !important; }
+body[data-ep-theme="plum"] { background-color:#1a1428 !important; }
+body[data-ep-theme="ember"] { background-color:#261a16 !important; }
+body[data-ep-theme="forest"]::before { background:rgba(83,205,143,.10) !important; }
+body[data-ep-theme="forest"]::after { background:rgba(72,173,123,.08) !important; }
+body[data-ep-theme="plum"]::before { background:rgba(169,121,255,.10) !important; }
+body[data-ep-theme="plum"]::after { background:rgba(113,137,255,.08) !important; }
+body[data-ep-theme="ember"]::before { background:rgba(255,148,91,.10) !important; }
+body[data-ep-theme="ember"]::after { background:rgba(255,195,107,.07) !important; }
+#epThemeSelect { padding:9px 11px; border:1px solid rgba(125,211,252,.3) !important; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer; }
+#epThemeSelect:focus-visible { outline:2px solid #7dd3fc; outline-offset:3px; }
+</style>
 
 <style id="ep-revision-profile-styles">
 .ep-profile-card{margin:0 0 1.2rem;padding:1.2rem;border:1px solid rgba(93,184,207,.3);border-radius:18px;background:linear-gradient(140deg,rgba(10,32,52,.96),rgba(12,49,67,.92));color:#edf8ff;display:grid;gap:1rem}.ep-profile-card h3{margin:.35rem 0;color:#f2f8ff}.ep-profile-card p{margin:.3rem 0;color:#b9d0df}.ep-profile-kicker{font-size:.72rem;letter-spacing:.12em;color:#77d4e8;font-weight:800}.ep-profile-card label{display:grid;gap:.4rem;color:#d6e8f1;font-size:.88rem}.ep-profile-card input{width:100%;max-width:360px;box-sizing:border-box;padding:.7rem .8rem;border-radius:9px;border:1px solid #45677b;background:#071a2a;color:#fff;font:inherit}.ep-profile-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}.ep-profile-stats>div{padding:.8rem;border:1px solid rgba(150,207,226,.2);border-radius:12px;background:rgba(3,19,33,.45);display:flex;flex-direction:column;gap:.3rem;min-width:0}.ep-profile-stats strong{font-size:1.15rem;overflow-wrap:anywhere;color:#8fe2f1}.ep-profile-stats span{font-size:.78rem;color:#c5dbe6}.ep-profile-note{font-size:.8rem}.ep-challenge-note{padding:.7rem .85rem;border-left:3px solid #55bfd2;background:rgba(70,165,190,.1);border-radius:0 8px 8px 0;color:#c8eaf2}.architecture-feedback .arch-gate{display:block;margin-top:.8rem}.architecture-gate textarea{width:100%;box-sizing:border-box}.architecture-gate button{max-width:100%}@media(max-width:520px){.ep-profile-stats{grid-template-columns:1fr}.ep-profile-stats>div{flex-direction:row;align-items:center;justify-content:space-between}}
@@ -4225,6 +4240,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
         >
             About
         </button>
+
+        <label for="epThemeSelect" class="ep-theme-label" style="color:#dff5ff;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;">
+            <span aria-hidden="true">◐</span><span>Theme</span>
+            <select id="epThemeSelect" aria-label="Choose website background theme" onchange="epSetTheme(this.value)">
+                <option value="eagle">Eagle Blue</option>
+                <option value="forest">Forest</option>
+                <option value="plum">Cosmic Plum</option>
+                <option value="ember">Warm Ember</option>
+            </select>
+        </label>
 
         <select
             id="languageSelect"
@@ -9549,9 +9574,9 @@ const topics = {
             const items = (missing || []).map(escapeHTML).join(" · ");
             const language = selectedLanguage === "ar" ? "ar" : selectedLanguage === "fr" ? "fr" : "en";
             const copy = {
-                en: {short:"Your answer is too brief to diagnose. Explain the mechanism, evidence, and consequence.", pass:"Self-review completed. Your response is recorded as learner-checked evidence, not independently verified mastery.", fail:"Self-review is incomplete or the answer is too short. Revisit these criteria: ", review:"Review the concept above, then try a new version of the question.", next:"Try a new question"},
-                fr: {short:"Votre réponse est trop courte pour diagnostiquer la difficulté. Expliquez le mécanisme, les preuves et les conséquences.", pass:"Auto-évaluation terminée. Votre réponse est enregistrée comme preuve vérifiée par l’apprenant, pas comme maîtrise vérifiée indépendamment.", fail:"L’auto-évaluation est incomplète ou la réponse est trop courte. Revoyez ces critères : ", review:"Révisez le concept ci-dessus, puis essayez une nouvelle version de la question.", next:"Essayer une nouvelle question"},
-                ar: {short:"الإجابة قصيرة جداً لتحديد موضع الصعوبة. اشرح الآلية والدليل والنتيجة.", pass:"اكتمل التقييم الذاتي. سُجّلت الإجابة كدليل راجعه المتعلّم، وليس كإتقان تم التحقق منه بشكل مستقل.", fail:"التقييم الذاتي غير مكتمل أو الإجابة قصيرة جداً. راجع هذه المعايير: ", review:"راجع المفهوم أعلاه، ثم جرّب صيغة جديدة من السؤال.", next:"جرّب سؤالاً جديداً"}
+                en: {short:"Your answer is too brief to diagnose. Explain the mechanism, evidence, and consequence.", pass:"Self-review completed. Your response is recorded as learner-checked evidence, not independently verified mastery.", fail:"Your answer was received, but this version cannot verify its meaning. Use these prompts to review it: ", review:"Review the concept above, then try a new version of the question.", next:"Try a new question"},
+                fr: {short:"Votre réponse est trop courte pour diagnostiquer la difficulté. Expliquez le mécanisme, les preuves et les conséquences.", pass:"Auto-évaluation terminée. Votre réponse est enregistrée comme preuve vérifiée par l’apprenant, pas comme maîtrise vérifiée indépendamment.", fail:"Votre réponse a été reçue, mais cette version ne peut pas en vérifier le sens. Utilisez ces critères pour la revoir : ", review:"Révisez le concept ci-dessus, puis essayez une nouvelle version de la question.", next:"Essayer une nouvelle question"},
+                ar: {short:"الإجابة قصيرة جداً لتحديد موضع الصعوبة. اشرح الآلية والدليل والنتيجة.", pass:"اكتمل التقييم الذاتي. سُجّلت الإجابة كدليل راجعه المتعلّم، وليس كإتقان تم التحقق منه بشكل مستقل.", fail:"تم استلام إجابتك، لكن هذا الإصدار لا يستطيع التحقق من معناها. استخدم هذه المعايير لمراجعتها: ", review:"راجع المفهوم أعلاه، ثم جرّب صيغة جديدة من السؤال.", next:"جرّب سؤالاً جديداً"}
             };
             return copy[language];
         }
@@ -9796,38 +9821,107 @@ const topics = {
             if (!profile || !panel || !profile.gates?.[index]) return;
             const selectedLevel = document.querySelector('#learningLevel')?.value || 'beginner';
             const challengeNote = selectedLevel === 'beginner' ? 'Show your reasoning step by step; you may use the concept description.' : selectedLevel === 'intermediate' ? 'Intermediate challenge: explain the mechanism, rule out one alternative, and predict a consequence.' : 'Advanced direct challenge: identify the controlling variables, predict a changed scenario, and state one limitation of the model.';
-            panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Advancement Gate — ${escapeHTML(profile.levels[index][0])}</h3><p>${escapeHTML(profile.gates[index])}</p><p class="ep-challenge-note">${escapeHTML(challengeNote)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><fieldset class="ep-self-review"><legend>Before submitting, check your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>This is a self-review rubric, not an AI or semantic grader.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+            panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Advancement Gate — ${escapeHTML(profile.levels[index][0])}</h3><p>${escapeHTML(profile.gates[index])}</p><p class="ep-challenge-note">${escapeHTML(challengeNote)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><fieldset class="ep-self-review"><legend>Optional self-review: reflect on your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>These prompts support reflection; they do not determine whether your answer is correct.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
             panel.scrollIntoView({behavior:'smooth',block:'center'});
         }
 
-        function evaluateArchitectureGate(key,index) {
-            const profile = architectureProfiles[key];
-            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim().toLowerCase();
-            const feedback = document.querySelector('#architectureGateFeedback');
-            if (!profile || !feedback) return;
-            const signals = profile.signals?.[index] || [];
-            const copy = epLocalizedFeedback();
-            if (answer.length < 35) {
-                epRecordCheckpoint(key,index,false,'mountain');
-                feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>${escapeHTML(copy.short)}</strong><br>${escapeHTML(copy.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'mountain')">${escapeHTML(copy.next)}</button>`; return;
+        /*
+         * Flexible first-pass checkpoint reader.
+         * It recognizes common alternate wording, equations, and metaphor cues,
+         * but deliberately reports uncertainty rather than claiming semantic
+         * understanding from keyword overlap alone. This is not an AI grader.
+         */
+        function epNormalizeAnswer(value) {
+            return String(value || '')
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .replace(/schrodinger/g, 'schrodinger')
+                .replace(/[^a-z0-9α-ω+−=<>.%/\s-]/gi, ' ')
+                .replace(/\s+/g, ' ').trim();
+        }
+        const EP_ANSWER_ALIASES = {
+            'superposition': ['superposition','multiple states','several states','many possible states','combination of states','overlap of states','both states at once'],
+            'probability': ['probability','chance','likelihood','odds','fraction of outcomes','statistical distribution'],
+            'measurement': ['measurement','measure','observe','observation','when detected','when measured','readout'],
+            'state': ['state','condition','quantum system','wavefunction','wave function'],
+            'spectrum': ['spectrum','spectra','spectral lines','wavelength','emission line','absorption line'],
+            'redshift': ['redshift','red shift','shift toward red','longer wavelength','doppler shift'],
+            'composition': ['composition','chemical makeup','elements','what it is made of'],
+            'velocity': ['velocity','speed','motion','moving away','moving toward'],
+            'mass': ['mass','weight','amount of matter'],
+            'orbit': ['orbit','orbital path','revolve','goes around'],
+            'gravity': ['gravity','gravitational','attraction','pulls together','pull toward'],
+            'light': ['light','photon','electromagnetic radiation'],
+            'curvature': ['curvature','bending','bends','warping','distortion'],
+            'evolution': ['evolution','natural selection','adaptation','heritable change','descent with modification'],
+            'mutation': ['mutation','genetic change','dna change','variation'],
+            'function': ['function','reusable block','named block of code','procedure'],
+            'variable': ['variable','stores a value','named value','placeholder for a value'],
+            'condition': ['condition','if statement','branch','decision rule'],
+            'loop': ['loop','repeat','iteration','repeatedly'],
+            'supply': ['supply','logistics','transport','shipping','convoy','supply chain'],
+            'humanism': ['humanism','humanist','human potential','human-centered','human centred']
+        };
+        function epAnswerEvidence(answer, key, index, kind) {
+            const normalized = epNormalizeAnswer(answer);
+            const profile = architectureProfiles[key] || {};
+            let signals = [];
+            if (kind === 'island') signals = profile.islandSignals?.[index] || [];
+            else if (kind === 'nexus') signals = Array.isArray(profile.signals?.[0]) ? profile.signals.flat() : (profile.signals || []);
+            else signals = Array.isArray(profile.signals?.[index]) ? profile.signals[index] : (profile.signals || []);
+            const unique = [...new Set(signals.map(x => String(x).toLowerCase()))];
+            const matched = [];
+            for (const signal of unique) {
+                const variants = EP_ANSWER_ALIASES[signal] || [signal];
+                if (variants.some(term => {
+                    const t = epNormalizeAnswer(term);
+                    return t && (` ${normalized} `).includes(` ${t} `);
+                })) matched.push(signal);
             }
+            const hasEquation = /(?:[a-zα-ω]\s*\^?\s*\d*\s*=|\b\w+\s*\(.*\)\s*=|\b\d+(?:\.\d+)?\s*%|\|[^|]+\|\s*\^?\s*2)/i.test(answer);
+            const hasMetaphorCue = /\b(like|as if|similar to|imagine|think of it as|analogy|metaphor|مثل|كأن|comme|tel que)\b/i.test(answer);
+            const hasUncertaintyCue = /\b(maybe|perhaps|possibly|i am not sure|not sure|uncertain|might|could be|je ne suis pas sûr|peut-être|ربما|لست متأكد)\b/i.test(normalized);
+            return { matched, total: unique.length, hasEquation, hasMetaphorCue, hasUncertaintyCue };
+        }
+        function renderCheckpointSubmission(key, index, kind, answer, feedback) {
             const rubricChecks = [...document.querySelectorAll('#architectureGatePanel .ep-rubric-check')];
-            const rubricComplete = rubricChecks.length === 4 && rubricChecks.every(input => input.checked);
-            const passed = answer.length >= 80 && rubricComplete;
-            epRecordCheckpoint(key,index,passed,'mountain');
-            if (passed) {
-                architectureProgress[key] = Math.max(architectureProgress[key] ?? -1,index);
-                const rank = epRank(Object.values(epLearnerProfile.checkpoints || {}).filter(x=>x.passed).length);
-                const rankText = rank[selectedLanguage] || rank.en;
-                feedback.className='architecture-feedback good';
-                feedback.innerHTML=`<strong>${escapeHTML(copy.pass)}</strong><br>${epText('Evidence recorded for','Preuve enregistrée pour','تم تسجيل دليل على')} <strong>${escapeHTML(profile.levels[index][0])}</strong>. ${epText('Current rank','Rang actuel','الرتبة الحالية')}: <strong>${escapeHTML(rankText)}</strong>. <span class="architecture-note">${epText('This is a learner self-check, not independent semantic grading.','Il s’agit d’une auto-évaluation, pas d’une correction sémantique indépendante.','هذا تقييم ذاتي، وليس تصحيحاً دلالياً مستقلاً.')}</span>`;
-                const room=document.querySelector('#architectureRoom'); if(room){ const node=room.querySelectorAll('.arch-level')[index]; if(node) node.classList.add('unlocked'); }
-            } else {
-                const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
-                feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>${escapeHTML(copy.fail)}${escapeHTML(epText('mechanism · evidence · consequence · limitation','mécanisme · preuve · conséquence · limite','الآلية · الدليل · النتيجة · الحدود'))}</strong><br>${escapeHTML(copy.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'mountain')">${escapeHTML(copy.next)}</button>`;
+            const reviewed = rubricChecks.filter(input => input.checked).length;
+            epRecordCheckpoint(key, index, false, kind);
+            feedback.className = 'architecture-feedback needs';
+            if (!answer.trim()) {
+                feedback.innerHTML = `<strong>${escapeHTML(epText('Enter an answer first.','Saisissez d’abord une réponse.','أدخل إجابتك أولاً.'))}</strong><p>${escapeHTML(epText('Nothing was evaluated because no answer was entered.','Aucune évaluation : aucune réponse n’a été saisie.','لم يتم التقييم لأنك لم تدخل إجابة.'))}</p>`;
+                return;
             }
+            const evidence = epAnswerEvidence(answer, key, index, kind);
+            let heading, explanation;
+            if (evidence.total > 0 && evidence.matched.length >= Math.max(2, Math.ceil(evidence.total * 0.5))) {
+                heading = epText('Relevant concepts detected — review the reasoning','Des concepts pertinents ont été repérés — vérifiez le raisonnement','تم رصد مفاهيم ذات صلة — راجع الاستدلال');
+                explanation = epText(
+                    `The answer mentions ${evidence.matched.join(', ')}. This is a sign of topic alignment, not proof that every claim is correct. Check whether the explanation connects these ideas accurately.`,
+                    `La réponse mentionne ${evidence.matched.join(', ')}. Cela indique un lien avec le sujet, sans prouver que chaque affirmation est correcte. Vérifiez les liens logiques.`,
+                    `تذكر الإجابة ${evidence.matched.join('، ')}. هذا مؤشر على ارتباطها بالموضوع وليس دليلاً على صحة كل الادعاءات. تحقق من صحة الربط بين الأفكار.`
+                );
+            } else if (evidence.matched.length > 0 || evidence.hasEquation || evidence.hasMetaphorCue) {
+                heading = epText('Some relevant evidence found — meaning remains uncertain','وُجدت بعض المؤشرات ذات الصلة — المعنى ما زال غير محسوم','وُجدت مؤشرات ذات صلة — المعنى ما زال غير مؤكد');
+                explanation = epText(
+                    `The response includes ${[...evidence.matched, ...(evidence.hasEquation?['equation or mathematical notation']:[]), ...(evidence.hasMetaphorCue?['analogy/metaphor wording']:[])].join(', ')}. It may be a valid explanation in different wording, but this local checker cannot reliably decide that.`,
+                    `تتضمن الإجابة ${[...evidence.matched, ...(evidence.hasEquation?['une équation ou notation mathématique']:[]), ...(evidence.hasMetaphorCue?['une analogie ou métaphore']:[])].join(', ')}. قد يكون الشرح صحيحاً بصياغة مختلفة، لكن هذا الفاحص المحلي لا يستطيع الجزم بذلك.`,
+                    `تتضمن الإجابة ${[...evidence.matched, ...(evidence.hasEquation?['معادلة أو رموز رياضية']:[]), ...(evidence.hasMetaphorCue?['تشبيه أو استعارة']:[])].join('، ')}. قد يكون الشرح صحيحاً بصياغة مختلفة، لكن الفاحص المحلي لا يستطيع التأكد من ذلك.`
+                );
+            } else {
+                heading = epText('Meaning uncertain — not marked wrong','المعنى غير واضح — لم تُصنَّف الإجابة كخاطئة','المعنى غير محسوم — لم تُصنّف الإجابة على أنها خاطئة');
+                explanation = epText('The checker did not find enough of its expected concept signals. That does not mean your answer is wrong: you may have used a metaphor, different terminology, or a valid concise explanation. Add one sentence connecting your idea to the result, or have it reviewed by a semantic grader.', 'لم يجد الفاحص ما يكفي من مؤشرات المفاهيم المتوقعة. هذا لا يعني أن إجابتك خاطئة؛ ربما استخدمت تشبيهاً أو مصطلحات مختلفة أو شرحاً موجزاً صحيحاً. أضف جملة تربط فكرتك بالنتيجة أو استخدم تقييماً دلالياً.', 'لم يعثر الفاحص على إشارات كافية للمفاهيم المتوقعة. هذا لا يعني أن إجابتك خاطئة؛ فقد تكون استخدمت استعارة أو مصطلحات مختلفة أو شرحاً مختصراً صحيحاً. أضف جملة تربط الفكرة بالنتيجة أو استخدم مقيّماً دلالياً.');
+            }
+            if (evidence.hasUncertaintyCue) explanation += ' ' + epText('Your wording also signals uncertainty; that is useful information, not an automatic error.', 'Votre formulation indique aussi une incertitude ; c’est une information utile, pas une erreur automatique.', 'صياغتك تشير أيضاً إلى عدم اليقين؛ وهذه معلومة مفيدة وليست خطأً تلقائياً.');
+            const reviewStatus = epText(`${reviewed} of 4 optional self-review prompts checked. This does not change the assessment.`, `${reviewed} critères facultatifs sur 4 cochés. Cela ne change pas l’évaluation.`, `تم تحديد ${reviewed} من 4 معايير اختيارية. هذا لا يغيّر التقييم.`);
+            feedback.innerHTML = `<strong>${escapeHTML(heading)}</strong><p>${escapeHTML(explanation)}</p><p class="architecture-note">${escapeHTML(reviewStatus)}</p><p class="architecture-note">${escapeHTML(epText('This is a local evidence check, not semantic grading. It does not award mastery or label an answer incorrect.','Il s’agit d’une vérification locale d’indices, pas d’une correction sémantique. Elle n’accorde pas la maîtrise et ne déclare pas une réponse fausse.','هذا فحص محلي للمؤشرات وليس تقييماً دلالياً. لا يمنح الإتقان ولا يصنّف الإجابة كخاطئة.'))}</p>`;
+        }
+
+        function evaluateArchitectureGate(key,index) {
+            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim();
+            const feedback = document.querySelector('#architectureGateFeedback');
+            if (!architectureProfiles[key] || !feedback) return;
+            renderCheckpointSubmission(key, index, 'mountain', answer, feedback);
         }
         function epRetryGate(key,index,kind) {
             const profile = architectureProfiles[key]; if (!profile) return;
@@ -9840,7 +9934,7 @@ const topics = {
             const attempt = ((epLearnerProfile.retryCounts || {})[`${key}:${kind}:${index}`] || 0);
             epLearnerProfile.retryCounts ||= {}; epLearnerProfile.retryCounts[`${key}:${kind}:${index}`] = attempt + 1; epSaveProfile();
             const question = `${original}\n\n${variants[attempt % variants.length]}`;
-            panel.innerHTML = `<div class="architecture-gate"><h3>${epText('Revision checkpoint','Étape de révision','نقطة مراجعة')} — ${escapeHTML(profile.title)}</h3><p>${escapeHTML(question)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="${escapeHTML(epText('Explain the mechanism, evidence, and predicted outcome…','Expliquez le mécanisme, les preuves et le résultat prévu…','اشرح الآلية والدليل والنتيجة المتوقعة…'))}"></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" onclick="${kind==='island' ? `evaluateArchitectureIslandGate('${key}',${index})` : kind==='nexus' ? `evaluateArchitectureNexus('${key}')` : `evaluateArchitectureGate('${key}',${index})`} ">${escapeHTML(epText('Check new answer','Évaluer la nouvelle réponse','تحقق من الإجابة الجديدة'))}</button></div><fieldset class="ep-self-review"><legend>Before submitting, check your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>This is a self-review rubric, not an AI or semantic grader.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+            panel.innerHTML = `<div class="architecture-gate"><h3>${epText('Revision checkpoint','Étape de révision','نقطة مراجعة')} — ${escapeHTML(profile.title)}</h3><p>${escapeHTML(question)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="${escapeHTML(epText('Explain the mechanism, evidence, and predicted outcome…','Expliquez le mécanisme, les preuves et le résultat prévu…','اشرح الآلية والدليل والنتيجة المتوقعة…'))}"></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" onclick="${kind==='island' ? `evaluateArchitectureIslandGate('${key}',${index})` : kind==='nexus' ? `evaluateArchitectureNexus('${key}')` : `evaluateArchitectureGate('${key}',${index})`} ">${escapeHTML(epText('Check new answer','Évaluer la nouvelle réponse','تحقق من الإجابة الجديدة'))}</button></div><fieldset class="ep-self-review"><legend>Optional self-review: reflect on your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>These prompts support reflection; they do not determine whether your answer is correct.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
             panel.scrollIntoView({behavior:'smooth',block:'center'});
         }
 
@@ -9853,57 +9947,31 @@ const topics = {
             if (!gate) {
                 panel.innerHTML = `<div class="architecture-gate"><h3>🌐 ${escapeHTML(island[0])}</h3><p>${escapeHTML(island[1])}</p><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Return to the map</button></div>`;
             } else {
-                panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Checkpoint — ${escapeHTML(island[0])}</h3><p>${escapeHTML(gate)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureIslandGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><fieldset class="ep-self-review"><legend>Before submitting, check your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>This is a self-review rubric, not an AI or semantic grader.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+                panel.innerHTML = `<div class="architecture-gate"><h3>⚡ Checkpoint — ${escapeHTML(island[0])}</h3><p>${escapeHTML(gate)}</p><textarea id="architectureGateAnswer" aria-label="Your reasoning" placeholder="Explain your reasoning in your own words..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureIslandGate('${key}',${index})">Check my reasoning</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><fieldset class="ep-self-review"><legend>Optional self-review: reflect on your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>These prompts support reflection; they do not determine whether your answer is correct.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
             }
             panel.scrollIntoView({behavior:'smooth',block:'center'});
         }
 
         function evaluateArchitectureIslandGate(key,index) {
-            const profile = architectureProfiles[key];
-            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim().toLowerCase();
+            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim();
             const feedback = document.querySelector('#architectureGateFeedback');
-            if (!profile || !feedback) return;
-            const signals = profile.islandSignals?.[index] || [];
-            if (answer.length < 35) { epRecordCheckpoint(key,index,false,'island'); const c=epLocalizedFeedback(); feedback.className='architecture-feedback needs'; feedback.innerHTML=`<strong>${escapeHTML(c.short)}</strong><br>${escapeHTML(c.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'island')">${escapeHTML(c.next)}</button>`; return; }
-            const rubricChecks = [...document.querySelectorAll('#architectureGatePanel .ep-rubric-check')];
-            const rubricComplete = rubricChecks.length === 4 && rubricChecks.every(input => input.checked);
-            const passed = answer.length >= 80 && rubricComplete; epRecordCheckpoint(key,index,passed,'island');
-            if (passed) {
-                feedback.className='architecture-feedback good';
-                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().pass)}</strong><br><span class="architecture-note">${escapeHTML(epText('Your self-review is recorded; the app does not independently verify reasoning yet.','Votre auto-évaluation est enregistrée ; l’application ne vérifie pas encore le raisonnement de manière indépendante.','تم تسجيل تقييمك الذاتي؛ التطبيق لا يتحقق من الاستدلال بشكل مستقل بعد.'))}</span>`;
-            } else {
-                const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
-                feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().fail)}${escapeHTML(epText('mechanism · evidence · consequence · limitation','mécanisme · preuve · conséquence · limite','الآلية · الدليل · النتيجة · الحدود'))}</strong><br>${escapeHTML(epLocalizedFeedback().review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',${index},'island')">${escapeHTML(epLocalizedFeedback().next)}</button>`;
-            }
+            if (!architectureProfiles[key] || !feedback) return;
+            renderCheckpointSubmission(key, index, 'island', answer, feedback);
         }
 
         function openArchitectureNexus(key) {
             const profile = architectureProfiles[key];
             const panel = document.querySelector('#architectureGatePanel');
             if (!profile || !panel || !profile.nexus) return;
-            panel.innerHTML = `<div class="architecture-gate"><h3>🌐 Nexus Gate — ${escapeHTML(profile.title)}</h3><p>${escapeHTML(profile.nexus)}</p><textarea id="architectureGateAnswer" aria-label="Your systemic reasoning" placeholder="Trace the cascade across the connected ideas..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureNexus('${key}')">Check my synthesis</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><fieldset class="ep-self-review"><legend>Before submitting, check your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>This is a self-review rubric, not an AI or semantic grader.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
+            panel.innerHTML = `<div class="architecture-gate"><h3>🌐 Nexus Gate — ${escapeHTML(profile.title)}</h3><p>${escapeHTML(profile.nexus)}</p><textarea id="architectureGateAnswer" aria-label="Your systemic reasoning" placeholder="Trace the cascade across the connected ideas..."></textarea><div class="architecture-gate-actions"><button type="button" class="architecture-primary" style="width:auto" onclick="evaluateArchitectureNexus('${key}')">Check my synthesis</button><button type="button" class="architecture-secondary" onclick="document.querySelector('#architectureGatePanel').innerHTML=''">Close</button></div><fieldset class="ep-self-review"><legend>Optional self-review: reflect on your explanation</legend><label><input type="checkbox" class="ep-rubric-check"> I explained the mechanism, not just the result.</label><label><input type="checkbox" class="ep-rubric-check"> I used a relevant fact, observation, or example.</label><label><input type="checkbox" class="ep-rubric-check"> I predicted a consequence or explained why it follows.</label><label><input type="checkbox" class="ep-rubric-check"> I named an assumption, alternative, or limitation.</label><small>These prompts support reflection; they do not determine whether your answer is correct.</small></fieldset><div id="architectureGateFeedback" aria-live="polite"></div></div>`;
             panel.scrollIntoView({behavior:'smooth',block:'center'});
         }
 
         function evaluateArchitectureNexus(key) {
-            const profile = architectureProfiles[key];
-            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim().toLowerCase();
+            const answer = (document.querySelector('#architectureGateAnswer')?.value || '').trim();
             const feedback = document.querySelector('#architectureGateFeedback');
-            if (!profile || !feedback) return;
-            const signals = profile.nexusSignals || [];
-            if (answer.length < 50) { epRecordCheckpoint(key,0,false,'nexus'); const c=epLocalizedFeedback(); feedback.className='architecture-feedback needs'; feedback.innerHTML=`<strong>${escapeHTML(c.short)}</strong><br>${escapeHTML(c.review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',0,'nexus')">${escapeHTML(c.next)}</button>`; return; }
-            const rubricChecks = [...document.querySelectorAll('#architectureGatePanel .ep-rubric-check')];
-            const rubricComplete = rubricChecks.length === 4 && rubricChecks.every(input => input.checked);
-            const passed = answer.length >= 100 && rubricComplete; epRecordCheckpoint(key,0,passed,'nexus');
-            if (passed) {
-                feedback.className='architecture-feedback good';
-                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().pass)}</strong><br>${escapeHTML(epText('Your answer linked multiple parts of the system.','Votre réponse relie plusieurs parties du système.','ربطت إجابتك بين أجزاء متعددة من النظام.'))}`;
-            } else {
-                const missing=signals.filter(signal=>!answer.includes(signal)).slice(0,3);
-                feedback.className='architecture-feedback needs';
-                feedback.innerHTML=`<strong>${escapeHTML(epLocalizedFeedback().fail)}${escapeHTML(epText('mechanism · evidence · consequence · limitation','mécanisme · preuve · conséquence · limite','الآلية · الدليل · النتيجة · الحدود'))}</strong><br>${escapeHTML(epLocalizedFeedback().review)}<button type="button" class="arch-gate" onclick="epRetryGate('${key}',0,'nexus')">${escapeHTML(epLocalizedFeedback().next)}</button>`;
-            }
+            if (!architectureProfiles[key] || !feedback) return;
+            renderCheckpointSubmission(key, 0, 'nexus', answer, feedback);
         }
 
         async function searchWikipediaPages(query, limit = 6) {
@@ -11134,6 +11202,21 @@ const topics = {
             if (event.key === "ArrowLeft" || event.key === "ArrowUp") changePresentationSlide(-1);
         });
 
+
+        // User-selectable background themes, saved locally on this device.
+        function epSetTheme(theme) {
+            const allowed = ["eagle", "forest", "plum", "ember"];
+            const chosen = allowed.includes(theme) ? theme : "eagle";
+            document.body.dataset.epTheme = chosen;
+            const selector = document.getElementById("epThemeSelect");
+            if (selector) selector.value = chosen;
+            try { localStorage.setItem("eaglesPanoramaTheme", chosen); } catch (_) {}
+        }
+        (function epInitTheme() {
+            let saved = "eagle";
+            try { saved = localStorage.getItem("eaglesPanoramaTheme") || "eagle"; } catch (_) {}
+            epSetTheme(saved);
+        })();
 
         initializeApp();
 
