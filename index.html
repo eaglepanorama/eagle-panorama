@@ -4173,17 +4173,62 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 </style>
 
 <style id="ep-theme-switcher-styles">
-/* Theme switcher: keep all palettes dark enough to preserve existing text contrast. */
-body[data-ep-theme="eagle"] { background-color:#071522 !important; }
-body[data-ep-theme="forest"] { background-color:#0b211b !important; }
-body[data-ep-theme="plum"] { background-color:#1a1428 !important; }
-body[data-ep-theme="ember"] { background-color:#261a16 !important; }
-body[data-ep-theme="forest"]::before { background:rgba(83,205,143,.10) !important; }
-body[data-ep-theme="forest"]::after { background:rgba(72,173,123,.08) !important; }
-body[data-ep-theme="plum"]::before { background:rgba(169,121,255,.10) !important; }
-body[data-ep-theme="plum"]::after { background:rgba(113,137,255,.08) !important; }
-body[data-ep-theme="ember"]::before { background:rgba(255,148,91,.10) !important; }
-body[data-ep-theme="ember"]::after { background:rgba(255,195,107,.07) !important; }
+/* Distinct background designs, not just different colored glows. */
+body[data-ep-theme="eagle"] {
+  background-color:#071522 !important;
+  background-image:
+    radial-gradient(ellipse at 18% 12%, rgba(30,105,145,.24), transparent 42%),
+    radial-gradient(ellipse at 82% 86%, rgba(28,69,112,.18), transparent 38%),
+    linear-gradient(145deg,#071522 0%,#0a1b2b 48%,#06111e 100%) !important;
+  background-attachment:fixed !important;
+}
+/* Forest: layered evergreen shades with a quiet, organic contour grid. */
+body[data-ep-theme="forest"] {
+  background-color:#081b16 !important;
+  background-image:
+    radial-gradient(ellipse at 12% 15%,rgba(44,119,78,.22),transparent 38%),
+    radial-gradient(ellipse at 88% 72%,rgba(30,91,65,.20),transparent 40%),
+    repeating-linear-gradient(135deg,rgba(146,190,137,.035) 0px,rgba(146,190,137,.035) 1px,transparent 1px,transparent 34px),
+    linear-gradient(145deg,#071812 0%,#0c281f 50%,#06150f 100%) !important;
+  background-attachment:fixed !important;
+}
+/* Cosmic Plum: broad nebula-like fields and fine diagonal grain. */
+body[data-ep-theme="plum"] {
+  background-color:#171126 !important;
+  background-image:
+    radial-gradient(ellipse at 76% 18%,rgba(118,71,173,.26),transparent 38%),
+    radial-gradient(ellipse at 20% 80%,rgba(56,70,145,.20),transparent 42%),
+    repeating-linear-gradient(35deg,rgba(207,185,255,.025) 0px,rgba(207,185,255,.025) 1px,transparent 1px,transparent 28px),
+    linear-gradient(145deg,#110d20 0%,#211632 52%,#100e22 100%) !important;
+  background-attachment:fixed !important;
+}
+/* Warm Ember: warm mineral-paper texture, clearly different from the night-sky default. */
+body[data-ep-theme="ember"] {
+  background-color:#241914 !important;
+  background-image:
+    radial-gradient(ellipse at 16% 14%,rgba(171,91,48,.20),transparent 38%),
+    radial-gradient(ellipse at 84% 82%,rgba(153,102,46,.16),transparent 40%),
+    repeating-linear-gradient(0deg,rgba(255,211,161,.035) 0px,rgba(255,211,161,.035) 1px,transparent 1px,transparent 5px),
+    repeating-linear-gradient(90deg,rgba(255,211,161,.018) 0px,rgba(255,211,161,.018) 1px,transparent 1px,transparent 38px),
+    linear-gradient(145deg,#211611 0%,#302018 52%,#1c130f 100%) !important;
+  background-attachment:fixed !important;
+}
+/* The animated starfield belongs only to Eagle Blue; other themes get their own texture. */
+body[data-ep-theme="forest"] #starfieldCanvas,
+body[data-ep-theme="forest"] .starfield-overlay,
+body[data-ep-theme="plum"] #starfieldCanvas,
+body[data-ep-theme="plum"] .starfield-overlay,
+body[data-ep-theme="ember"] #starfieldCanvas,
+body[data-ep-theme="ember"] .starfield-overlay { display:none !important; }
+body[data-ep-theme="eagle"] #starfieldCanvas { display:block; }
+body[data-ep-theme="eagle"] .starfield-overlay { display:block; }
+/* Disable the old corner glow blobs for textured themes so the background really changes. */
+body[data-ep-theme="forest"]::before,
+body[data-ep-theme="forest"]::after,
+body[data-ep-theme="plum"]::before,
+body[data-ep-theme="plum"]::after,
+body[data-ep-theme="ember"]::before,
+body[data-ep-theme="ember"]::after { opacity:0 !important; }
 #epThemeSelect { padding:9px 11px; border:1px solid rgba(125,211,252,.3) !important; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer; }
 #epThemeSelect:focus-visible { outline:2px solid #7dd3fc; outline-offset:3px; }
 </style>
@@ -4244,10 +4289,10 @@ body[data-ep-theme="ember"]::after { background:rgba(255,195,107,.07) !important
         <label for="epThemeSelect" class="ep-theme-label" style="color:#dff5ff;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;">
             <span aria-hidden="true">◐</span><span>Theme</span>
             <select id="epThemeSelect" aria-label="Choose website background theme" onchange="epSetTheme(this.value)">
-                <option value="eagle">Eagle Blue</option>
-                <option value="forest">Forest</option>
-                <option value="plum">Cosmic Plum</option>
-                <option value="ember">Warm Ember</option>
+                <option value="eagle">Eagle Blue · Starfield</option>
+                <option value="forest">Forest · Contour Grid</option>
+                <option value="plum">Cosmic Plum · Nebula</option>
+                <option value="ember">Warm Ember · Mineral Paper</option>
             </select>
         </label>
 
